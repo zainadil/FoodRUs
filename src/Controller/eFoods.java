@@ -1,6 +1,8 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Start
  */
-@WebServlet("/Start")
+@WebServlet("/eFoods")
 public class eFoods extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -22,11 +24,9 @@ public class eFoods extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Home.jspx");
+		rd.forward(request, response);
 	}
 
 	/**
