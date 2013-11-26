@@ -17,6 +17,7 @@ public class CategoryDAO {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 	} 
 	
+	//Retrieval Method
 	public List<CategoryBean> retrieveCategories() throws SQLException{
 		
 		List<CategoryBean> rv = new LinkedList<CategoryBean>();
