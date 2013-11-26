@@ -8,19 +8,19 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CategoryDAO {
+public class ItemDAO {
 	
-	private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=student;password=secret;";
+private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=student;password=secret;";
 	
-	public CategoryDAO() throws ClassNotFoundException
+	public ItemDAO() throws ClassNotFoundException
 	{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 	} 
 	
 	//Retrieval Method
-	public List<CategoryBean> retrieveCategories() throws SQLException{
+	public List<ItemBean> retrieveCategories() throws SQLException{
 		
-		List<CategoryBean> rv = new LinkedList<CategoryBean>();
+		List<ItemBean> rv = new LinkedList<ItemBean>();
 		
 		Connection conn = null;
 		Statement statement = null;
@@ -32,9 +32,8 @@ public class CategoryDAO {
 			statement.executeUpdate("SET SCHEMA ROUMANI");
 			set = statement.executeQuery("SELECT * FROM Category ORDER BY NAME");
 		
-			while(set.next())
-				rv.add(new CategoryBean(set.getInt("ID"), new String(set.getString("NAME")), new String(set.getString("DESCRIPTION")), set.getBlob("PICTURE")));
-		
+			while(set.next());
+				//rv.add(new ItemBean(set.getString("NUMBER"), set.getString("NAME"), ));
 		} catch (SQLException e){
 			throw new SQLException("SQL Exception", e);
 		} finally{
@@ -45,4 +44,5 @@ public class CategoryDAO {
 		
 		return rv;
 	}
+
 }
