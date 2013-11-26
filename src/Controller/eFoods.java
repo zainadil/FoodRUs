@@ -27,6 +27,7 @@ public class eFoods extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Home.jspx");
 		rd.forward(request, response);
+		// hello
 	}
 
 	/**
