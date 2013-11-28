@@ -57,8 +57,7 @@ public class eFoods extends HttpServlet {
 			} else if (pageURI.contains("Logout")){
 				logout(pageURI,  model, request, response);
 			} else if (pageURI.contains("Cart")){
-				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
-				rd.forward(request, response);
+				cart(pageURI,  model, request, response);
 			} else {
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
