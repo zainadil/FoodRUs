@@ -22,7 +22,7 @@
 			<div id = "headerLogo">FOODS R US </div>
 			<input type="submit" id="cart" name="cart" value="cart"> </input>
 			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
-			<input type="submit" id="login" name="login" value="login"> </input>
+			<input type="submit" id="loginPage" name="loginPage" value="Login"> </input>
 		</div>
 	
 		<div id= "searchBar">

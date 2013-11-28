@@ -56,12 +56,14 @@ public class eFoods extends HttpServlet {
 					rd.forward(request, response);
 					//ideally go to category servlet
 			}
-			else if (request.getParameter("login")!= null)
+			else if (request.getParameter("loginPage") != null)
 			{
 				rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 				rd.forward(request, response);
 				//ideally go to its own servelet
 
+			} else if(request.getParameter("login") != null){
+				 checkLogin(model, request, response);
 			} else {
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
@@ -82,20 +84,17 @@ public class eFoods extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
 	}
-	private void checkLogin(FoodRus model, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException
+	
+	
+	private void checkLogin(FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		RequestDispatcher rd;
 		boolean loggedIn;
-		System.out.println("AHHHHHH MOTHERLAND");
-		
 		String accountNumber = request.getParameter("accountNumber");
 		request.setAttribute("accountNumber", accountNumber);
 		String password = request.getParameter("password");
-		
-		System.out.println("ahhhhhhh came back mothafuckaaaaaaaaaaaaa");
-		
-		if( model.checkCredentials(accountNumber, password)){	
+			
+		if( model.checkCredentials(accountNumber, password)){
 			loggedIn = true;
 			request.setAttribute("loggedIn", loggedIn);
 			rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
@@ -103,8 +102,9 @@ public class eFoods extends HttpServlet {
 		} else {
 			loggedIn=false;
 			request.setAttribute("loggedIn", loggedIn);
+			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
+			rd.forward(request, response);
 		}
-
 	}
-
+	
 }

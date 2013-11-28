@@ -31,7 +31,7 @@
        	 	<p><input type="text" name="accountNumber" value="" placeholder="Account Number"/></p>
         	<p><input type="password" name="password" value="" placeholder="Password"/></p>
         	
-        	<input type="submit" id="login" name="loggedIn" value="LOGIN"> </input><br/>
+        	<input type="submit" id="login" name="login" value="LOGIN"> </input><br/>
         	
         	<c:if test = "${loggedIn eq false}" >
         		<center>

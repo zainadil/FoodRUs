@@ -33,6 +33,7 @@ public class FoodRus
 
 //**********************************CLIENT TABLE METHODS ******************************************
 	public boolean checkCredentials(String accountNumber, String password) {
+		System.out.println("Tyring to check Credentials");
 		return clientData.checkCredentials(accountNumber, password);
 		
 	}
