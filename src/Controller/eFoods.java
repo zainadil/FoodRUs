@@ -39,31 +39,23 @@ public class eFoods extends HttpServlet {
 		{
 			FoodRus model = (FoodRus) this.getServletContext().getAttribute("fru");
 			RequestDispatcher rd;
-			if (request.getParameter("category") != null) 
+			
+			String pageURI = request.getRequestURI();
+			
+			if (pageURI.contains("Category")) 
 			{
-					//System.out.println("in category");
-					String category = request.getParameter("category");
-
 					List<CategoryBean> catBean = model.retrieveCategories();
-					//System.out.println("List size" + catBean.size());
 					request.setAttribute("catBean", catBean);
-					
-					//System.out.println("category is: " + category);
-					List<ItemBean> itemList = model.retrieveItems(category);
+					List<ItemBean> itemList = model.retrieveItems("Meat");
 					request.setAttribute("itemList", itemList);
-
 				    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 					rd.forward(request, response);
-					//ideally go to category servlet
 			}
-			else if (request.getParameter("loginPage") != null)
-			{
-				rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
+			else if (pageURI.contains("Login")){
+				Login(pageURI,  model, request, response);
+			} else if (pageURI.contains("Cart")){
+				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
-				//ideally go to its own servelet
-
-			} else if(request.getParameter("login") != null){
-				 checkLogin(model, request, response);
 			} else {
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
@@ -85,26 +77,31 @@ public class eFoods extends HttpServlet {
 		this.doGet(request, response);
 	}
 	
-	
-	private void checkLogin(FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	private void Login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		RequestDispatcher rd;
-		boolean loggedIn;
-		String accountNumber = request.getParameter("accountNumber");
-		request.setAttribute("accountNumber", accountNumber);
-		String password = request.getParameter("password");
-			
-		if( model.checkCredentials(accountNumber, password)){
-			loggedIn = true;
-			request.setAttribute("loggedIn", loggedIn);
-			rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
-			rd.forward(request, response);
+		if(request.getParameter("login") != null){
+			//Login Button has been pressed.
+			System.out.println("Came in here");
+			boolean loggedIn;
+			String accountNumber = request.getParameter("accountNumber");
+			request.setAttribute("accountNumber", accountNumber);
+			String password = request.getParameter("password");
+				
+			if( model.checkCredentials(accountNumber, password)){
+				loggedIn = true;
+				request.setAttribute("loggedIn", loggedIn);
+				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
+				rd.forward(request, response);
+			} else {
+				loggedIn=false;
+				request.setAttribute("loggedIn", loggedIn);
+				rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
+				rd.forward(request, response);
+			}
 		} else {
-			loggedIn=false;
-			request.setAttribute("loggedIn", loggedIn);
 			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 			rd.forward(request, response);
 		}
-	}
-	
+	}	
 }
