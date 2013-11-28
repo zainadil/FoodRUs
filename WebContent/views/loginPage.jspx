@@ -20,10 +20,15 @@
 <legend> Login Page </legend>
 <div id ="wrap">
 		<div id = "header" align="center">
-			<input type="submit" id="cart" name="cart" value="cart"> </input>
-			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
-			FOODS R US
-			<input type="submit" id="login" name="login" value="login"> </input>
+			<div id = "headerLogo">FOODS R US </div>
+				<a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a> <a
+					href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+        	<c:if test = "${loggedIn eq null}">
+				<a href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+			</c:if>
+        	<c:if test = "${loggedIn eq true}">
+				<a href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+			</c:if>
 		</div>
 
 
@@ -31,7 +36,7 @@
        	 	<p><input type="text" name="accountNumber" value="" placeholder="Account Number"/></p>
         	<p><input type="password" name="password" value="" placeholder="Password"/></p>
         	
-        	<input type="submit" id="login" name="login" value="LOGIN"> </input><br/>
+        	<input type="submit" id="loginButton" name="loginButton" value="LOGIN"> </input><br/>
         	
         	<c:if test = "${loggedIn eq false}" >
         		<center>

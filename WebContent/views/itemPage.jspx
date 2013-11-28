@@ -19,9 +19,14 @@
 <div id ="wrap">
 				<div id = "header" align="center">
 			<div id = "headerLogo">FOODS R US </div>
-			<input type="submit" id="cart" name="cart" value="cart"> </input>
-			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
-			<input type="submit" id="login" name="login" value="login"> </input>
+				<a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a> <a
+					href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+        	<c:if test = "${loggedIn eq null}">
+				<a href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+			</c:if>
+        	<c:if test = "${loggedIn eq true}">
+				<a href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+			</c:if>
 		</div>
 	
 		<div id= "searchBar">
