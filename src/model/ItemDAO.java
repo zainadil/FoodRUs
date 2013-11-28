@@ -18,7 +18,7 @@ private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=studen
 	} 
 	
 	//Retrieval Method
-	public List<ItemBean> retrieveCategories() throws SQLException{
+	public List<ItemBean> retrieveItems(String category) throws SQLException{
 		
 		List<ItemBean> rv = new LinkedList<ItemBean>();
 		
@@ -26,14 +26,40 @@ private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=studen
 		Statement statement = null;
 		ResultSet set = null;
 		
+		
+		//System.out.println("category picked is: " + category);
+		
+		
 		try{
 			conn = DriverManager.getConnection(DB_URL);
 			statement = conn.createStatement();
 			statement.executeUpdate("SET SCHEMA ROUMANI");
-			set = statement.executeQuery("SELECT * FROM Category ORDER BY NAME");
+			
+			String s = "select item.number, "
+					+ "item.name, item.price, item.qty, item.onOrder,"
+					+ " item.reOrder, item.catId, item.supId, item.CostPrice,"
+					+ " item.unit, category.id from item, category "
+					+ "where item.catID = category.id AND category.name = '" + category + "'";
+			
+			System.out.println("Excuting Statement " +  s);
+			
+			set = statement.executeQuery(s);
 		
-			while(set.next());
-				//rv.add(new ItemBean(set.getString("NUMBER"), set.getString("NAME"), ));
+			while(set.next())
+			{
+				rv.add(new ItemBean(set.getString("NUMBER"), 
+									set.getString("NAME"), 
+									set.getDouble("PRICE"),
+									set.getInt("QTY"),
+									set.getInt("ONORDER"),
+									set.getInt("REORDER"),
+									set.getInt("CATID"),
+									set.getInt("SUPID"),
+									set.getDouble("COSTPRICE"),
+									set.getString("UNIT")));
+			}
+			
+		System.out.println("List size IN DAO" + rv.size());
 		} catch (SQLException e){
 			throw new SQLException("SQL Exception", e);
 		} finally{
@@ -44,5 +70,9 @@ private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=studen
 		
 		return rv;
 	}
+	
+	
+	
+	
 
 }

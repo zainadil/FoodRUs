@@ -1,0 +1,53 @@
+CSS: @CHARSET "ISO-8859-1";
+html 
+{
+	margin: 0;
+	padding: 0;
+	color: #000;
+	background: #a7a09a;
+}
+#wrap 
+{
+	width: 1024px;
+	margin: 0 auto;
+	background: #99c;
+}
+#header 
+{
+	padding: 5px 10px;
+	background: #ddd;
+	
+}
+#searchBar
+{
+	padding: 5px 10px;
+	background: #000;
+}
+#categories
+{
+	float: left;
+	width: 200px;
+	padding: 10px;
+	background: #99c;
+}
+#main 
+{
+	float: left;
+	width: 784px;
+	padding: 10px;
+	background: #9c9;
+}
+#footer 
+{
+	clear: both;
+	padding: 5px 10px;
+	background: #cc9;
+}
+#footer p 
+{
+	margin: 0;
+}
+* html #footer 
+{
+	height: 1px;
+}
