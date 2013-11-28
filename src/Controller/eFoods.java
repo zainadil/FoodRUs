@@ -85,10 +85,11 @@ public class eFoods extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		System.out.println("Logging Out...");
-		//implement logout functionality
+		//TO-DO implement logout functionality
+		// Logging out should clear all session activities? including cart?
 		if (request.getAttribute("loggedIn") != null)
 			session.removeAttribute("loggedIn");
-
+		//		response.sendRedirect(request.getHeader("referer")); //sendBack to Referer
 		response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 	}
 	private void login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -97,7 +98,6 @@ public class eFoods extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		if(request.getParameter("loginButton") != null){
-			//Login Button has been pressed.
 			System.out.println("Came in here");
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
@@ -108,7 +108,12 @@ public class eFoods extends HttpServlet {
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn",  true);
-				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
+
+//				System.out.println("Should I send you back to: " + session.getAttribute("returnTo"));
+//				System.out.println("Or should I send you back to: "+ request.getHeader("referer"));
+//				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
+				response.sendRedirect((String) session.getAttribute("returnTo"));
+
 			} else {
 				loggedIn=false;
 				request.setAttribute("loggedIn", loggedIn);
@@ -116,6 +121,7 @@ public class eFoods extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else {
+			session.setAttribute("returnTo", (String) request.getHeader("referer"));
 			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 			rd.forward(request, response);
 		}
