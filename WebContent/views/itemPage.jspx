@@ -10,61 +10,65 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/webpage.css" type="text/css"
+	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/foodrus.css" type="text/css"
 	title="cse4413Front" media="screen, print" />
 </head>
 <body>
 
 <form action="" method="POST">
 <div id ="wrap">
-		<div id = "header" align="center">
+				<div id = "header" align="center">
+			<div id = "headerLogo">FOODS R US </div>
 			<input type="submit" id="cart" name="cart" value="cart"> </input>
 			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
-			FOODS R US
 			<input type="submit" id="login" name="login" value="login"> </input>
 		</div>
 	
 		<div id= "searchBar">
-			<label for="search" >SEARCH </label>
-			<input type="submit" id="search" name="logo" value="search" > </input><br/>
+			<div id= "searchBox">
+				<label for="search" >Search: </label>
+				<input id="searchText" name="searchText" value="" placeholder = "Search for an Item or a Category!" > </input>
+				<input type="submit" id="search" name="logo" value="search" > </input>
+			</div>
 		</div>
 		
-		<div id = "categories">
-		<label for="category" >CATEGORIES: </label><BR/>
-			 <c:if test="${not empty catBean}">
-					<c:forEach var="i" items="${catBean}">
-						<input type="submit" id="categories" name="category" value="${i.name}"> </input>
-	            	</c:forEach>
-				</c:if>
-				    <c:if test="${empty catBean}">
-					<p> No results </p>
-				</c:if>
-		</div>
+		<div id = "main">
 		
+			<div id = "leftNav">
+				 <c:if test="${not empty catBean}">
+						<c:forEach var="i" items="${catBean}">
+							<input type="submit" id="categories" name="category" value="${i.name}"> </input><br/>
+		            	</c:forEach>
+					</c:if>
+					    <c:if test="${empty catBean}">
+						<p> No results </p>
+					</c:if>
+			</div>
 			
-		<div id="main">
-			<c:if test="${not empty itemList}">
-			ITEMS
-				<c:forEach var="i" items="${itemList}">
-				 	<div style="width:200px;height:250px;border:1px solid black">
-						<ul>
-							<!--MANDATORY-->
-							${i.name} 
-							<li>${i.number} </li>
-							<li>${i.price} </li>
-							 Quantity: <input type="number" name="quantity" min="1" max="${i.qty}"></input>
-							<input type="submit" value="Add to Cart">
-							</input>
-						</ul>									
-						<!--FADED: OPTIONAL-->
-					</div>
-				</c:forEach>		
-			</c:if>
-			<c:if test="${empty itemList}">
-			List is empty
-			</c:if>
+				
+			<div id="mainContentItemPage">
+				<c:if test="${not empty itemList}">
+				ITEMS
+					<c:forEach var="i" items="${itemList}">
+					 	<div style="width:200px;height:250px;border:1px solid black">
+							<ul>
+								<!--MANDATORY-->
+								${i.name} 
+								<li>${i.number} </li>
+								<li>${i.price} </li>
+								 Quantity: <input type="number" name="quantity" min="1" max="${i.qty}"></input><br/>
+								<input type="submit" value="Add to Cart">
+								</input>
+							</ul>									
+							<!--FADED: OPTIONAL-->
+						</div>
+					</c:forEach>		
+				</c:if>
+				<c:if test="${empty itemList}">
+				List is empty
+				</c:if>
+			</div>
 		</div>
-		
 		
 		<div id = "footer">
 		FOOTER

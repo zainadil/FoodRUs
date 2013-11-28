@@ -12,10 +12,11 @@
 <head>
 	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/foodrus.css" type="text/css" title="cse4413Generic" media="screen, print" />
 	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/homepage.css" type="text/css" title="cse4413HomePage" media="screen, print" />
+	<script type="text/javascript" src = "${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
 <body>
 
-<form action="" method="POST">
+<form id = "mainForm" action="" method="POST">
 <div id ="wrap">
 		<div id = "header" align="center">
 			<div id = "headerLogo">FOODS R US </div>
@@ -34,30 +35,12 @@
 		
 		
 		<div id="mainContent">
-		
-			<div id ="cereal"><h1>Cereal</h1></div>
-			<div class="cheese"><h1>Cheese</h1></div>
-			<div class="iceCream"><h1>Ice Cream</h1></div>
-			<div class="meat"><h1>Meat</h1></div>
-		
-		<!-- 
-		<label for="category" >CATEGORIES: </label><BR/>
-			 
-			 	<c:if test="${not empty catBean}">
-					<c:forEach var="i" items="${catBean}">
-						<input type="submit" id="category" name="category" value="${i.name}"> </input>
-	            	</c:forEach>
-				</c:if>
-				    <c:if test="${empty catBean}">
-					<p> No results </p>
-					
-					</c:if>
-			
-		 -->
+			<input class ="cereal" type="submit" name="category" value="Cereal"> </input>
+			<input class ="cheese" type="submit" name="category" value="Cheese"> </input>
+			<input class ="iceCream" type="submit" name="category" value="Ice Cream"> </input>
+			<input class ="meat" type="submit" name="category" value="Meat"> </input>
 		 </div>
-		<div id = "footer">
-		FOOTER
-		</div>
+		<div id = "footer">FOOTER</div>
 </div>	
 </form>
 </body>

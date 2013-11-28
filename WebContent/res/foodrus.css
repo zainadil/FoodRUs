@@ -40,17 +40,29 @@ html
 	width : 600px;
 }
 
-#categories
+#leftNav
 {
 	float: left;
-	width: 200px;
-	padding: 10px;
-	background: #99c;
+	width: 20%;
+	height: 100%;
+	background: blue;
 }
+
+#main{
+	height: 100%;
+	width: 100%;
+}
+
 #mainContent 
 {
 	height: 500px;
 	width: 100%;
+}
+
+#mainContentItemPage{
+	height: 100%;
+	width: 80%;
+	float: right;
 }
 #footer 
 {
@@ -67,27 +79,58 @@ html
 	height: 1px;
 }
 
-#cereal {
+.cereal {
     background-color: red;
     float: left;
     height: 50%;
     width: 50%;
+    font-size: 20px;
 }
+
+.cereal:HOVER{
+	background-color: RED;  
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 30px;
+}
+
 .cheese {
     background-color: brown;
     float: left;
     height: 50%;
     width: 50%;
+    font-size: 20px;
 }
+
+.cheese:HOVER{
+	background-color: RED;  
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 30px;
+}
+
 .iceCream {
     background-color: blue;
     float: left;
     height: 50%;
     width: 50%;
+    font-size: 20px;
 }
+
+.iceCream:HOVER{
+	background-color: RED;  
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 30px;
+}
+
 .meat {
     background-color: green;
     float: left;
     height: 50%;
     width: 50%;
+    font-size: 20px;
+}
+
+.meat:HOVER {
+	background-color: RED;  
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 30px;
 }
