@@ -10,7 +10,7 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/webpage.css" type="text/css"
+	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/foodrus.css" type="text/css"
 	title="cse4413Front" media="screen, print" />
 </head>
 <body>
@@ -18,20 +18,25 @@
 <form action="" method="POST">
 <div id ="wrap">
 		<div id = "header" align="center">
+			<div id = "headerLogo">FOODS R US </div>
 			<input type="submit" id="cart" name="cart" value="cart"> </input>
 			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
-			FOODS R US
 			<input type="submit" id="login" name="login" value="login"> </input>
 		</div>
 	
-		<div id= "searchBar" align="center">
-			<label for="search" >SEARCH </label>
-			<input type="submit" id="search" name="logo" value="search" > </input><br/>
+		<div id= "searchBar">
+			<div id= "searchBox">
+				<label for="search" >Search: </label>
+				<input id="searchText" name="searchText" value="" placeholder = "Search for an Item or a Category!" > </input>
+				<input type="submit" id="search" name="logo" value="search" > </input>
+			</div>
 		</div>
 		
 		
-		<div id="main">
+		<div id="mainContent">
 		<label for="category" >CATEGORIES: </label><BR/>
+			 
+			 <!--  Add the categories in a table here -->
 			 
 			 	<c:if test="${not empty catBean}">
 					<c:forEach var="i" items="${catBean}">
@@ -47,11 +52,7 @@
 		<div id = "footer">
 		FOOTER
 		</div>
-		
 </div>	
-	
-	
-	
 </form>
 </body>
 </html>

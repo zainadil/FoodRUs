@@ -14,15 +14,32 @@ html
 }
 #header 
 {
+	height: 70px;
 	padding: 5px 10px;
 	background: #ddd;
 	
 }
+
+#headerLogo{
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 30px;
+}
+
 #searchBar
 {
+	height: 50px;
 	padding: 5px 10px;
-	background: #000;
+	background: yellow;
 }
+
+#searchBox{
+	padding-left: 150px;
+	padding-top: 13px;
+}
+#searchText{
+	width : 600px;
+}
+
 #categories
 {
 	float: left;
@@ -30,10 +47,9 @@ html
 	padding: 10px;
 	background: #99c;
 }
-#main 
+#mainContent 
 {
 	float: left;
-	width: 784px;
 	padding: 10px;
 	background: #9c9;
 }
