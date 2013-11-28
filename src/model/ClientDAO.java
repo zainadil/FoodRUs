@@ -49,11 +49,40 @@ public class ClientDAO
 		}
 
 
-		public void checkAccountNumber() 
+		public boolean checkCredentials(String accountNumber, String password) 
 		{
+			//by default result is false --> we dt want the client to be logged in
+			boolean result = false;
+			List<ClientBean> rv = new LinkedList<ClientBean>();
+			Connection conn = null;
+			Statement statement = null;
+			ResultSet set = null;
+			int accountN = Integer.parseInt("accountNumber");
+			try {
+				conn = DriverManager.getConnection(DB_URL);
 			
+			statement = conn.createStatement();
+			statement.executeUpdate("SET SCHEMA ROUMANI");
+			set = statement.executeQuery("SELECT * from CLIENT WHERE NUMBER = " + accountN + " AND password= " + password);
+			
+			while(set.next())
+				rv.add(new ClientBean(set.getString("RATING"), set.getString("PASSWORD"), set.getString("NAME"), set.getInt("NUMBER")));
+					
+			if(rv.size() > 0)
+				result=true;
+			else
+				result=false;
+			
+			
+			} catch (SQLException e) {
+				System.out.println("problem in checkAccountNumber in clientDAO -- method: checkAccountNumber");
+				e.printStackTrace();
+			}
+			return result;
 			
 		}
+
+
 	
 
 }//end ClientDAO class

@@ -32,6 +32,12 @@
         	<p><input type="password" name="password" value="" placeholder="Password"/></p>
         	
         	<input type="submit" id="login" name="loggedIn" value="LOGIN"> </input><br/>
+        	
+        	<c:if test = "${loggedIn eq false}" >
+        		<center>
+        		<span style="color: red" id = "loggedInError">Unable to login, please check username or password</span>
+        		</center>
+        	</c:if>
 		</div>
 	</div>
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+		xmlns:c="http://java.sun.com/jsp/jstl/core"
+		xmlns:f="http://java.sun.com/jsp/jstl/fmt">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
+		pageEncoding="ISO-8859-1" session="false"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>cartPage</title>
+</head>
+<body>
+
+<form action="" method="POST">
+<div id ="wrap">
+		<div id = "header" align="center">
+			<input type="submit" id="cart" name="cart" value="cart"> </input>
+			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
+			FOODS R US
+			<input type="submit" id="login" name="login" value="login"> </input>
+		</div>
+	
+		<div id= "searchBar">
+			<label for="search" >SEARCH </label>
+			<input type="submit" id="search" name="logo" value="search" > </input><br/>
+		</div>
+		
+		<div id="main">
+			Items in your shopping cart are: 
+		<!-- 	<c:if test="${not empty cartList}">
+				<c:forEach var="i" items="${cartList}"> -->
+				 	<ol>	
+				 		<li>Name:Chips <!--${i.name}--><br/> Product ID:12345 <!--${i.number}--><br/> Price: 20.00 <!--${i.price}-->  </li> 
+					</ol>
+		<!--		</c:forEach>
+			</c:if> -->	
+			<input type="submit" value="Continue Shopping"></input>
+			<input type="submit" value="Checking"></input>
+		</div>
+		
+		
+		<div id = "footer">
+		FOOTER
+		</div>
+		
+	</div>	
+	
+</form>
+
+
+</body>
+</html>
+</jsp:root>

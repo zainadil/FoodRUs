@@ -25,21 +25,32 @@ public class eFoods extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
+	
+	
+	
 	public eFoods() 
 	{
 		super();
 
 	}
 
+
+
 	@Override
 	public void init() throws ServletException 
 	{
 		FoodRus fru = new FoodRus();
 		this.getServletContext().setAttribute("fru", fru);
+		
+		
+
 	}
-	
+
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+	
 			FoodRus f = (FoodRus)this.getServletContext().getAttribute("fru");
 			
 			try 
@@ -80,8 +91,11 @@ public class eFoods extends HttpServlet {
 				
 				if (request.getParameter("login")!= null)
 				{
+					boolean loggedIn;
 					System.out.println("forwarding to loginPage");
 					this.getServletContext().getRequestDispatcher("/views/loginPage.jspx").forward(request, response);
+					String referer = request.getHeader("Referer"); 
+					
 					//get params from browser
 					String accountNumber = request.getParameter("accountNumber");
 					request.setAttribute("accountNumber", accountNumber);
@@ -89,12 +103,30 @@ public class eFoods extends HttpServlet {
 					request.setAttribute("password", password);
 					
 					//call model to check DB to see if user exists
-					//f.checkAccountNumber();
+					if(f.checkCredentials(accountNumber, password) == true)
+					{	
+						loggedIn = true;
+						request.setAttribute("loggedIn", loggedIn);
+						//go to last visited page
+						
+						response.sendRedirect(referer);
+					}
+					else
+					{
+						loggedIn=false;
+						request.setAttribute("loggedIn", loggedIn);
+					}
+					
 					
 					//Once New Login button is pressed, forward to LAST VISITED PAGE				
 				}
 
-
+				if (request.getParameter("cart")!= null)
+				{
+					System.out.println("forwarding to cartPage");
+					this.getServletContext().getRequestDispatcher("/views/cartPage.jspx").forward(request, response);
+									
+				}
 			} catch (SQLException e) 
 			{
 				System.out.println("Category Bean List not created");

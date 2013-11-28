@@ -32,10 +32,9 @@ public class FoodRus
 	
 
 //**********************************CLIENT TABLE METHODS ******************************************
-	public boolean checkAccountNumber(String accountNumber) 
-	{
-		//clientData.checkAccountNumber("accountNumber");
-		return true;
+	public boolean checkCredentials(String accountNumber, String password) {
+		return clientData.checkCredentials(accountNumber, password);
+		
 	}
 	
 //**********************************ITEM TABLE METHODS *******************************************
@@ -43,6 +42,7 @@ public class FoodRus
 	{
 		return itemData.retrieveItems(category);
 	}
+	
 	
 	
 	
