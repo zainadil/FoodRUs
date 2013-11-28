@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.*;
 
@@ -54,10 +55,8 @@ public class eFoods extends HttpServlet {
 				rd.forward(request, response);
 			} 
 		}
-		catch (Exception e)
-		{
-			
-			
+		catch (Exception e){
+			System.out.println("Exception here");		
 		}
 	}
 
@@ -100,15 +99,21 @@ public class eFoods extends HttpServlet {
 
 	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		
+		HttpSession session = request.getSession();
+		
 		RequestDispatcher rd;
 		List<CategoryBean> catBean = model.retrieveCategories();
 		request.setAttribute("catBean", catBean);
 		List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
 		request.setAttribute("itemList", itemList);
+		
+		//Check if userLogged in
+		if(session.getAttribute("loggedIn") != null)
+			request.setAttribute("loggedIn", true);
+		
 	    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 		rd.forward(request, response);
 	}
-	
 	
 	private String getCategory(String uri){	
 		String rv = "";
