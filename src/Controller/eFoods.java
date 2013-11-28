@@ -109,8 +109,7 @@ public class eFoods extends HttpServlet {
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn",  true);
-				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
-				rd.forward(request, response);
+				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 			} else {
 				loggedIn=false;
 				request.setAttribute("loggedIn", loggedIn);
