@@ -33,8 +33,6 @@
         	
         	<input type="submit" id="login" name="loggedIn" value="LOGIN"> </input><br/>
 		</div>
-		
-		
 	</div>
 
 	</form>

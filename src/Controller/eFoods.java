@@ -45,18 +45,8 @@ public class eFoods extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		//************************************************************************************FRESH VISIT - WELCOME PAGE
-		if(request.getParameter("logo") == null && request.getParameter("category") == null && request.getParameter("login") == null)
-		{		
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/views/welcomePage.jspx");
-			rd.forward(request, response);
-		}
-		//************************************************************************************NON FRESH VISIT
-		//if(request.getParameter("logo") != null)
-		else
-		{
+	
 			FoodRus f = (FoodRus)this.getServletContext().getAttribute("fru");
-			//************************************************************************************HOMEPAGE 
 			
 			try 
 			{
@@ -116,10 +106,7 @@ public class eFoods extends HttpServlet {
 				System.out.println("Category Bean List not created");
 				e.printStackTrace();
 			}
-
-
 		}//end (ELSE) logo is not null
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
