@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.*;
 
-
-
 /**
  * Servlet implementation class Start
  */
@@ -25,120 +23,88 @@ public class eFoods extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	
-	
-	
-	public eFoods() 
-	{
+	public eFoods() {
 		super();
 
 	}
 
-
-
 	@Override
-	public void init() throws ServletException 
-	{
+	public void init() throws ServletException {
 		FoodRus fru = new FoodRus();
 		this.getServletContext().setAttribute("fru", fru);
-		
-		
-
 	}
 
-
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-	
-			FoodRus f = (FoodRus)this.getServletContext().getAttribute("fru");
-			
-			try 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try
+		{
+			FoodRus model = (FoodRus) this.getServletContext().getAttribute("fru");
+			RequestDispatcher rd;
+			if (request.getParameter("category") != null) 
 			{
-				//retrieving categories
-				List<CategoryBean> catBean = f.retrieveCategories();
-				System.out.println("List size" + catBean.size());
-				request.setAttribute("catBean", catBean);
-				
-				String category = request.getParameter("category");
-				System.out.println("category is: " + category);
-				
-				//first visit to homepage
-				if (request.getParameter("category") == null)
-				{
+					//System.out.println("in category");
+					String category = request.getParameter("category");
+
+					List<CategoryBean> catBean = model.retrieveCategories();
+					//System.out.println("List size" + catBean.size());
+					request.setAttribute("catBean", catBean);
 					
-					System.out.println("im here in category == null");
-					this.getServletContext().getRequestDispatcher("/views/homePage.jspx").forward(request, response);
-				}
-				
-				//call model with the right category
-//				String category2 = request.getParameter("category");
-//				System.out.println("category after clicking is: " + category);
-				category = request.getParameter("category");
-				
-				//category selected 
-				if (category != null)
-				{
-					System.out.println("category is: " + category);
-					List<ItemBean> itemList = f.retrieveItems(category);
+					//System.out.println("category is: " + category);
+					List<ItemBean> itemList = model.retrieveItems(category);
 					request.setAttribute("itemList", itemList);
-					
-					System.out.println("Item List size" + itemList.size());
-					
-					this.getServletContext().getRequestDispatcher("/views/itemPage.jspx").forward(request, response);
-					
-				}
-				
-				if (request.getParameter("login")!= null)
-				{
-					boolean loggedIn;
-					System.out.println("forwarding to loginPage");
-					this.getServletContext().getRequestDispatcher("/views/loginPage.jspx").forward(request, response);
-					String referer = request.getHeader("Referer"); 
-					
-					//get params from browser
-					String accountNumber = request.getParameter("accountNumber");
-					request.setAttribute("accountNumber", accountNumber);
-					String password = request.getParameter("password");
-					request.setAttribute("password", password);
-					
-					//call model to check DB to see if user exists
-					if(f.checkCredentials(accountNumber, password) == true)
-					{	
-						loggedIn = true;
-						request.setAttribute("loggedIn", loggedIn);
-						//go to last visited page
-						
-						response.sendRedirect(referer);
-					}
-					else
-					{
-						loggedIn=false;
-						request.setAttribute("loggedIn", loggedIn);
-					}
-					
-					
-					//Once New Login button is pressed, forward to LAST VISITED PAGE				
-				}
 
-				if (request.getParameter("cart")!= null)
-				{
-					System.out.println("forwarding to cartPage");
-					this.getServletContext().getRequestDispatcher("/views/cartPage.jspx").forward(request, response);
-									
-				}
-			} catch (SQLException e) 
-			{
-				System.out.println("Category Bean List not created");
-				e.printStackTrace();
+				    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+					rd.forward(request, response);
+					//ideally go to category servlet
 			}
-		}//end (ELSE) logo is not null
+			else if (request.getParameter("login")!= null)
+			{
+				rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
+				rd.forward(request, response);
+				//ideally go to its own servelet
+
+			} else {
+				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
+				rd.forward(request, response);
+			} 
+		}
+		catch (Exception e)
+		{
+			
+			
+		}
+	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
+	}
+	private void checkLogin(FoodRus model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException
+	{
+		RequestDispatcher rd;
+		boolean loggedIn;
+		System.out.println("AHHHHHH MOTHERLAND");
+		
+		String accountNumber = request.getParameter("accountNumber");
+		request.setAttribute("accountNumber", accountNumber);
+		String password = request.getParameter("password");
+		
+		System.out.println("ahhhhhhh came back mothafuckaaaaaaaaaaaaa");
+		
+		if( model.checkCredentials(accountNumber, password)){	
+			loggedIn = true;
+			request.setAttribute("loggedIn", loggedIn);
+			rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
+			rd.forward(request, response);
+		} else {
+			loggedIn=false;
+			request.setAttribute("loggedIn", loggedIn);
+		}
+
 	}
 
 }
