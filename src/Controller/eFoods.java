@@ -42,16 +42,9 @@ public class eFoods extends HttpServlet {
 			
 			String pageURI = request.getRequestURI();
 			
-			if (pageURI.contains("Category")) 
-			{
-					List<CategoryBean> catBean = model.retrieveCategories();
-					request.setAttribute("catBean", catBean);
-					List<ItemBean> itemList = model.retrieveItems("Meat");
-					request.setAttribute("itemList", itemList);
-				    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
-					rd.forward(request, response);
-			}
-			else if (pageURI.contains("Login")){
+			if (pageURI.contains("Category")) {
+				category(pageURI, model, request, response);
+			} else if (pageURI.contains("Login")){
 				Login(pageURI,  model, request, response);
 			} else if (pageURI.contains("Cart")){
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
@@ -104,4 +97,31 @@ public class eFoods extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}	
+
+	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		
+		RequestDispatcher rd;
+		List<CategoryBean> catBean = model.retrieveCategories();
+		request.setAttribute("catBean", catBean);
+		List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
+		request.setAttribute("itemList", itemList);
+	    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+		rd.forward(request, response);
+	}
+	
+	
+	private String getCategory(String uri){	
+		String rv = "";
+		if(uri.toUpperCase().contains("MEAT"))
+			rv = "Meat";
+		else if(uri.toUpperCase().contains("CEREAL"))
+			rv = "Cereal";
+		else if(uri.toUpperCase().contains("ICECREAM"))
+			rv = "Ice Cream";
+		else if(uri.toUpperCase().contains("CHEESE"))
+			rv = "Cheese";
+		return rv;
+	}	
 }
+
+
