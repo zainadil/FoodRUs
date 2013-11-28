@@ -39,7 +39,8 @@
 			<input class ="cheese" type="submit" name="category" value="Cheese"> </input>
 			<input class ="iceCream" type="submit" name="category" value="Ice Cream"> </input>
 			<input class ="meat" type="submit" name="category" value="Meat"> </input>
-		 </div>
+		</div>
+		 
 		<div id = "footer">FOOTER</div>
 </div>	
 </form>

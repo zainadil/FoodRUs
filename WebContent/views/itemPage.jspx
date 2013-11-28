@@ -33,7 +33,6 @@
 		</div>
 		
 		<div id = "main">
-		
 			<div id = "leftNav">
 				 <c:if test="${not empty catBean}">
 						<c:forEach var="i" items="${catBean}">
@@ -48,9 +47,9 @@
 				
 			<div id="mainContentItemPage">
 				<c:if test="${not empty itemList}">
-				ITEMS
+				
 					<c:forEach var="i" items="${itemList}">
-					 	<div style="width:200px;height:250px;border:1px solid black">
+					 	<div id = "itemList">
 							<ul>
 								<!--MANDATORY-->
 								${i.name} 
@@ -64,16 +63,16 @@
 						</div>
 					</c:forEach>		
 				</c:if>
+				
 				<c:if test="${empty itemList}">
-				List is empty
+					List is empty
 				</c:if>
 			</div>
 		</div>
 		
 		<div id = "footer">
-		FOOTER
+			FOOTER
 		</div>
-		
 </div>	
 	
 	
