@@ -16,7 +16,7 @@ import model.*;
 /**
  * Servlet implementation class Start
  */
-@WebServlet("/eFoods")
+@WebServlet("/eFoods/*")
 public class eFoods extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
