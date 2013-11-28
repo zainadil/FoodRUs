@@ -31,21 +31,15 @@ public class eFoods extends HttpServlet {
 
 	}
 
-
-
 	@Override
 	public void init() throws ServletException 
 	{
 		FoodRus fru = new FoodRus();
 		this.getServletContext().setAttribute("fru", fru);
-
 	}
-
-
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-	
 			FoodRus f = (FoodRus)this.getServletContext().getAttribute("fru");
 			
 			try 

@@ -10,8 +10,8 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/foodrus.css" type="text/css"
-	title="cse4413Front" media="screen, print" />
+	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/foodrus.css" type="text/css" title="cse4413Generic" media="screen, print" />
+	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/homepage.css" type="text/css" title="cse4413HomePage" media="screen, print" />
 </head>
 <body>
 
@@ -34,9 +34,14 @@
 		
 		
 		<div id="mainContent">
+		
+			<div id ="cereal"><h1>Cereal</h1></div>
+			<div class="cheese"><h1>Cheese</h1></div>
+			<div class="iceCream"><h1>Ice Cream</h1></div>
+			<div class="meat"><h1>Meat</h1></div>
+		
+		<!-- 
 		<label for="category" >CATEGORIES: </label><BR/>
-			 
-			 <!--  Add the categories in a table here -->
 			 
 			 	<c:if test="${not empty catBean}">
 					<c:forEach var="i" items="${catBean}">
@@ -47,8 +52,9 @@
 					<p> No results </p>
 					
 					</c:if>
-			</div>
-		
+			
+		 -->
+		 </div>
 		<div id = "footer">
 		FOOTER
 		</div>

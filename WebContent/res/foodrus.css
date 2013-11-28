@@ -49,9 +49,8 @@ html
 }
 #mainContent 
 {
-	float: left;
-	padding: 10px;
-	background: #9c9;
+	height: 500px;
+	width: 100%;
 }
 #footer 
 {
@@ -66,4 +65,29 @@ html
 * html #footer 
 {
 	height: 1px;
+}
+
+#cereal {
+    background-color: red;
+    float: left;
+    height: 50%;
+    width: 50%;
+}
+.cheese {
+    background-color: brown;
+    float: left;
+    height: 50%;
+    width: 50%;
+}
+.iceCream {
+    background-color: blue;
+    float: left;
+    height: 50%;
+    width: 50%;
+}
+.meat {
+    background-color: green;
+    float: left;
+    height: 50%;
+    width: 50%;
 }
