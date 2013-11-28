@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
-		xmlns:c="http://java.sun.com/jsp/jstl/core"
-		xmlns:f="http://java.sun.com/jsp/jstl/fmt">
-	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
-		pageEncoding="ISO-8859-1" session="false"/>
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>cartPage</title>
+<link rel="StyleSheet"
+	href="${pageContext.request.contextPath}/res/foodrus.css"
+	type="text/css" title="cse4413Generic" media="screen, print" />
+<link rel="StyleSheet"
+	href="${pageContext.request.contextPath}/res/homepage.css"
+	type="text/css" title="cse4413HomePage" media="screen, print" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/res/foodrus.js">
+	;
+</script>
 </head>
 <body>
 
-<form action="" method="POST">
-<div id ="wrap">
-		<div id = "header" align="center">
-			<input type="submit" id="cart" name="cart" value="cart"> </input>
-			<input type="submit" id="checkout" name="checkout" value="checkout"> </input>
-			FOODS R US
-			<input type="submit" id="login" name="login" value="login"> </input>
-		</div>
-	
-		<div id= "searchBar">
-			<label for="search" >SEARCH </label>
-			<input type="submit" id="search" name="logo" value="search" > </input><br/>
-		</div>
+	<form id="mainForm" action="" method="POST">
+		<div id="wrap">
+			<div id="header" align="center">
+				<div id="headerLogo">FOODS R US</div>
+				<a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a> <a
+					href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+				<a href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+			</div>
+
+			<div id="searchBar">
+				<div id="searchBox">
+					<label for="search">Search: </label> <input id="searchText"
+						name="searchText" value=""
+						placeholder="Search for an Item or a Category!"> </input> <a
+						href="${pageContext.request.contextPath}/eFoods/Search">Search</a>
+				</div>
+			</div>
 		
 		<div id="main">
 			Items in your shopping cart are: 

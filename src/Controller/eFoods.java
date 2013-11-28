@@ -40,7 +40,6 @@ public class eFoods extends HttpServlet {
 		{
 			FoodRus model = (FoodRus) this.getServletContext().getAttribute("fru");
 			RequestDispatcher rd;
-			
 			String pageURI = request.getRequestURI();
 			
 			if (pageURI.contains("Category")) {
@@ -48,8 +47,7 @@ public class eFoods extends HttpServlet {
 			} else if (pageURI.contains("Login")){
 				Login(pageURI,  model, request, response);
 			} else if (pageURI.contains("Cart")){
-				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
-				rd.forward(request, response);
+				cart(pageURI, model, request, response);
 			} else {
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
@@ -115,6 +113,12 @@ public class eFoods extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
+	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		RequestDispatcher rd;
+		rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
+		rd.forward(request, response);
+	}
+
 	private String getCategory(String uri){	
 		String rv = "";
 		if(uri.toUpperCase().contains("MEAT"))
