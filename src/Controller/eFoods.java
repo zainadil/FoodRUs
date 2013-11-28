@@ -40,23 +40,37 @@ public class eFoods extends HttpServlet {
 		{
 			FoodRus model = (FoodRus) this.getServletContext().getAttribute("fru");
 			RequestDispatcher rd;
+			HttpSession session = request.getSession();
 			String pageURI = request.getRequestURI();
-			
-			if (pageURI.contains("Category")) {
-				category(pageURI, model, request, response);
-			} else if (pageURI.contains("Login")){
-				Login(pageURI,  model, request, response);
+			request.setAttribute("loggedIn", session.getAttribute("loggedIn"));
+			if (pageURI.contains("Category")) 
+			{
+					List<CategoryBean> catBean = model.retrieveCategories();
+					request.setAttribute("catBean", catBean);
+					List<ItemBean> itemList = model.retrieveItems("Meat");
+					request.setAttribute("itemList", itemList);
+				    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+					rd.forward(request, response);
+			}
+			else if (pageURI.contains("Login")){
+				login(pageURI,  model, request, response);
+			} else if (pageURI.contains("Logout")){
+				logout(pageURI,  model, request, response);
 			} else if (pageURI.contains("Cart")){
-				cart(pageURI, model, request, response);
+				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
+				rd.forward(request, response);
 			} else {
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
 			} 
 		}
-		catch (Exception e){
-			System.out.println("Exception here");		
+		catch (Exception e)
+		{
+			
+			
 		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -66,11 +80,24 @@ public class eFoods extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
 	}
-	
-	private void Login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+
+	private void logout(String pageURI, FoodRus model,
+			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+
+		System.out.println("Logging Out...");
+		//implement logout functionality
+		if (request.getAttribute("loggedIn") != null)
+			session.removeAttribute("loggedIn");
+
+		response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
+	}
+	private void login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		RequestDispatcher rd;
-		if(request.getParameter("login") != null){
+		HttpSession session = request.getSession();
+		
+		if(request.getParameter("loginButton") != null){
 			//Login Button has been pressed.
 			System.out.println("Came in here");
 			boolean loggedIn;
@@ -81,8 +108,8 @@ public class eFoods extends HttpServlet {
 			if( model.checkCredentials(accountNumber, password)){
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
-				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
-				rd.forward(request, response);
+				session.setAttribute("loggedIn",  true);
+				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 			} else {
 				loggedIn=false;
 				request.setAttribute("loggedIn", loggedIn);
@@ -93,8 +120,8 @@ public class eFoods extends HttpServlet {
 			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 			rd.forward(request, response);
 		}
-	}	
-
+	}
+	
 	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		
 		HttpSession session = request.getSession();
@@ -132,5 +159,3 @@ public class eFoods extends HttpServlet {
 		return rv;
 	}	
 }
-
-
