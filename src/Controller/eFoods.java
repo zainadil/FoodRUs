@@ -90,13 +90,16 @@ public class eFoods extends HttpServlet {
 		RequestDispatcher rd;
 		HttpSession session = request.getSession();
 		ClientBean tmp;
+		
+		System.out.println("Came in here");
+		
 		if (request.getParameter("loginButton") != null) {
-			System.out.println("Came in here");
+
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
 			request.setAttribute("accountNumber", accountNumber);
 			String password = request.getParameter("password");
-
+			
 			if ((tmp = model.checkClient(accountNumber, password)) != null) {
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
@@ -158,8 +161,22 @@ public class eFoods extends HttpServlet {
 
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,
 			SQLException {
+		
 		HttpSession session = request.getSession();
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+		
+		if(request.getParameter("updateQuantity") != null){
+			String updatedIDandQty = request.getParameter("updatedIDandQty");
+			System.out.println(updatedIDandQty);
+			String[] splits = updatedIDandQty.split(";");
+			
+			String key = splits[0];
+			int quantity = Integer.parseInt(splits[1]);
+			if(quantity == 0)
+				basket.remove(key);
+			else basket.put(key, quantity);
+		}
+		
 		CartBean cartBean = model.generateShopppingCart(basket, (ClientBean) request.getSession().getAttribute("client"));
 		request.setAttribute("sCart", cartBean);
 		RequestDispatcher rd;
