@@ -64,8 +64,9 @@ public class eFoods extends HttpServlet {
 		}
 		catch (Exception e)
 		{
-			
-			
+			//Why we silence problem? No Good.
+			System.out.println("hello " +e);
+			e.printStackTrace();
 		}
 	}
 
@@ -94,7 +95,7 @@ public class eFoods extends HttpServlet {
 	{
 		RequestDispatcher rd;
 		HttpSession session = request.getSession();
-		
+		ClientBean tmp;
 		if(request.getParameter("loginButton") != null){
 			System.out.println("Came in here");
 			boolean loggedIn;
@@ -102,10 +103,11 @@ public class eFoods extends HttpServlet {
 			request.setAttribute("accountNumber", accountNumber);
 			String password = request.getParameter("password");
 				
-			if( model.checkCredentials(accountNumber, password)){
+			if( (tmp = model.checkClient(accountNumber, password)) != null){
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn",  true);
+				session.setAttribute("client", tmp);
 				response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
 				loggedIn=false;
@@ -135,7 +137,11 @@ public class eFoods extends HttpServlet {
 				if(cart.containsKey(itemID)){
 					cart.put(itemID, cart.get(itemID) + ItemQuantity);
 				} else cart.put(itemID, ItemQuantity);
-				
+//				if( request.getAttribute("loggedIn") != null)
+//				{
+//					model.generateShopppingCart(cart, (ClientBean) session.getAttribute("client"));
+//				}
+				session.setAttribute("cart", cart);
 				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods/Category/Meat");
 				
 			} else{

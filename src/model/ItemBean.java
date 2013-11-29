@@ -30,9 +30,7 @@ public class ItemBean {
 		setUnit(unit);
 	}
 	
-	@Override
 	public String toString() {
-		
 		return "ItemBean [number=" + number + ", name=" + name + ", price="
 				+ price + ", qty=" + qty + ", onOrder=" + onOrder
 				+ ", reOrder=" + reOrder + ", catId=" + catId + ", supId="

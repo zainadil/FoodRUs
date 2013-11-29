@@ -3,16 +3,22 @@ package model;
 public class ClientBean 
 {
 	public String rating;
-	public String password;
 	public String name;
 	public int number;
 	
-	public ClientBean(String rating, String password, String name, int number) 
+	public String toString() {
+		return "ClientBean [rating=" + rating + ", name=" + name + ", number="
+				+ number + "]";
+	}
+
+	public ClientBean(String rating,String name, int number) 
 	{
 		setRating(rating);
-		setPassword(password);
 		setName(name);
 		setNumber(number);
+	}
+
+	public ClientBean() {
 	}
 
 	public String getRating() {
@@ -21,14 +27,6 @@ public class ClientBean
 
 	public void setRating(String rating) {
 		this.rating = rating;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getName() {

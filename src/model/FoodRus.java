@@ -1,7 +1,11 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class FoodRus 
 {
@@ -27,15 +31,19 @@ public class FoodRus
 	public List<CategoryBean> retrieveCategories() throws SQLException 
 	{
 		return categoryData.retrieveCategories();
-		
 	}
 	
 
 //**********************************CLIENT TABLE METHODS ******************************************
-	public boolean checkCredentials(String accountNumber, String password) {
+	public ClientBean checkClient(String accountNumber, String password) {
+		ClientBean tmp = new ClientBean();
 		System.out.println("Tyring to check Credentials");
-		return clientData.checkCredentials(accountNumber, password);
-		
+		if (clientData.checkCredentials(accountNumber, password)){
+			tmp = clientData.getClientInfo(accountNumber);
+		} else {
+			tmp = null;
+		}
+		return tmp;
 	}
 	
 //**********************************ITEM TABLE METHODS *******************************************
@@ -48,7 +56,40 @@ public class FoodRus
 	{
 		return itemData.retrieveItem(number);
 	}
-	
-	
+	 
+			/*** Function for Shopping Cart 
+			 * @throws SQLException ***/
+	public CartBean generateShopppingCart(HashMap<String, Integer> cart, ClientBean client) throws SQLException 
+	{
+		double hst = 13; // this is wrong. change it.
+		CartBean tmp = new CartBean();
+		ItemBean item = new ItemBean();
+		List<ItemBean> listItem = new LinkedList<ItemBean>();
+		double total = 0;
+		if (cart == null) {
+			return null;
+		}
+		for(String key: cart.keySet()){
+			cart.get(key);
+			System.out.println("Key = "
+					+ key 
+					+ ", Value = "
+					+ cart.get(key));
+			item = itemData.retrieveItem(key);
+			item.toString();
+			item.setQty(cart.get(key));
+			total += (cart.get(key) * item.getPrice());
+			listItem.add(item);
+		}
+		
+		tmp.setCustomer(client);;
+		tmp.setItems(listItem);
+		tmp.setTotal(total);
+		tmp.setHST(hst);
+		tmp.setGrandTotal(total * hst);
+		System.out.println(tmp.toString());
+		return null;
+		
+	}
 	
 }//end business Logic

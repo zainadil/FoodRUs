@@ -72,7 +72,6 @@ private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=studen
 	}
 	public ItemBean retrieveItem(String number) throws SQLException{
 		ItemBean rv = new ItemBean();
-		System.out.println("what");
 		Connection conn = null;
 		Statement statement = null;
 		ResultSet set = null;
@@ -82,7 +81,6 @@ private String DB_URL = "jdbc:derby://roumani.eecs.yorku.ca:9999/CSE;user=studen
 			statement.executeUpdate("SET SCHEMA ROUMANI");
 			String s = "select * from item where item.number = '" + number + "'";			
 			set = statement.executeQuery(s);
-		
 			while(set.next())
 			{
 				rv = new ItemBean(set.getString("NUMBER"), 
