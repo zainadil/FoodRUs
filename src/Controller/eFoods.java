@@ -156,12 +156,13 @@ public class eFoods extends HttpServlet {
 				response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
 				loggedIn = false;
-				request.setAttribute("loggedInError", loggedIn);
+				request.setAttribute("loggedInError", true);
 				rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 				rd.forward(request, response);
 			}
 		} else {
-			session.setAttribute("returnTo", (String) request.getHeader("referer"));
+			if (request.getAttribute("returnTo") == null )
+				session.setAttribute("returnTo", (String) request.getHeader("referer"));
 			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 			rd.forward(request, response);
 		}
@@ -288,8 +289,9 @@ public class eFoods extends HttpServlet {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
 		if (session.getAttribute("client") == null) {
-			System.out.println("Please Log in before checking out");
-
+			request.setAttribute("signInRequired", true);
+			request.setAttribute("returnTo", (String) request.getHeader("referer"));
+			login(uri, model, request, response);
 		} else {
 			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
 					(ClientBean) session.getAttribute("client"));
@@ -301,7 +303,7 @@ public class eFoods extends HttpServlet {
 			// rd =
 			// getServletContext().getRequestDispatcher("/views/cartPage.jspx");
 			// rd.forward(request, response);
-
+			System.out.println("Redirect to Checkout.jspx");
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		}
 

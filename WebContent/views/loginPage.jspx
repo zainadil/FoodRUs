@@ -20,9 +20,14 @@
 
 	<form id="login" action="" method="POST">
 		
-			<c:if test="${loggedInError eq false}">
+			<c:if test="${loggedInError eq true}">
 				<center>
 					<span style="color: red" id="loggedInError">Invalid Username or Password</span>
+				</center>
+			</c:if>
+			<c:if test="${signInRequired eq true}">
+				<center>
+					<span style="color: blue" id="loggedInError">Please login to continue... </span>
 				</center>
 			</c:if>
 		
