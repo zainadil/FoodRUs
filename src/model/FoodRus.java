@@ -86,8 +86,6 @@ public class FoodRus
 		tmp.setHST(hst);
 		tmp.setGrandTotal(total * hst);
 		System.out.println(tmp.toString());
-		return null;
-		
+		return tmp;	
 	}
-	
 }//end business Logic

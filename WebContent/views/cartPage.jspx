@@ -47,16 +47,26 @@
 			</div>
 		
 		<div id="main">	
-		<c:if test="${not empty cartList}">
+		<c:if test="${not empty sCart}">
 			
 			<h1> Items in your shopping cart are: </h1>
 			
-			<c:forEach var="i" items="${cartList}"> 
+			<c:forEach var="i" items="${sCart.items}"> 
 			 	<ol>	
 			 		<li>Name: ${i.name}<br/> Item ID:${i.number}<br/> Price: ${i.price}</li> 
 				</ol>
 			</c:forEach>
+			<br/>
+				Sub-Total: ${sCart.total}
+			<br/>
+				HST: ${sCart.HST}
+			<br/>
+				Total: ${sCart.grandTotal}
 		</c:if>	
+		
+		<c:if test="${empty sCart}">
+			<h1>What the FUCKK</h1>
+		</c:if>
 	
 		<input type="submit" value="Continue Shopping"></input>
 		

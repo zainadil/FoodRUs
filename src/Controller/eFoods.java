@@ -152,7 +152,6 @@ public class eFoods extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else {
-			
 			List<CategoryBean> catBean = model.retrieveCategories();
 			request.setAttribute("catBean", catBean);
 			List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
@@ -168,11 +167,13 @@ public class eFoods extends HttpServlet {
 	}
 	
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		
-		if(request.getSession().getAttribute("loggenIn") != null){
+		System.out.println("Came inside cart");
+		if(request.getSession().getAttribute("loggedIn") != null){
 			HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
+			
 			CartBean cartBean = model.generateShopppingCart(cart,(ClientBean)request.getSession().getAttribute("client"));
-	
+			
+			request.setAttribute("sCart", cartBean);
 			RequestDispatcher rd;
 			rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
 			rd.forward(request, response);
