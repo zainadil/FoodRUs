@@ -142,10 +142,6 @@ public class eFoods extends HttpServlet {
 		System.out.println("Came in here");
 		
 		if (request.getParameter("loginButton") != null) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 42594ceee9c3928f5dad07147702a39b1bd45b82
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
 			request.setAttribute("accountNumber", accountNumber);
@@ -228,7 +224,6 @@ public class eFoods extends HttpServlet {
 		}
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Client has chosen to go to the Cart Page (Basket Page). Here the HashMap
 	 * from above is displayed, if null then it is shown as empty.
@@ -245,15 +240,8 @@ public class eFoods extends HttpServlet {
 	 * @throws Exception
 	 * 
 	 */
+
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
-
-		CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
-				(ClientBean) session.getAttribute("client"));
-
-=======
-	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,
-			SQLException {
 		
 		HttpSession session = request.getSession();
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
@@ -271,7 +259,6 @@ public class eFoods extends HttpServlet {
 		}
 		
 		CartBean cartBean = model.generateShopppingCart(basket, (ClientBean) request.getSession().getAttribute("client"));
->>>>>>> 42594ceee9c3928f5dad07147702a39b1bd45b82
 		request.setAttribute("sCart", cartBean);
 		RequestDispatcher rd;
 
