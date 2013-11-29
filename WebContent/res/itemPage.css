@@ -57,9 +57,9 @@ body{
 	top: 4%;
 	padding-left: 15px;
 	background-color: #FFFFFF;
-	width: 150px;
+	width: 170px;
 	float: left;
-	height:600px;
+	height:830px;
 	text-align: center;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
@@ -132,6 +132,7 @@ h5, h6 {
 	-webkit-border-radius:50px;
 	border-radius:50px;
 	cursor:pointer;
+	margin-right: 5px;
 	}
 	
 #main{
@@ -192,5 +193,14 @@ h5, h6 {
 	border-radius:50px;
 	cursor:pointer;
 	text-decoration: none;
-	}
+}
+
+#footer{
+	clear: both;
+	margin-top: 25px;
+	margin-left: 20px;
+	position: relative;	
+	width: 104%;
+	height: 45px;
+}
 	
