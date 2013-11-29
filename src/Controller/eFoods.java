@@ -3,6 +3,8 @@ package Controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,16 +45,9 @@ public class eFoods extends HttpServlet {
 			HttpSession session = request.getSession();
 			String pageURI = request.getRequestURI();
 			request.setAttribute("loggedIn", session.getAttribute("loggedIn"));
-			if (pageURI.contains("Category")) 
-			{
-					List<CategoryBean> catBean = model.retrieveCategories();
-					request.setAttribute("catBean", catBean);
-					List<ItemBean> itemList = model.retrieveItems("Meat");
-					request.setAttribute("itemList", itemList);
-				    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
-					rd.forward(request, response);
-			}
-			else if (pageURI.contains("Login")){
+			if (pageURI.contains("Category")) {
+				category(pageURI, model, request, response);
+			} else if (pageURI.contains("Login")){
 				login(pageURI,  model, request, response);
 			} else if (pageURI.contains("Logout")){
 				logout(pageURI,  model, request, response);
@@ -69,7 +64,6 @@ public class eFoods extends HttpServlet {
 			
 		}
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -130,19 +124,27 @@ public class eFoods extends HttpServlet {
 	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		
 		HttpSession session = request.getSession();
-		
 		RequestDispatcher rd;
-		List<CategoryBean> catBean = model.retrieveCategories();
-		request.setAttribute("catBean", catBean);
-		List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
-		request.setAttribute("itemList", itemList);
 		
-		//Check if userLogged in
-		if(session.getAttribute("loggedIn") != null)
-			request.setAttribute("loggedIn", true);
-		
-	    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
-		rd.forward(request, response);
+		if(uri.contains("Order")){
+			String itemID = getItemID(uri);
+			ItemBean item = null;
+			rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+			rd.forward(request, response);
+		} else {
+			
+			List<CategoryBean> catBean = model.retrieveCategories();
+			request.setAttribute("catBean", catBean);
+			List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
+			request.setAttribute("itemList", itemList);
+			
+			//Check if userLogged in
+			if(session.getAttribute("loggedIn") != null)
+				request.setAttribute("loggedIn", true);
+			
+		    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+			rd.forward(request, response);
+		}
 	}
 	
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
@@ -151,6 +153,12 @@ public class eFoods extends HttpServlet {
 		rd.forward(request, response);
 	}
 
+	private String getItemID(String uri){
+		Matcher matcher = Pattern.compile("(?<=Order/).*").matcher(uri);
+		matcher.find();
+		return matcher.group();
+	}
+	
 	private String getCategory(String uri){	
 		String rv = "";
 		if(uri.toUpperCase().contains("MEAT"))

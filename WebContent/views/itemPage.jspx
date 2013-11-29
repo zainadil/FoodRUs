@@ -39,38 +39,26 @@
 		
 		<div id = "main">
 			<div id = "leftNav">
-				 <c:if test="${not empty catBean}">
-						<c:forEach var="i" items="${catBean}">
-							<input type="submit" id="categories" name="category" value="${i.name}"> </input><br/>
-		            	</c:forEach>
-					</c:if>
-					    <c:if test="${empty catBean}">
-						<p> No results </p>
-					</c:if>
+				 <a href="${pageContext.request.contextPath}/eFoods/Category/cereal">Cereal</a><br/>
+				<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese">Cheese</a><br/>
+				<a href="${pageContext.request.contextPath}/eFoods/Category/iceCream">Ice Cream</a><br/>
+				<a href="${pageContext.request.contextPath}/eFoods/Category/Meat">Meat</a><br/>
 			</div>
 			
-				
 			<div id="mainContentItemPage">
 				<c:if test="${not empty itemList}">
 				
 					<c:forEach var="i" items="${itemList}">
 					 	<div id = "itemList">
-							<ul>
-								<!--MANDATORY-->
-								${i.name} 
-								<li>${i.number} </li>
-								<li>${i.price} </li>
-								 Quantity: <input type="number" name="quantity" min="1" max="${i.qty}"></input><br/>
-								<input type="submit" value="Add to Cart">
-								</input>
-							</ul>									
-							<!--FADED: OPTIONAL-->
+								Product: ${i.name} <br/> 
+								Price: ${i.price} <br/>
+								<a href = "${pageContext.request.contextPath}/eFoods/Category/Order/${i.number}"> Order</a> 
 						</div>
-					</c:forEach>		
+					</c:forEach>
 				</c:if>
 				
 				<c:if test="${empty itemList}">
-					List is empty
+					There's nothing in for this category
 				</c:if>
 			</div>
 		</div>
