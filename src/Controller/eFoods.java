@@ -129,7 +129,7 @@ public class eFoods extends HttpServlet {
 		if(uri.contains("Order")){
 			String itemID = getItemID(uri);
 			ItemBean item = null;
-			rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+			rd = getServletContext().getRequestDispatcher("/views/item.jspx");
 			rd.forward(request, response);
 		} else {
 			

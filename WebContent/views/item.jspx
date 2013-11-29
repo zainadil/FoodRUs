@@ -51,7 +51,7 @@
 				</c:if>
 				
 				<c:if test="${empty item}">
-					invalid item ID
+					I don't have anything to Show you :(
 				</c:if>
 			</div>
 		</div>
