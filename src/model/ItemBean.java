@@ -29,6 +29,15 @@ public class ItemBean {
 		setCostPrice(costPrice);
 		setUnit(unit);
 	}
+	
+	@Override
+	public String toString() {
+		
+		return "ItemBean [number=" + number + ", name=" + name + ", price="
+				+ price + ", qty=" + qty + ", onOrder=" + onOrder
+				+ ", reOrder=" + reOrder + ", catId=" + catId + ", supId="
+				+ supId + ", CostPrice=" + CostPrice + ", unit=" + unit + "]";
+	}
 
 	public String getNumber() {
 		return number;

@@ -53,7 +53,8 @@
 					href="${pageContext.request.contextPath}/eFoods/Category/Cheese">Cheese</a>
 				<a class="iceCream"
 					href="${pageContext.request.contextPath}/eFoods/Category/iceCream">Ice
-					Cream</a> <a class="meat"
+					Cream</a> 
+				<a class="meat"
 					href="${pageContext.request.contextPath}/eFoods/Category/Meat">Meat</a>
 			</div>
 
