@@ -296,15 +296,8 @@ public class eFoods extends HttpServlet {
 			String filename = "D:\\test.xml";
 
 			model.export(cartBean, filename);
-
-			// 
-			// rd =
-			// getServletContext().getRequestDispatcher("/views/cartPage.jspx");
-			// rd.forward(request, response);
-
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		}
-
 	}
 
 	private String getItemID(String uri) {

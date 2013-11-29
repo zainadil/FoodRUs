@@ -1,76 +1,91 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
- 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-		  xmlns:f="http://java.sun.com/jsp/jstl/fmt">
-	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
-		pageEncoding="ISO-8859-1" session="false"/>
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/foodrus.css" type="text/css"
-	title="cse4413Front" media="screen, print" />
+<link rel="StyleSheet"
+	href="${pageContext.request.contextPath}/res/itemPage.css"
+	type="text/css" title="cse4413Front" media="screen, print" />
 </head>
-<body>
+	<body>
+		<form action="" method="POST">
 
-<form action="" method="POST">
-<div id ="wrap">
-				<div id = "header" align="center">
-			<div id = "headerLogo">FOODS R US </div>
-				<a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a> <a
-					href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-        	<c:if test = "${loggedIn eq null}">
-				<a href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
-			</c:if>
-        	<c:if test = "${loggedIn eq true}">
-				<a href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
-			</c:if>
-		</div>
-	
-		<div id= "searchBar">
-			<div id= "searchBox">
-				<label for="search" >Search: </label>
-				<input id="searchText" name="searchText" value="" placeholder = "Search for an Item or a Category!" > </input>
-				<input type="submit" id="search" name="logo" value="search" > </input>
-			</div>
-		</div>
-		
-		<div id = "main">
-			<div id = "leftNav">
-				 <a href="${pageContext.request.contextPath}/eFoods/Category/cereal">Cereal</a><br/>
-				<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese">Cheese</a><br/>
-				<a href="${pageContext.request.contextPath}/eFoods/Category/iceCream">Ice Cream</a><br/>
-				<a href="${pageContext.request.contextPath}/eFoods/Category/Meat">Meat</a><br/>
-			</div>
-			
-			<div id="mainContentItemPage">
-				<c:if test="${not empty itemList}">
+			<div id="TopMenu">
 				
-					<c:forEach var="i" items="${itemList}">
-					 	<div id = "itemList">
-								Product: ${i.name} <br/> 
-								Price: ${i.price} <br/>
-								<a href = "${pageContext.request.contextPath}/eFoods/Category/Order/${i.number}"> Order</a> 
-						</div>
-					</c:forEach>
+				<div id="topLogo">
+					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+				</div>
+
+				<div id="TopMenuList">
+				<c:if test="${loggedIn eq null}">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+				</c:if>
+				<c:if test="${loggedIn eq true}">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
 				</c:if>
 				
-				<c:if test="${empty itemList}">
-					There's nothing in for this category
-				</c:if>
 			</div>
-		</div>
-		
-		<div id = "footer">
-			FOOTER
-		</div>
-</div>	
-	
-	
-	
-</form>
-</body>
-</html>
+			</div>
+			<div id = "main">
+				<div id="leftMenu">
+					<table id="leftMenuList">
+						<tr>
+							<td><a
+								href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
+										<strong>Cereal</strong>
+									</h4></a></td>
+						</tr>
+						<tr>
+							<td><a
+								href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
+										<strong>Cheese</strong>
+									</h4></a></td>
+						</tr>
+						<tr>
+							<td><a
+								href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
+										<strong>Ice Cream</strong>
+									</h4></a></td>
+						</tr>
+						<tr>
+							<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
+										<strong>Meat</strong>
+									</h4></a></td>
+						</tr>
+					</table>
+				</div>
+				<div id = "mainContent">
+					<c:if test="${not empty itemList}">
+						<c:forEach var="i" items="${itemList}">
+							 <div id = "items">
+									<div id = "itemDetails">
+										<div id = "itemName">
+											${i.name} <br/>
+										</div>
+									</div>
+									<div id = "itemPrice">	
+										<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
+									</div>
+									<div id = "itemButton">
+										<a id = "orderbuttons" href = "${pageContext.request.contextPath}/eFoods/Category/Order/${i.number}"> Order</a> 
+									</div>
+							</div>
+						</c:forEach>
+					</c:if>
+				</div>		
+					<c:if test="${empty itemList}">
+						There's nothing in for this category
+					</c:if>
+				</div>
+			</form>
+		</body>
+	</html>
 </jsp:root>

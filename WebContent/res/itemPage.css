@@ -1,0 +1,196 @@
+body{
+	position: relative;
+	width: 90%;
+	height: 90%;
+}
+
+#topLogo{
+	position: relative;
+	width: 0%;
+	height: 0%;
+	float: left;
+}
+
+#Logo{
+	height:40px;
+	width: 200px;	
+}
+
+#TopMenu {
+	margin-top: 25px;
+	margin-left: 20px;
+	position: relative;	
+	width: 104%;
+	height: 45px;
+	background-color: #FFFFFF;
+	border: 8px solid #EEEEEE;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 10px #4E707C;
+}
+
+#TopMenuList {
+	padding-top: 8px;
+	padding-bottom: 8px;	
+	padding-right: 5px;
+	float: right;
+}
+
+#TopMenuList tr {
+	padding-left: 10px;
+}
+
+#TopMenuList td {	
+	padding-top: 10px;
+	text-align: center;
+	height: 30px;
+}
+
+#TopMenu a:link {
+	text-decoration: none;
+	color: #000000;
+}
+
+#leftMenu {
+	margin-left: 20px;
+	margin-top:20px;
+	position: relative;
+	top: 4%;
+	padding-left: 15px;
+	background-color: #FFFFFF;
+	width: 150px;
+	float: left;
+	height:600px;
+	text-align: center;
+	border: 8px solid #EEEEEE;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 10px #4E707C;
+}
+
+#leftMenuList table {
+	padding: 10px;
+}
+
+#leftMenuList tr {
+	padding-left: 10px;
+}
+
+#leftMenuList td {
+	width: 130px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+#leftMenu a:link {
+	text-decoration: none;
+	color: #000000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-weight: normal;
+	margin: 0;
+	line-height: 1.1em;
+	color: #000;
+}
+h1 {
+	font-size: 2em;
+	margin-bottom: .5em;
+}
+h2 {
+	font-size: 1.75em;
+	margin-bottom: .5142em;
+	padding-top: .2em;
+}
+h3 {
+	font-size: 1.5em;
+	margin-bottom: .7em;
+	padding-top: .3em;
+}
+h4 {
+	font-size: 1.25em;
+	margin-bottom: .6em;
+}
+h5, h6 {
+	font-size: 1em;
+	margin-bottom: .5em;
+	font-weight: bold;
+}
+
+#buttons{
+	border:0;
+	padding:7px 15px;
+	height:30px;
+	line-height:25px;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	text-shadow:#007dab 0 1px 0;
+	background:#0092c8;
+	-moz-border-radius:50px;
+	-webkit-border-radius:50px;
+	border-radius:50px;
+	cursor:pointer;
+	}
+	
+#main{
+	width:110%;
+}
+	
+#mainContent{
+	margin-left:220px;
+}	
+	
+#items {
+	margin-left: 20px;
+	margin-top:20px;
+	margin-right: 12px;
+	position: relative;
+	top: 4%;
+	padding-left: 15px;
+	background-color: #FFFFFF;
+	width: 170px;
+	float: left;
+	height: 180px;
+	text-align: center;
+	border: 8px solid #EEEEEE;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 10px #4E707C;
+}
+
+#itemDetails{
+	height: 110px;
+}	
+
+#itemName{
+	width:155px;
+	padding-top:20px;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: Coronetscript, cursive;
+}
+
+#itemPrice{
+	height:40px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#orderbuttons{
+	border:0;
+	padding:7px 9px;
+	height:30px;
+	line-height:16px;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	text-shadow:#007dab 0 1px 0;
+	background:Green;
+	-moz-border-radius:50px;
+	-webkit-border-radius:50px;
+	border-radius:50px;
+	cursor:pointer;
+	text-decoration: none;
+	}
+	
