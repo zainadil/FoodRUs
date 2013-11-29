@@ -38,7 +38,7 @@
         	
         	<input type="submit" id="loginButton" name="loginButton" value="LOGIN"> </input><br/>
         	
-        	<c:if test = "${loggedIn eq false}" >
+        	<c:if test = "${loggedInError eq false}" >
         		<center>
         		<span style="color: red" id = "loggedInError">Unable to login, please check username or password</span>
         		</center>

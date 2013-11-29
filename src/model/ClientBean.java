@@ -19,6 +19,7 @@ public class ClientBean
 	}
 
 	public ClientBean() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getRating() {
