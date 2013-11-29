@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<order id="120" submitted="2011-11-29">
+
+	<customer account="10087">
+		<name>The K8 Company Group</name>
+	</customer>
+
+	<items>
+		<item number="0905A708">
+			<name>J0 Chicken Meat</name>
+			<price>5.02</price>
+			<quantity>100</quantity>
+			<extended>502.0</extended>
+		</item>
+		<item number="1409S381">
+			<name>Brownie Ice Cream with Praline by MG</name>
+			<price>7.39</price>
+			<quantity>120</quantity>
+			<extended>886.8</extended>
+		</item>
+	</items>
+
+	<total>1388.80</total>
+	<shipping>0</shipping>
+	<HST>180.54</HST>
+	<grandTotal>1569.34</grandTotal>
+
+</order>

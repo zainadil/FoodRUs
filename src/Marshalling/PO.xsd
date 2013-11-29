@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+			Schema for the client's P/O of CSE4413 project #1
+		</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="order" type="orderType" />
+	
+	<xsd:complexType name="orderType">
+		<xsd:sequence>
+			<xsd:element name="customer" type="customerType" />
+			<xsd:element name="items" type="itemsType" />
+			<xsd:element name="total" type="xsd:decimal"/>
+			<xsd:element name="shipping" type="xsd:decimal"/>
+			<xsd:element name="HST" type="xsd:decimal"/>
+			<xsd:element name="grandTotal" type="xsd:decimal"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" use="required" type="xsd:positiveInteger" />
+		<xsd:attribute name="submitted" type="xsd:date" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="customerType">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+                <xsd:attribute name="account">
+                        <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                <xsd:pattern value="\d{5}" />
+                                </xsd:restriction>
+                        </xsd:simpleType>
+                </xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="itemsType">
+		<xsd:sequence>
+			<xsd:element name="item" type="itemType" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="itemType">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="price" type="xsd:decimal" />
+			<xsd:element name="quantity" type="xsd:positiveInteger" />
+			<xsd:element name="extended" type="xsd:decimal" />	
+		</xsd:sequence>
+		<xsd:attribute name="number">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d{4}[A-Z|a-z]\d{3}" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+
+</xsd:schema>
+
