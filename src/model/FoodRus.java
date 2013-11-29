@@ -55,20 +55,20 @@ public class FoodRus {
 	 * 
 	 * @throws SQLException
 	 ***/
-	public CartBean generateShopppingCart(HashMap<String, Integer> cart, ClientBean client) throws SQLException {
+	public CartBean generateShopppingCart(HashMap<String, Integer> basket, ClientBean client) throws SQLException {
 		double hst = 13; // this is wrong. change it.
 		CartBean tmp = new CartBean();
 		ItemBean item = new ItemBean();
 		List<ItemBean> listItem = new LinkedList<ItemBean>();
 		double total = 0;
-		if (cart == null) {
+		if (basket == null) {
 			return null;
 		}
-		for (String key : cart.keySet()) {
-			cart.get(key);
+		for (String key : basket.keySet()) {
+			basket.get(key);
 			item = itemData.retrieveItem(key);
-			item.setQty(cart.get(key));
-			total += (cart.get(key) * item.getPrice());
+			item.setQty(basket.get(key));
+			total += (basket.get(key) * item.getPrice());
 			listItem.add(item);
 		}
 
