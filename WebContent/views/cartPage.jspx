@@ -53,24 +53,25 @@
 			
 			<c:forEach var="i" items="${sCart.items}"> 
 			 	<ol>	
-			 		<li>Name: ${i.name}<br/> Item ID:${i.number}<br/> Price: ${i.price}</li> 
+			 		<li>Name: ${i.name}<br/> Item ID: ${i.number} <br/>Quantity Ordered: ${i.qty} <br/> Price: ${i.price} </li> 
 				</ol>
 			</c:forEach>
 			<br/>
-				Sub-Total: ${sCart.total}
+				Sub-Total: $ ${sCart.total}
 			<br/>
-				HST: ${sCart.HST}
+				HST: ${sCart.HST} %
 			<br/>
-				Total: ${sCart.grandTotal}
+				Total: $ ${sCart.grandTotal}
 		</c:if>	
 		
 		<c:if test="${empty sCart}">
-			<h1>What the FUCKK</h1>
+			<h1>Cart is empty!</h1>
 		</c:if>
-	
+		<br/>
+		<br/>
 		<input type="submit" value="Continue Shopping"></input>
 		
-		<input type="submit" value="Checking"></input>
+		<input type="submit" value="Check Out"></input>
 	
 		</div>
 		

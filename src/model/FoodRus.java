@@ -5,60 +5,57 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FoodRus 
-{
+public class FoodRus {
 	CategoryDAO categoryData;
-	ClientDAO clientData; 
+	ClientDAO clientData;
 	ItemDAO itemData;
-	
-	public FoodRus() 
-	{
+
+	public FoodRus() {
 		try {
 			categoryData = new CategoryDAO();
 			clientData = new ClientDAO();
 			itemData = new ItemDAO();
-		} 
-		catch (ClassNotFoundException e) {
-			
-			System.out.println("Class not found Exception -- One of the DAO's wasn't created properly");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Class not found Exception -- One of the DAO's wasn't created properly: " + e);
 		}
-		
-		
+
 	}
- //*********************************CATEGORY TABLE METHODS***************************************
-	public List<CategoryBean> retrieveCategories() throws SQLException 
-	{
+
+	/*** CATEGORY TABLE METHODS **/
+	public List<CategoryBean> retrieveCategories() throws SQLException {
 		return categoryData.retrieveCategories();
 	}
-	
 
-//**********************************CLIENT TABLE METHODS ******************************************
-	public ClientBean checkClient(String accountNumber, String password) {
+	/**
+	 * CLIENT TABLE METHODS
+	 * 
+	 * @throws SQLException
+	 **/
+	public ClientBean checkClient(String accountNumber, String password) throws SQLException {
 		ClientBean tmp = new ClientBean();
-		System.out.println("Tyring to check Credentials");
-		if (clientData.checkCredentials(accountNumber, password)){
+		if (clientData.checkCredentials(accountNumber, password)) {
 			tmp = clientData.getClientInfo(accountNumber);
 		} else {
 			tmp = null;
 		}
 		return tmp;
 	}
-	
-//**********************************ITEM TABLE METHODS *******************************************
-	public List<ItemBean> retrieveItems(String category) throws SQLException
-	{
+
+	/** ITEM TABLE METHODS ***/
+	public List<ItemBean> retrieveItems(String category) throws SQLException {
 		return itemData.retrieveItems(category);
 	}
-	
-	public ItemBean retrieveItem(String number) throws SQLException
-	{
+
+	public ItemBean retrieveItem(String number) throws SQLException {
 		return itemData.retrieveItem(number);
 	}
-	 
-			/*** Function for Shopping Cart 
-			 * @throws SQLException ***/
-	public CartBean generateShopppingCart(HashMap<String, Integer> cart, ClientBean client) throws SQLException 
-	{
+
+	/***
+	 * Function for Shopping Cart
+	 * 
+	 * @throws SQLException
+	 ***/
+	public CartBean generateShopppingCart(HashMap<String, Integer> cart, ClientBean client) throws SQLException {
 		double hst = 13; // this is wrong. change it.
 		CartBean tmp = new CartBean();
 		ItemBean item = new ItemBean();
@@ -67,25 +64,19 @@ public class FoodRus
 		if (cart == null) {
 			return null;
 		}
-		for(String key: cart.keySet()){
+		for (String key : cart.keySet()) {
 			cart.get(key);
-			System.out.println("Key = "
-					+ key 
-					+ ", Value = "
-					+ cart.get(key));
 			item = itemData.retrieveItem(key);
-			item.toString();
 			item.setQty(cart.get(key));
 			total += (cart.get(key) * item.getPrice());
 			listItem.add(item);
 		}
-		
-		tmp.setCustomer(client);;
+
+		tmp.setCustomer(client);
 		tmp.setItems(listItem);
 		tmp.setTotal(total);
 		tmp.setHST(hst);
-		tmp.setGrandTotal(total * hst);
-		System.out.println(tmp.toString());
-		return tmp;	
+		tmp.setGrandTotal(total * ((hst/100) + 1));
+		return tmp;
 	}
-}//end business Logic
+}// end business Logic

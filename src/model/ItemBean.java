@@ -1,7 +1,7 @@
 package model;
 
 public class ItemBean {
-	
+
 	private String number;
 	private String name;
 	private double price;
@@ -12,12 +12,13 @@ public class ItemBean {
 	private int supId;
 	private double CostPrice;
 	private String unit;
-	
-	public ItemBean(){
-		
+
+	public ItemBean() {
+
 	}
-	
-	public ItemBean(String itemNumber, String name, double price, int quantity, int onOrder, int reOrder, int categoryID, int supplierID, double costPrice, String unit){
+
+	public ItemBean(String itemNumber, String name, double price, int quantity, int onOrder, int reOrder, int categoryID, int supplierID,
+			double costPrice, String unit) {
 		setNumber(itemNumber);
 		setName(name);
 		setPrice(price);
@@ -29,12 +30,10 @@ public class ItemBean {
 		setCostPrice(costPrice);
 		setUnit(unit);
 	}
-	
+
 	public String toString() {
-		return "ItemBean [number=" + number + ", name=" + name + ", price="
-				+ price + ", qty=" + qty + ", onOrder=" + onOrder
-				+ ", reOrder=" + reOrder + ", catId=" + catId + ", supId="
-				+ supId + ", CostPrice=" + CostPrice + ", unit=" + unit + "]";
+		return "ItemBean [number=" + number + ", name=" + name + ", price=" + price + ", qty=" + qty + ", onOrder=" + onOrder + ", reOrder="
+				+ reOrder + ", catId=" + catId + ", supId=" + supId + ", CostPrice=" + CostPrice + ", unit=" + unit + "]";
 	}
 
 	public String getNumber() {
@@ -116,5 +115,5 @@ public class ItemBean {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
+
 }

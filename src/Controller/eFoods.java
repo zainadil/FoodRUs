@@ -33,38 +33,38 @@ public class eFoods extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		
+
 		FoodRus fru = new FoodRus();
-		HashMap<String, Integer> cart = new HashMap<String, Integer>();
 		this.getServletContext().setAttribute("fru", fru);
-		this.getServletContext().setAttribute("cart", cart);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try
-		{
+		try {
 			FoodRus model = (FoodRus) this.getServletContext().getAttribute("fru");
 			RequestDispatcher rd;
 			HttpSession session = request.getSession();
 			String pageURI = request.getRequestURI();
 			request.setAttribute("loggedIn", session.getAttribute("loggedIn"));
+			if (session.getAttribute("basket") == null) {
+				HashMap<String, Integer> basket = new HashMap<String, Integer>();
+				session.setAttribute("basket", basket);
+			}
+
 			if (pageURI.contains("Category")) {
 				category(pageURI, model, request, response);
-			} else if (pageURI.contains("Login")){
-				login(pageURI,  model, request, response);
-			} else if (pageURI.contains("Logout")){
-				logout(pageURI,  model, request, response);
-			} else if (pageURI.contains("Cart")){
-				cart(pageURI,  model, request, response);
+			} else if (pageURI.contains("Login")) {
+				login(pageURI, model, request, response);
+			} else if (pageURI.contains("Logout")) {
+				logout(pageURI, model, request, response);
+			} else if (pageURI.contains("Cart")) {
+				cart(pageURI, model, request, response);
 			} else {
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
-			} 
-		}
-		catch (Exception e)
-		{
-			//Why we silence problem? No Good.
-			System.out.println("hello " +e);
+			}
+		} catch (Exception e) {
+			// Why we silence problem? No Good.
+			System.out.println("Error Caught: " + e);
 			e.printStackTrace();
 		}
 	}
@@ -73,43 +73,38 @@ public class eFoods extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
 	}
 
-	private void logout(String pageURI, FoodRus model,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void logout(String pageURI, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
 		System.out.println("Logging Out...");
-		//TO-DO implement logout functionality
-		// Logging out should clear all session activities? including cart?
-		if (request.getAttribute("loggedIn") != null)
-			session.removeAttribute("loggedIn");
-		//		response.sendRedirect(request.getHeader("referer")); //sendBack to Referer
+		if (request.getAttribute("loggedIn") != null) session.removeAttribute("loggedIn");
 		response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 	}
-	private void login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
+
+	private void login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,
+			SQLException {
 		RequestDispatcher rd;
 		HttpSession session = request.getSession();
 		ClientBean tmp;
-		if(request.getParameter("loginButton") != null){
+		if (request.getParameter("loginButton") != null) {
 			System.out.println("Came in here");
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
 			request.setAttribute("accountNumber", accountNumber);
 			String password = request.getParameter("password");
-				
-			if( (tmp = model.checkClient(accountNumber, password)) != null){
+
+			if ((tmp = model.checkClient(accountNumber, password)) != null) {
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
-				session.setAttribute("loggedIn",  true);
+				session.setAttribute("loggedIn", true);
 				session.setAttribute("client", tmp);
 				response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
-				loggedIn=false;
+				loggedIn = false;
 				request.setAttribute("loggedInError", loggedIn);
 				rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 				rd.forward(request, response);
@@ -120,34 +115,30 @@ public class eFoods extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
-	
-	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		
+
+	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,
+			SQLException {
+
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
-		
-		if(uri.contains("Order")){
-			if(request.getParameter("addToCart") != null){
-				
+
+		if (uri.contains("Order")) {
+
+			if (request.getParameter("addToBasket") != null) {
 				String itemID = request.getParameter("itemID");
 				int ItemQuantity = Integer.parseInt(request.getParameter("quantity"));
-				HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
-				
-				if(cart.containsKey(itemID)){
-					cart.put(itemID, cart.get(itemID) + ItemQuantity);
-				} else cart.put(itemID, ItemQuantity);
-//				if( request.getAttribute("loggedIn") != null)
-//				{
-//					model.generateShopppingCart(cart, (ClientBean) session.getAttribute("client"));
-//				}
-				session.setAttribute("cart", cart);
-				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods/Category/Meat");
-				
-			} else{
-				System.out.println("Doesn't contain order");
+				HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+				if (basket.containsKey(itemID)) {
+					System.out.println("2");
+					basket.put(itemID, basket.get(itemID) + ItemQuantity);
+				} else basket.put(itemID, ItemQuantity);
+				session.setAttribute("basket", basket);
+				response.sendRedirect((String) session.getAttribute("returnTo"));
+			} else {
+				session.setAttribute("returnTo", request.getHeader("referer"));
 				String itemID = getItemID(uri);
 				ItemBean item = model.retrieveItem(itemID);
-				request.setAttribute("item",item);
+				request.setAttribute("item", item);
 				rd = getServletContext().getRequestDispatcher("/views/item.jspx");
 				rd.forward(request, response);
 			}
@@ -156,46 +147,38 @@ public class eFoods extends HttpServlet {
 			request.setAttribute("catBean", catBean);
 			List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
 			request.setAttribute("itemList", itemList);
-			
-			//Check if userLogged in
-			if(session.getAttribute("loggedIn") != null)
-				request.setAttribute("loggedIn", true);
-			
-		    rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+
+			// Check if userLogged in
+			if (session.getAttribute("loggedIn") != null) request.setAttribute("loggedIn", true);
+
+			rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 			rd.forward(request, response);
 		}
 	}
-	
-	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		System.out.println("Came inside cart");
-		if(request.getSession().getAttribute("loggedIn") != null){
-			HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
-			
-			CartBean cartBean = model.generateShopppingCart(cart,(ClientBean)request.getSession().getAttribute("client"));
-			
-			request.setAttribute("sCart", cartBean);
-			RequestDispatcher rd;
-			rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
-			rd.forward(request, response);
-		} else login(uri, model, request, response);
+
+	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,
+			SQLException {
+		HttpSession session = request.getSession();
+		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+		CartBean cartBean = model.generateShopppingCart(basket, (ClientBean) request.getSession().getAttribute("client"));
+		request.setAttribute("sCart", cartBean);
+		RequestDispatcher rd;
+		rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
+		rd.forward(request, response);
 	}
-	
-	private String getItemID(String uri){
+
+	private String getItemID(String uri) {
 		Matcher matcher = Pattern.compile("(?<=Order/).*").matcher(uri);
 		matcher.find();
 		return matcher.group();
 	}
-	
-	private String getCategory(String uri){	
+
+	private String getCategory(String uri) {
 		String rv = "";
-		if(uri.toUpperCase().contains("MEAT"))
-			rv = "Meat";
-		else if(uri.toUpperCase().contains("CEREAL"))
-			rv = "Cereal";
-		else if(uri.toUpperCase().contains("ICECREAM"))
-			rv = "Ice Cream";
-		else if(uri.toUpperCase().contains("CHEESE"))
-			rv = "Cheese";
+		if (uri.toUpperCase().contains("MEAT")) rv = "Meat";
+		else if (uri.toUpperCase().contains("CEREAL")) rv = "Cereal";
+		else if (uri.toUpperCase().contains("ICECREAM")) rv = "Ice Cream";
+		else if (uri.toUpperCase().contains("CHEESE")) rv = "Cheese";
 		return rv;
-	}	
+	}
 }

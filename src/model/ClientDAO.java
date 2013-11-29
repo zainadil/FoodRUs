@@ -16,7 +16,7 @@ public class ClientDAO {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 	}
 
-	public boolean checkCredentials(String accountNumber, String password) {
+	public boolean checkCredentials(String accountNumber, String password) throws SQLException {
 		// by default result is false --> we dt want the client to be logged in
 		boolean result = false;
 		Connection conn = null;
@@ -27,24 +27,22 @@ public class ClientDAO {
 			conn = DriverManager.getConnection(DB_URL);
 			statement = conn.createStatement();
 			statement.executeUpdate("SET SCHEMA ROUMANI");
-			String q = "SELECT * from CLIENT WHERE NUMBER = " + accountNumber
-					+ " AND password = '" + password + "'";
-			System.out.println(q);
+			String q = "SELECT * from CLIENT WHERE NUMBER = " + accountNumber + " AND password = '" + password + "'";
 			set = statement.executeQuery(q);
 
-			if (set.next())
-				result = true;
-			else
-				result = false;
+			if (set.next()) result = true;
+			else result = false;
 		} catch (SQLException e) {
-			System.out
-					.println("problem in checkAccountNumber in clientDAO -- method: checkAccountNumber");
-			e.printStackTrace();
+			throw new SQLException("SQL Exception", e);
+		} finally {
+			if (set != null) set.close();
+			if (statement != null) statement.close();
+			if (conn != null) conn.close();
 		}
 		return result;
 	}
 
-	public ClientBean getClientInfo(String accountNumber) {
+	public ClientBean getClientInfo(String accountNumber) throws SQLException {
 		// by default result is false --> we dt want the client to be logged in
 		Connection conn = null;
 		Statement statement = null;
@@ -55,18 +53,18 @@ public class ClientDAO {
 			statement = conn.createStatement();
 			statement.executeUpdate("SET SCHEMA ROUMANI");
 			String q = "SELECT * from CLIENT WHERE NUMBER = " + accountNumber;
-			System.out.println(q);
 			set = statement.executeQuery(q);
 
 			if (set.next()) {
-				tmp = new ClientBean(set.getString("RATING"),
-						set.getString("NAME"), set.getInt("NUMBER"));
+				tmp = new ClientBean(set.getString("RATING"), set.getString("NAME"), set.getInt("NUMBER"));
 
 			}
 		} catch (SQLException e) {
-			System.out
-					.println("problem in checkAccountNumber in clientDAO -- method: checkAccountNumber");
-			e.printStackTrace();
+			throw new SQLException("SQL Exception", e);
+		} finally {
+			if (set != null) set.close();
+			if (statement != null) statement.close();
+			if (conn != null) conn.close();
 		}
 
 		return tmp;
