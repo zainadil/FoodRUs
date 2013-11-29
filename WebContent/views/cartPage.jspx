@@ -22,8 +22,6 @@
 </script>
 </head>
 <body>
-
-	<form id="mainForm" action="" method="POST">
 		<div id="wrap">
 			<div id="header" align="center">
 				<div id="headerLogo">FOODS R US</div>
@@ -50,12 +48,23 @@
 		<c:if test="${not empty sCart}">
 			
 			<h1> Items in your shopping cart are: </h1>
-			
-			<c:forEach var="i" items="${sCart.items}"> 
-			 	<ol>	
-			 		<li>Name: ${i.name}<br/> Item ID: ${i.number} <br/>Quantity Ordered: ${i.qty} <br/> Price: ${i.price} </li> 
+			<ol>
+			<form name="input" id = "input" action="" method="post">
+				<c:forEach var="i" items="${sCart.items}"> 
+			 		<li>
+							<label > Name: ${i.name} </label><br/>
+							<label > Item ID: ${i.number} </label><br/>
+							<label > Price: ${i.price} </label><br/>
+							<label > Quantity </label>
+							<input type="text" value="${i.qty}" id = "${i.number}"></input><br/>
+							<input type="submit" value="Update Quantity" id="updateQuantity" name="updateQuantity" onClick = "updateQuanity('${i.number}');"/>
+					</li>
+					<br/>
+			 		</c:forEach>
+			 		<input type="hidden" name = "updatedIDandQty" id="updatedIDandQty" value = ""/>
+			 		</form>
+						
 				</ol>
-			</c:forEach>
 			<br/>
 				Sub-Total: $ ${sCart.total}
 			<br/>
@@ -76,12 +85,7 @@
 		</div>
 		
 		<div id = "footer"> FOOTER </div>
-		
-	</div>	
-	
-</form>
-
-
+	</div>
 </body>
 </html>
 </jsp:root>
