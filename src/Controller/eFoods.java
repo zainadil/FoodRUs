@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,8 +34,11 @@ public class eFoods extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		
 		FoodRus fru = new FoodRus();
+		HashMap<String, Integer> cart = new HashMap<String, Integer>();
 		this.getServletContext().setAttribute("fru", fru);
+		this.getServletContext().setAttribute("cart", cart);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,12 +106,7 @@ public class eFoods extends HttpServlet {
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn",  true);
-
-//				System.out.println("Should I send you back to: " + session.getAttribute("returnTo"));
-//				System.out.println("Or should I send you back to: "+ request.getHeader("referer"));
-//				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 				response.sendRedirect((String) session.getAttribute("returnTo"));
-
 			} else {
 				loggedIn=false;
 				request.setAttribute("loggedIn", loggedIn);
@@ -127,10 +126,26 @@ public class eFoods extends HttpServlet {
 		RequestDispatcher rd;
 		
 		if(uri.contains("Order")){
-			String itemID = getItemID(uri);
-			ItemBean item = null;
-			rd = getServletContext().getRequestDispatcher("/views/item.jspx");
-			rd.forward(request, response);
+			if(request.getParameter("addToCart") != null){
+				
+				String itemID = request.getParameter("itemID");
+				int ItemQuantity = Integer.parseInt(request.getParameter("quantity"));
+				HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
+				
+				if(cart.containsKey(itemID)){
+					cart.put(itemID, cart.get(itemID) + ItemQuantity);
+				} else cart.put(itemID, ItemQuantity);
+				
+				response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods/Category/Meat");
+				
+			} else{
+				System.out.println("Doesn't contain order");
+				String itemID = getItemID(uri);
+				ItemBean item = model.retrieveItem(itemID);
+				request.setAttribute("item",item);
+				rd = getServletContext().getRequestDispatcher("/views/item.jspx");
+				rd.forward(request, response);
+			}
 		} else {
 			
 			List<CategoryBean> catBean = model.retrieveCategories();
@@ -152,7 +167,7 @@ public class eFoods extends HttpServlet {
 		rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
 		rd.forward(request, response);
 	}
-
+	
 	private String getItemID(String uri){
 		Matcher matcher = Pattern.compile("(?<=Order/).*").matcher(uri);
 		matcher.find();

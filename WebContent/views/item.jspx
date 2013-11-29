@@ -47,7 +47,13 @@
 			
 			<div id="mainContentItemPage">
 				<c:if test="${not empty item}">
-					${item.name} 
+					<form name="input" action="" method="post">
+						${item.name}<br/>
+						<label for="interest" accesskey="i">Quantity:</label>
+						<input type="text" id="quantity" name="quantity" value = "1"/>
+						<input type="hidden" value="${item.number}" name="itemID"></input>
+						<input type="submit" value="Add to Cart" id="addToCart" name="addToCart" />
+					</form>
 				</c:if>
 				
 				<c:if test="${empty item}">
@@ -55,6 +61,7 @@
 				</c:if>
 			</div>
 		</div>
+		
 		
 		<div id = "footer">
 			FOOTER

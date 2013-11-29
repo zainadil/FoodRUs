@@ -43,9 +43,9 @@ public class FoodRus
 	{
 		return itemData.retrieveItems(category);
 	}
+	
 	public ItemBean retrieveItem(String number) throws SQLException
 	{
-		System.out.println("in here");
 		return itemData.retrieveItem(number);
 	}
 	
