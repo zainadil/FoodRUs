@@ -169,12 +169,14 @@ public class eFoods extends HttpServlet {
 	
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		
-		HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
-		
-
-		RequestDispatcher rd;
-		rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
-		rd.forward(request, response);
+		if(request.getSession().getAttribute("loggenIn") != null){
+			HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
+			CartBean cartBean = model.generateShopppingCart(cart,(ClientBean)request.getSession().getAttribute("client"));
+	
+			RequestDispatcher rd;
+			rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
+			rd.forward(request, response);
+		} else login(uri, model, request, response);
 	}
 	
 	private String getItemID(String uri){
