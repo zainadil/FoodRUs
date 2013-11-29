@@ -46,23 +46,25 @@
 				</div>
 			</div>
 		
-		<div id="main">
-			Items in your shopping cart are: 
-		<!-- 	<c:if test="${not empty cartList}">
-				<c:forEach var="i" items="${cartList}"> -->
-				 	<ol>	
-				 		<li>Name:Chips <!--${i.name}--><br/> Product ID:12345 <!--${i.number}--><br/> Price: 20.00 <!--${i.price}-->  </li> 
-					</ol>
-		<!--		</c:forEach>
-			</c:if> -->	
-			<input type="submit" value="Continue Shopping"></input>
-			<input type="submit" value="Checking"></input>
+		<div id="main">	
+		<c:if test="${not empty cartList}">
+			
+			<h1> Items in your shopping cart are: </h1>
+			
+			<c:forEach var="i" items="${cartList}"> 
+			 	<ol>	
+			 		<li>Name: ${i.name}<br/> Item ID:${i.number}<br/> Price: ${i.price}</li> 
+				</ol>
+			</c:forEach>
+		</c:if>	
+	
+		<input type="submit" value="Continue Shopping"></input>
+		
+		<input type="submit" value="Checking"></input>
+	
 		</div>
 		
-		
-		<div id = "footer">
-		FOOTER
-		</div>
+		<div id = "footer"> FOOTER </div>
 		
 	</div>	
 	

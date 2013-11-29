@@ -29,7 +29,6 @@ public class eFoods extends HttpServlet {
 	 */
 	public eFoods() {
 		super();
-
 	}
 
 	@Override
@@ -169,6 +168,10 @@ public class eFoods extends HttpServlet {
 	}
 	
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		
+		HashMap<String, Integer> cart = (HashMap<String, Integer>) this.getServletContext().getAttribute("cart");
+		
+
 		RequestDispatcher rd;
 		rd = getServletContext().getRequestDispatcher("/views/cartPage.jspx");
 		rd.forward(request, response);
