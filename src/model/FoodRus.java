@@ -84,6 +84,7 @@ public class FoodRus {
 			basket.get(key);
 			item = itemData.retrieveItem(key);
 			item.setQty(basket.get(key));
+			item.setExtendedPrice(item.getQty()*item.getPrice());
 			total += (basket.get(key) * item.getPrice());
 			listItem.add(item);
 		}
@@ -97,7 +98,7 @@ public class FoodRus {
 	}
 
 	public boolean retrieveBlobs(String filename) throws SQLException, IOException{
-		return itemData.retrieveBlobs(filename);
+		return categoryData.retrieveBlobs(filename);
 	}
 	
 	public void export(CartBean cart, String filename) throws Exception {

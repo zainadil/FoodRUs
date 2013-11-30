@@ -12,6 +12,7 @@ public class ItemBean {
 	private int supId;
 	private double CostPrice;
 	private String unit;
+	private double extendedPrice;
 
 	public ItemBean() {
 
@@ -29,6 +30,14 @@ public class ItemBean {
 		setSupID(supplierID);
 		setCostPrice(costPrice);
 		setUnit(unit);
+	}
+
+	public double getExtendedPrice() {
+		return extendedPrice;
+	}
+
+	public void setExtendedPrice(double extendedPrice) {
+		this.extendedPrice = extendedPrice;
 	}
 
 	public String toString() {

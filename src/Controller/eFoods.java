@@ -37,7 +37,7 @@ public class eFoods extends HttpServlet {
 		try {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
-			fru.retrieveBlobs(this.getServletContext().getRealPath("\\png\\"));
+			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -299,6 +299,7 @@ public class eFoods extends HttpServlet {
 		if (session.getAttribute("client") == null) {
 			request.setAttribute("signInRequired", true);
 			request.setAttribute("returnTo", (String) request.getHeader("referer"));
+			session.setAttribute("returnTo",request.getAttribute("returnTo"));
 			login(uri, model, request, response);
 		} else {
 			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),

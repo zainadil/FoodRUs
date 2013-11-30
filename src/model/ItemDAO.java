@@ -75,33 +75,4 @@ public class ItemDAO {
 
 		return rv;
 	}
-
-	
-	public boolean retrieveBlobs(String filename) throws SQLException, IOException {
-		boolean rv = false;
-		Connection conn = null;
-		Statement statement = null;
-		ResultSet set = null;
-		try {
-			conn = DriverManager.getConnection(DB_URL);
-			statement = conn.createStatement();
-			statement.executeUpdate("SET SCHEMA ROUMANI");
-			String s = "select category.id, category.name, category.picture from category";
-			set = statement.executeQuery(s);
-			while (set.next()) {
-				InputStream image_stream = set.getBinaryStream("PICTURE");
-				BufferedImage image = ImageIO.read(image_stream);
-				ImageIO.write(image, "png", new File(filename+set.getString("NAME")+".png"));
-
-			}
-		} catch (SQLException e) {
-			throw new SQLException("SQL Exception", e);
-		} finally {
-			if (set != null) set.close();
-			if (statement != null) statement.close();
-			if (conn != null) conn.close();
-		}
-
-		return rv;
-	}
 }
