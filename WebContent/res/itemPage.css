@@ -165,7 +165,7 @@ h5, h6 {
 }
 
 #itemDetails{
-	height: 110px;
+	height: 80px;
 }	
 
 #itemName{
@@ -184,11 +184,11 @@ h5, h6 {
 
 #orderbuttons{
 	border:0;
-	padding:7px 9px;
-	height:30px;
-	line-height:16px;
+	padding:3px 7px;
+	height:26px;
+	line-height:13px;
 	text-align:center;
-	font-size:16px;
+	font-size:13px;
 	color:#fff;
 	text-shadow:#007dab 0 1px 0;
 	background:Green;
@@ -262,4 +262,7 @@ h5, h6 {
 	width: 104%;
 	height: 45px;
 }
-	
+
+.itemQty{
+	margin-bottom: 10px;
+}	

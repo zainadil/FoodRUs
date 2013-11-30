@@ -14,12 +14,10 @@
 <link rel="StyleSheet"
 	href="${pageContext.request.contextPath}/res/itemPage.css"
 	type="text/css" title="cse4413Front" media="screen, print" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
 	<body>
-		<form action="" method="POST">
-
-			<div id="TopMenu">
-				
+		<div id="TopMenu">
 				<div id="topLogo">
 					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
 				</div>
@@ -66,21 +64,25 @@
 				</div>
 				<div id = "mainContent">
 					<c:if test="${not empty itemList}">
-						<c:forEach var="i" items="${itemList}">
-							 <div id = "items">
-									<div id = "itemDetails">
-										<div id = "itemName">
-											${i.name} <br/>
+						<form id = "input" action="" method="POST">
+							<c:forEach var="i" items="${itemList}">
+								 <div id = "items">
+										<div id = "itemDetails">
+											<div id = "itemName">
+												${i.name} <br/>
+											</div>
 										</div>
-									</div>
-									<div id = "itemPrice">	
-										<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
-									</div>
-									<div id = "itemButton">
-										<a id = "orderbuttons" href = "${pageContext.request.contextPath}/eFoods/Category/Order/${i.number}"> Order</a> 
-									</div>
-							</div>
-						</c:forEach>
+										<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+										<div id = "itemPrice">	
+											<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
+										</div>
+										<div id = "itemButton">
+											<input type="submit" id = "orderbuttons" value="Order" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
+										</div>
+								</div>
+							</c:forEach>
+							<input type="hidden" name = "addedIDandQty" id="addedIDandQty"/>
+						</form>
 					</c:if>
 				</div>		
 					<c:if test="${empty itemList}">
@@ -91,7 +93,6 @@
 				<div id = "footer">		
 					
 				</div>				
-			</form>
 		</body>
 	</html>
 </jsp:root>

@@ -190,41 +190,28 @@ public class eFoods extends HttpServlet {
 	private void category(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
+		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
 		RequestDispatcher rd;
 
-		if (uri.contains("Order")) {
-
-			if (request.getParameter("addToBasket") != null) {
-				String itemID = request.getParameter("itemID");
-				int ItemQuantity = Integer.parseInt(request.getParameter("quantity"));
-				if (session.getAttribute("basket") == null) throw new Exception();
-				HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
-				if (basket.containsKey(itemID)) {
-					basket.put(itemID, basket.get(itemID) + ItemQuantity);
-				} else basket.put(itemID, ItemQuantity);
-				session.setAttribute("basket", basket);
-
-				if (session.getAttribute("returnTo") == null) response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
-				response.sendRedirect((String) session.getAttribute("returnTo"));
-
-			} else {
-				session.setAttribute("returnTo", request.getHeader("referer"));
-				String itemID = getItemID(uri);
-				ItemBean item = model.retrieveItem(itemID);
-				request.setAttribute("item", item);
-				rd = getServletContext().getRequestDispatcher("/views/item.jspx");
-				rd.forward(request, response);
+		if(request.getParameter("addedIDandQty") != null){
+				String updatedIDandQty = request.getParameter("addedIDandQty");
+				System.out.println(updatedIDandQty);
+				String[] splits = updatedIDandQty.split(";");
+				
+				String key = splits[0];
+				int quantity = Integer.parseInt(splits[1]);
+				if(quantity == 0)
+					basket.remove(key);
+				else basket.put(key, quantity);
 			}
-		} else {
-			// Do we need this?
+	
 			List<CategoryBean> catBean = model.retrieveCategories();
 			request.setAttribute("catBean", catBean);
 			List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
 			request.setAttribute("itemList", itemList);
-
+	
 			rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 			rd.forward(request, response);
-		}
 	}
 
 	/**
@@ -308,7 +295,6 @@ public class eFoods extends HttpServlet {
 			System.out.println("Redirect to Checkout.jspx");
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		}
-
 	}
 
 	private String getItemID(String uri) {
