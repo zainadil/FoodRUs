@@ -33,9 +33,15 @@ public class eFoods extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		
+		try {
+			FoodRus fru = new FoodRus();
+			this.getServletContext().setAttribute("fru", fru);
+			fru.retrieveBlobs(this.getServletContext().getRealPath("\\png\\"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 
-		FoodRus fru = new FoodRus();
-		this.getServletContext().setAttribute("fru", fru);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -298,6 +304,10 @@ public class eFoods extends HttpServlet {
 			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
 					(ClientBean) session.getAttribute("client"));
 			String filename = "D:\\test.xml";
+			
+			//filename should be something similar to this:
+			//String filename = "/export/"+cartBean.getCustomer().getNumber()+".xml";
+			//String filepath = this.getServletContext().getRealPath(filename);
 
 			model.export(cartBean, filename);
 

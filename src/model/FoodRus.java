@@ -1,6 +1,7 @@
 package model;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -33,15 +34,10 @@ public class FoodRus {
 	ClientDAO clientData;
 	ItemDAO itemData;
 
-	public FoodRus() {
-		try {
+	public FoodRus() throws Exception {
 			categoryData = new CategoryDAO();
 			clientData = new ClientDAO();
 			itemData = new ItemDAO();
-		} catch (ClassNotFoundException e) {
-			System.out.println("Class not found Exception -- One of the DAO's wasn't created properly: " + e);
-		}
-
 	}
 
 	/*** CATEGORY TABLE METHODS **/
@@ -100,6 +96,10 @@ public class FoodRus {
 		return tmp;
 	}
 
+	public boolean retrieveBlobs(String filename) throws SQLException, IOException{
+		return itemData.retrieveBlobs(filename);
+	}
+	
 	public void export(CartBean cart, String filename) throws Exception {
 		int x = 120;
 		Date now = new Date();

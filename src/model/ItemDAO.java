@@ -1,12 +1,10 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import javax.imageio.ImageIO;
 
 public class ItemDAO {
 
@@ -78,4 +76,32 @@ public class ItemDAO {
 		return rv;
 	}
 
+	
+	public boolean retrieveBlobs(String filename) throws SQLException, IOException {
+		boolean rv = false;
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet set = null;
+		try {
+			conn = DriverManager.getConnection(DB_URL);
+			statement = conn.createStatement();
+			statement.executeUpdate("SET SCHEMA ROUMANI");
+			String s = "select category.id, category.name, category.picture from category";
+			set = statement.executeQuery(s);
+			while (set.next()) {
+				InputStream image_stream = set.getBinaryStream("PICTURE");
+				BufferedImage image = ImageIO.read(image_stream);
+				ImageIO.write(image, "png", new File(filename+set.getString("NAME")+".png"));
+
+			}
+		} catch (SQLException e) {
+			throw new SQLException("SQL Exception", e);
+		} finally {
+			if (set != null) set.close();
+			if (statement != null) statement.close();
+			if (conn != null) conn.close();
+		}
+
+		return rv;
+	}
 }
