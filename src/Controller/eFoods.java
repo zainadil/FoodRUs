@@ -163,6 +163,8 @@ public class eFoods extends HttpServlet {
 		} else {
 			if (request.getAttribute("returnTo") == null )
 				session.setAttribute("returnTo", (String) request.getHeader("referer"));
+			else
+				session.setAttribute("returnTo", request.getAttribute("returnTo"));
 			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 			rd.forward(request, response);
 		}
