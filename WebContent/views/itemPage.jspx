@@ -17,88 +17,76 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
 	<body>
-<<<<<<< HEAD
 		<div id="TopMenu">
 				<div id="topLogo">
 					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
 				</div>
 				
+		<div id="TopMenuList">
 				<div id="TopMenuList">
-=======
-		<form action="" method="POST">
-
-			<div id="TopMenu">
-
-			<div id="topLogo">
-				<a href="${pageContext.request.contextPath}/eFoods/">
-				 <img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
-				</a>
-			</div>
-
-			<div id="TopMenuList">
->>>>>>> 527b8ad293555609d5fe7115fd9c57ffd6ab0d3a
-				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
-				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-				<c:if test="${loggedIn eq null}">
-					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
-				</c:if>
-				<c:if test="${loggedIn eq true}">
-					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
-				</c:if>
-				
-			</div>
-			</div>
-			<div id = "main" >
-				<div id="leftMenu">
-					<table id="leftMenuList">
-						<tr>
-							<td><a
-								href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
-										<strong>Cereal</strong>
-									</h4></a></td>
-						</tr>
-						<tr>
-							<td><a
-								href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
-										<strong>Cheese</strong>
-									</h4></a></td>
-						</tr>
-						<tr>
-							<td><a
-								href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
-										<strong>Ice Cream</strong>
-									</h4></a></td>
-						</tr>
-						<tr>
-							<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
-										<strong>Meat</strong>
-									</h4></a></td>
-						</tr>
-					</table>
-				</div>
-				<div id = "mainContent">
-					<c:if test="${not empty itemList}">
-						<form id = "input" action="" method="POST">
-							<c:forEach var="i" items="${itemList}">
-								 <div id = "items">
-										<div id = "itemDetails">
-											<div id = "itemName">
-												${i.name} <br/>
-											</div>
-										</div>
-										<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
-										<div id = "itemPrice">	
-											<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
-										</div>
-										<div id = "itemButton">
-											<input type="submit" id = "orderbuttons" value="Order" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
-										</div>
-								</div>
-							</c:forEach>
-							<input type="hidden" name = "addedIDandQty" id="addedIDandQty"/>
-						</form>
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+					<c:if test="${loggedIn eq null}">
+						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
 					</c:if>
-				</div>		
+					<c:if test="${loggedIn eq true}">
+						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+					</c:if>
+					
+				</div>
+		</div>	
+	</div>
+			<div id = "main" >
+					<div id="leftMenu">
+						<table id="leftMenuList">
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
+											<strong>Cereal</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
+											<strong>Cheese</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
+											<strong>Ice Cream</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
+											<strong>Meat</strong>
+										</h4></a></td>
+							</tr>
+						</table>
+					</div>
+					<div id = "mainContent">
+						<c:if test="${not empty itemList}">
+							<form id = "input" action="" method="POST">
+								<c:forEach var="i" items="${itemList}">
+									 <div id = "items">
+											<div id = "itemDetails">
+												<div id = "itemName">
+													${i.name} <br/>
+												</div>
+											</div>
+											<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+											<div id = "itemPrice">	
+												<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
+											</div>
+											<div id = "itemButton">
+												<input type="submit" id = "orderbuttons" value="Order" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
+											</div>
+									</div>
+								</c:forEach>
+								<input type="hidden" name = "addedIDandQty" id="addedIDandQty"/>
+							</form>
+						</c:if>
+					</div>		
 					<c:if test="${empty itemList}">
 						There's nothing in for this category
 					</c:if>
@@ -106,7 +94,7 @@
 				
 				<div id = "footer">		
 					
-				</div>				
+				</div>			
 		</body>
 	</html>
 </jsp:root>
