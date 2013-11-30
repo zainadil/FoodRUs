@@ -23,7 +23,9 @@
 			<div id="TopMenu">
 				
 				<div id="topLogo">
-					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+					<a href="${pageContext.request.contextPath}/eFoods/">
+						<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+					</a>
 				</div>
 				
 				<div id="TopMenuList">
@@ -79,6 +81,7 @@
 								 	<b>Item ID: </b> ${fn:toUpperCase(i.number)} <br/>
 									<b>Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
 									<b>Quantity </b> <input type="text" style = "width:10px" value="${i.qty}" id = "${i.number}"></input><br/>
+									<b>Extended Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.extendedPrice}"/><br/>
 									<input type="submit" id = "updateButtons" value="Update Quantity" name="updateQuantity" onClick = "updateQuanity('${i.number}');"/>
 								</div>
 						</div>		
