@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
+		pageEncoding="ISO-8859-1" session="false"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="TopMenu">
+
+		<div id="topLogo">
+			<a href="${pageContext.request.contextPath}/eFoods/">
+			 <img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+			</a>
+		</div>
+
+		<div id="TopMenuList">
+			<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
+			<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+			<c:if test="${loggedIn eq null}">
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+			</c:if>
+			<c:if test="${loggedIn eq true}">
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+			</c:if>
+			
+		</div>
+	</div>
+	
+	<div id = "main" >
+		<c:if test="${checkoutError eq true}">
+			Your order has not been processed ! Please check again later 
+		</c:if>
+		
+		<c:if test="${checkoutError eq false}">
+			Your order is being processed !<br/>
+			Please check your P/O at the following link : <a href = "${pageContext.request.contextPath}${filename}">${pageContext.request.contextPath}${filename}</a>
+		</c:if>
+	</div>
+	
+	<div id="footer">FOOTER</div>
+</body>
+</html>
+</jsp:root>
