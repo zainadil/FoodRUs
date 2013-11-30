@@ -153,7 +153,7 @@ public class eFoods extends HttpServlet {
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("client", tmp);
 				if (session.getAttribute("returnTo") == null) response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
-				response.sendRedirect((String) session.getAttribute("returnTo"));
+				else response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
 				loggedIn = false;
 				request.setAttribute("loggedInError", true);
