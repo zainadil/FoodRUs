@@ -19,12 +19,14 @@
 		<form action="" method="POST">
 
 			<div id="TopMenu">
-				
-				<div id="topLogo">
-					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
-				</div>
-				
-				<div id="TopMenuList">
+
+			<div id="topLogo">
+				<a href="${pageContext.request.contextPath}/eFoods/">
+				 <img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+				</a>
+			</div>
+
+			<div id="TopMenuList">
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
 				<c:if test="${loggedIn eq null}">
