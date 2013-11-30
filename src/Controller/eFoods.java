@@ -38,6 +38,7 @@ public class eFoods extends HttpServlet {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
 			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
+//			fru.checkPO
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -150,7 +151,6 @@ public class eFoods extends HttpServlet {
 		if (request.getParameter("loginButton") != null) {
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
-			request.setAttribute("accountNumber", accountNumber);
 			String password = request.getParameter("password");
 			
 			if ((tmp = model.checkClient(accountNumber, password)) != null) {
@@ -158,6 +158,7 @@ public class eFoods extends HttpServlet {
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("client", tmp);
+				session.setAttribute("accountNumber", accountNumber.toString());
 				if (session.getAttribute("returnTo") == null) response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 				else response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
@@ -304,20 +305,24 @@ public class eFoods extends HttpServlet {
 		} else {
 			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
 					(ClientBean) session.getAttribute("client"));
-			String filename = "D:\\test.xml";
 			
-			//filename should be something similar to this:
-			//String filename = "/export/"+cartBean.getCustomer().getNumber()+".xml";
-			//String filepath = this.getServletContext().getRealPath(filename);
+//			//check if file has been created -- dt know how to do that since we are using a filewriter... 
+//			//but it it hasnt been created add: (will display that the order wasn't processed)
+//			//if() request.setAttribute("checkoutError", "true");
+//			//else
+//			
+			String number = Integer.toString(cartBean.customer.getNumber());
+			String filename = "/POs/po"+ session.getAttribute("accountNumber") + "_" +".xml"; 
+			String filePath = this.getServletContext().getRealPath(filename);
+			System.out.println("filePath : "+ filePath);
+			System.out.println("filename : "+ filename);
+			request.setAttribute("filename", filename);
+			
+			model.export(cartBean, filePath);
+			request.setAttribute("checkoutError", "false");
 
-			model.export(cartBean, filename);
-
-			// 
-			// rd =
-			// getServletContext().getRequestDispatcher("/views/cartPage.jspx");
-			// rd.forward(request, response);
-			System.out.println("Redirect to Checkout.jspx");
-			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
+			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
+			rd.forward(request, response);
 		}
 
 	}
