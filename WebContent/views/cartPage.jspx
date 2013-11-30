@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:f="http://java.sun.com/jsp/jstl/fmt">
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
 		pageEncoding="ISO-8859-1" session="false" />
@@ -11,81 +13,92 @@
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="StyleSheet"
-	href="${pageContext.request.contextPath}/res/foodrus.css"
-	type="text/css" title="cse4413Generic" media="screen, print" />
-<link rel="StyleSheet"
-	href="${pageContext.request.contextPath}/res/homepage.css"
-	type="text/css" title="cse4413HomePage" media="screen, print" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/foodrus.js">
-	;
-</script>
+	href="${pageContext.request.contextPath}/res/itemPage.css"
+	type="text/css" title="cse4413Front" media="screen, print" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
-<body>
-		<div id="wrap">
-			<div id="header" align="center">
-				<div id="headerLogo">FOODS R US</div>
-				<a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a> <a
-					href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-        	<c:if test = "${loggedIn eq null}">
-				<a href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
-			</c:if>
-        	<c:if test = "${loggedIn eq true}">
-				<a href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
-			</c:if>
-			</div>
+	<body>
+		<form action="" method="POST">
 
-			<div id="searchBar">
-				<div id="searchBox">
-					<label for="search">Search: </label> <input id="searchText"
-						name="searchText" value=""
-						placeholder="Search for an Item or a Category!"> </input> <a
-						href="${pageContext.request.contextPath}/eFoods/Search">Search</a>
+			<div id="TopMenu">
+				
+				<div id="topLogo">
+					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+				</div>
+				
+				<div id="TopMenuList">
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+				<c:if test="${loggedIn eq null}">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+				</c:if>
+				<c:if test="${loggedIn eq true}">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+				</c:if>
+				
+			</div>
+			</div>
+			<div id = "main">
+				<div id="leftMenu">
+					<table id="leftMenuList">
+						<tr>
+							<td><a
+								href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
+										<strong>Cereal</strong>
+									</h4></a></td>
+						</tr>
+						<tr>
+							<td><a
+								href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
+										<strong>Cheese</strong>
+									</h4></a></td>
+						</tr>
+						<tr>
+							<td><a
+								href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
+										<strong>Ice Cream</strong>
+									</h4></a></td>
+						</tr>
+						<tr>
+							<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
+										<strong>Meat</strong>
+									</h4></a></td>
+						</tr>
+					</table>
 				</div>
 			</div>
-		
-		<div id="main">	
-		<c:if test="${not empty sCart}">
 			
-			<h1> Items in your shopping cart are: </h1>
-			<ol>
-			<form name="input" id = "input" action="" method="post">
-				<c:forEach var="i" items="${sCart.items}"> 
-			 		<li>
-							<label > Name: ${i.name} </label><br/>
-							<label > Item ID: ${i.number} </label><br/>
-							<label > Price: ${i.price} </label><br/>
-							<label > Quantity </label>
-							<input type="text" value="${i.qty}" id = "${i.number}"></input><br/>
-							<input type="submit" value="Update Quantity" id="updateQuantity" name="updateQuantity" onClick = "updateQuanity('${i.number}');"/>
-					</li>
-					<br/>
-			 		</c:forEach>
-			 		<input type="hidden" name = "updatedIDandQty" id="updatedIDandQty" value = ""/>
-			 		</form>
-						
-				</ol>
-			<br/>
-				Sub-Total: $ ${sCart.total}
-			<br/>
-				HST: ${sCart.HST} %
-			<br/>
-				Total: $ ${sCart.grandTotal}
-		</c:if>	
+	<div id="main">		
+		<div id = "mainContent">
+			<c:if test="${not empty sCart}">			
+				<form name="input" id = "input" action="" method="post">
+					<c:forEach var="i" items="${sCart.items}"> 
+				 		<div id = "cartItems">
+								<div id = "cartItemName"> ${i.name} </div>
+								<div id = "cartItemDetails">
+								 	<b>Item ID: </b> ${fn:toUpperCase(i.number)} <br/>
+									<b>Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
+									<b>Quantity </b> <input type="text" style = "width:10px" value="${i.qty}" id = "${i.number}"></input><br/>
+									<input type="submit" id = "updateButtons" value="Update Quantity" name="updateQuantity" onClick = "updateQuanity('${i.number}');"/>
+								</div>
+						</div>		
+				 	</c:forEach>
+				 	<input type="hidden" name = "updatedIDandQty" id="updatedIDandQty" value = ""/>
+				</form>
+			</c:if>	
 		
 		<c:if test="${empty sCart}">
-			<h1>Cart is empty!</h1>
+			<h1>Cart is Empty</h1>
 		</c:if>
-		<br/>
-		<br/>
-		<input type="submit" value="Continue Shopping"></input>
-		
-		<input type="submit" value="Check Out"></input>
-	
 		</div>
 		
-		<div id = "footer"> FOOTER </div>
+		<div id = "cartTotals">
+		
+		</div>
+		
 	</div>
-</body>
-</html>
+		<div id = "footer">		</div>				
+			</form>
+		</body>
+	</html>
 </jsp:root>
