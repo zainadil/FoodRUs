@@ -41,7 +41,7 @@
 		</c:if>
 		
 		<c:if test="${checkoutError eq false}">
-			Your order is being processed !<br/>
+			<h>Your order is being processed !</h><br/>
 			Please check your P/O at the following link : <a href = "${pageContext.request.contextPath}${filename}">${pageContext.request.contextPath}${filename}</a>
 		</c:if>
 	</div>
