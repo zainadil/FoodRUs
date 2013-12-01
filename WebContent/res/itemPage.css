@@ -177,7 +177,7 @@ h5, h6 {
 }
 
 #itemPrice{
-	height:40px;
+	height:25px;
 	font-weight: bold;
 	font-size: 20px;
 }
@@ -279,4 +279,27 @@ h5, h6 {
 	text-align: center;
 	font-size: 15px;	
 	color: blue;
+}
+
+#quantity{
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 3px;
+    margin: 0 20px 6px 6px;
+    padding: 4px;
+    position: relative;
+    margin-right:20px;
+    height:22px;
+    width:110px;
+}
+
+#qLabel{
+	font-weight:bold;
+	float:left;
+	text-align: left;
+	margin-left:5px;
+}
+
+#qTextBox{
+	margin-right:5px;
+	float:right;
 }

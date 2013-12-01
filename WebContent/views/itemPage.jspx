@@ -86,7 +86,16 @@
 													${i.name} <br/>
 												</div>
 											</div>
-											<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+											<center>
+											<div id = "quantity">
+												<div id="qLabel">
+													Quanity:
+												</div>
+												<div id="qTextBox">
+													<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+												</div>
+											</div>
+											</center>
 											<div id = "itemPrice">	
 												<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
 											</div>
