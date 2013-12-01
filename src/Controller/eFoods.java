@@ -1,9 +1,16 @@
 package Controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +44,10 @@ public class eFoods extends HttpServlet {
 		try {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
-			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
+//			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
+			String PoNumberFileName = "/POs/numberOfPosPerClient.txt";
+			this.getServletContext().setAttribute("PoNumberFileName", this.getServletContext().getRealPath(PoNumberFileName));
+			checkPoFileExists(PoNumberFileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -142,6 +152,7 @@ public class eFoods extends HttpServlet {
 			SQLException {
 		RequestDispatcher rd;
 		HttpSession session = request.getSession();
+		
 		ClientBean tmp;
 		
 		System.out.println("Came in here");
@@ -290,20 +301,28 @@ public class eFoods extends HttpServlet {
 		} else {
 			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
 					(ClientBean) session.getAttribute("client"));
-			String filename = "D:\\test.xml";
 			
-			//filename should be something similar to this:
-			//String filename = "/export/"+cartBean.getCustomer().getNumber()+".xml";
-			//String filepath = this.getServletContext().getRealPath(filename);
+//			check if file has been created -- dt know how to do that since we are using a filewriter... 
+//			but it it hasnt been created add: (will display that the order wasn't processed)
+//			if() request.setAttribute("checkoutError", "true");
+//			else
+			
+			String accountNumber = Integer.toString(cartBean.customer.getNumber());
+//			check if client exists in PoNumberFileName - if not, append to the file with quantity
+			String qty = this.checkPoQty((String)this.getServletContext().getAttribute("PoNumberFileName"), accountNumber);			
+			
+			String filename = "/POs/po" + accountNumber +"_"+ "" +".xml"; 
+			String filePath = this.getServletContext().getRealPath(filename);
+			System.out.println("filePath : "+ filePath);
+			System.out.println("filename : "+ filename);
+			request.setAttribute("filename", filename);
+			
+			model.export(cartBean, filePath);
+			
+			request.setAttribute("checkoutError", "false");
 
-			model.export(cartBean, filename);
-
-			// 
-			// rd =
-			// getServletContext().getRequestDispatcher("/views/cartPage.jspx");
-			// rd.forward(request, response);
-			System.out.println("Redirect to Checkout.jspx");
-			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
+			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
+			rd.forward(request, response);
 		}
 	}
 
@@ -320,5 +339,55 @@ public class eFoods extends HttpServlet {
 		else if (uri.toUpperCase().contains("ICECREAM")) rv = "Ice Cream";
 		else if (uri.toUpperCase().contains("CHEESE")) rv = "Cheese";
 		return rv;
+	}
+	
+	private String checkPoQty(String fileDirectory, String accountNumber) throws IOException
+	{
+		String quantityInFile = "0";
+		FileWriter f = new FileWriter(fileDirectory, true);
+	    BufferedReader br = new BufferedReader(new FileReader(fileDirectory)); 
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileDirectory, true));
+        String str = br.readLine();
+        if (str != null){
+        	while(str != null){
+	        	String clientNumber = str.substring(str.indexOf("'"));
+	        	System.out.println("client number in file is : " + clientNumber);
+	        	quantityInFile = str.substring(str.indexOf(","),str.length());
+	        	System.out.println("quantity for client " + clientNumber + " is:" + quantityInFile);
+	        	
+	            bw.write(str, 0, str.length());
+	            bw.newLine();
+	            // read the next line
+	            str = br.readLine();
+        	}
+        }
+        else
+        {
+        	
+        }
+        br.close();
+        bw.close();
+        
+		return quantityInFile;
+	}
+	
+	
+	private boolean checkPoFileExists(String PoNumberFileName) throws IOException 
+	{		
+//		System.out.println("this.getServletContext().getRealPath(PoNumberFileName) : " + this.getServletContext().getRealPath(PoNumberFileName));
+		File file = new File(this.getServletContext().getRealPath(PoNumberFileName));
+		boolean exists = false;
+  
+        if (!file.exists()){	
+        	file.createNewFile(); 
+        	exists = true; 
+        }
+        if (exists)
+            System.out.println("Empty File successfully created");
+        else
+            System.out.println("ur an idiot, the file already exists. Path to it: " + this.getServletContext().getRealPath(PoNumberFileName));
+		
+		return exists;
+				
 	}
 }
