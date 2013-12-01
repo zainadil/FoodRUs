@@ -80,29 +80,31 @@
 						<c:if test="${not empty itemList}">
 							<form id = "input" action="" method="POST">
 								<c:forEach var="i" items="${itemList}">
-									 <div id = "items">
-											<div id = "itemDetails">
-												<div id = "itemName">
-													${i.name} <br/>
+									<center>
+										 <div id = "items">
+												<div id = "itemDetails">
+													<div id = "itemName">
+														${i.name} <br/>
+													</div>
 												</div>
-											</div>
-											<center>
-											<div id = "quantity">
-												<div id="qLabel">
-													Quanity:
+												<center>
+												<div id = "quantity">
+													<div id="qLabel">
+														Quantity:
+													</div>
+													<div id="qTextBox">
+														<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+													</div>
 												</div>
-												<div id="qTextBox">
-													<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+												</center>
+												<div id = "itemPrice">	
+													<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
 												</div>
-											</div>
-											</center>
-											<div id = "itemPrice">	
-												<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
-											</div>
-											<div id = "itemButton">
-												<input type="submit" id = "orderbuttons" value="Order" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
-											</div>
-									</div>
+												<div id = "itemButton">
+													<input type="submit" id = "orderbuttons" value="Order" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
+												</div>
+										</div>
+									</center>
 								</c:forEach>
 								<input type="hidden" name = "addedIDandQty" id="addedIDandQty"/>
 							</form>

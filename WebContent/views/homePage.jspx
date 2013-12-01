@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
 	xmlns:f="http://java.sun.com/jsp/jstl/fmt">
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
 		pageEncoding="ISO-8859-1" session="false" />
@@ -11,56 +12,67 @@
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="StyleSheet"
-	href="${pageContext.request.contextPath}/res/foodrus.css"
-	type="text/css" title="cse4413Generic" media="screen, print" />
-<link rel="StyleSheet"
-	href="${pageContext.request.contextPath}/res/homepage.css"
-	type="text/css" title="cse4413HomePage" media="screen, print" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/foodrus.js">
-	;
-</script>
+	href="${pageContext.request.contextPath}/res/itemPage.css"
+	type="text/css" title="cse4413Front" media="screen, print" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
-<body>
-
-	<form id="mainForm" action="" method="POST">
-		<div id="wrap">
-			<div id="header" align="center">
-				<div id="headerLogo">FOODS R US</div>
-				<a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a> <a
-					href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-        	<c:if test = "${loggedIn eq null}">
-				<a href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
-			</c:if>
-        	<c:if test = "${loggedIn eq true}">
-				<a href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
-			</c:if>
-			</div>
-
-			<div id="searchBar">
-				<div id="searchBox">
-					<label for="search">Search: </label> <input id="searchText"
-						name="searchText" value=""
-						placeholder="Search for an Item or a Category!"> </input> <a
-						href="${pageContext.request.contextPath}/eFoods/Search">Search</a>
+	<body>
+		<div id="TopMenu">
+				<div id="topLogo">
+					<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
 				</div>
-			</div>
-
-			<div id="mainContent">
-				<a class="cereal"
-					href="${pageContext.request.contextPath}/eFoods/Category/cereal">Cereal</a>
-				<a class="cheese"
-					href="${pageContext.request.contextPath}/eFoods/Category/Cheese">Cheese</a>
-				<a class="iceCream"
-					href="${pageContext.request.contextPath}/eFoods/Category/iceCream">Ice
-					Cream</a> 
-				<a class="meat"
-					href="${pageContext.request.contextPath}/eFoods/Category/Meat">Meat</a>
-			</div>
-
-			<div id="footer">FOOTER</div>
-		</div>
-	</form>
-</body>
+				
+		<div id="TopMenuList">
+				<div id="TopMenuList">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+					<c:if test="${loggedIn eq null}">
+						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+					</c:if>
+					<c:if test="${loggedIn eq true}">
+						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+					</c:if>
+					
+				</div>
+		</div>	
+	</div>
+			<div id = "main" >
+					<div id="leftMenu">
+						<table id="leftMenuList">
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
+											<strong>Cereal</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
+											<strong>Cheese</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
+											<strong>Ice Cream</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
+											<strong>Meat</strong>
+										</h4></a></td>
+							</tr>
+						</table>
+					</div>
+					
+					<div id = "mainContent">
+						
+						
+					</div>	
+				</div>
+				<div id = "footer">		
+					
+				</div>			
+		</body>
 	</html>
 </jsp:root>
