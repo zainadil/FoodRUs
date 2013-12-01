@@ -64,7 +64,19 @@
 							</tr>
 						</table>
 					</div>
+					
 					<div id = "mainContent">
+						
+						<div id = "itemHeading">
+							${category}
+						</div>
+						
+						<div id ="addtoCartNotification">
+							<c:if test="${not empty addtoCartNotificaton}">
+								${addtoCartNotificaton}
+							</c:if>
+						</div>
+						
 						<c:if test="${not empty itemList}">
 							<form id = "input" action="" method="POST">
 								<c:forEach var="i" items="${itemList}">

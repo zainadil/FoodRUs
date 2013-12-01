@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+
 import javax.imageio.ImageIO;
 
 public class ItemDAO {
@@ -72,7 +73,31 @@ public class ItemDAO {
 			if (statement != null) statement.close();
 			if (conn != null) conn.close();
 		}
-
+		return rv;
+	}
+	
+	public String getItemName(String itemID) throws SQLException{
+		
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet set = null;
+		String rv = null;
+		try {
+			conn = DriverManager.getConnection(DB_URL);
+			statement = conn.createStatement();
+			statement.executeUpdate("SET SCHEMA ROUMANI");
+			String s = "SELECT Name FROM Item WHERE  item.number = '" + itemID + "'";
+			set = statement.executeQuery(s);
+			while (set.next()) {
+				rv = set.getString("Name");
+			}
+		} catch (SQLException e) {
+			throw new SQLException("SQL Exception", e);
+		} finally {
+			if (set != null) set.close();
+			if (statement != null) statement.close();
+			if (conn != null) conn.close();
+		}
 		return rv;
 	}
 }

@@ -161,4 +161,8 @@ public class FoodRus {
 		lw.setGrandTotal(new BigDecimal("" + cart.getGrandTotal()));
 		return lw;
 	}
+	
+	public String getItemName(String itemID) throws SQLException{
+		return itemData.getItemName(itemID);
+	}
 }// end business Logic

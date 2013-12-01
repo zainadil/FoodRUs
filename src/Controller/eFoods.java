@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Utilitiy.Utility;
 import model.*;
 
 /**
@@ -208,13 +209,18 @@ public class eFoods extends HttpServlet {
 				if(quantity == 0)
 					basket.remove(key);
 				else basket.put(key, quantity);
+				
+				String itemName = model.getItemName(key);
+				String finalMessage = quantity + " " + itemName + " added to Cart";
+				request.setAttribute("addtoCartNotificaton", finalMessage);
 			}
 	
+			String category = Utility.getCategory(uri);
 			List<CategoryBean> catBean = model.retrieveCategories();
 			request.setAttribute("catBean", catBean);
-			List<ItemBean> itemList = model.retrieveItems(getCategory(uri));
+			List<ItemBean> itemList = model.retrieveItems(category);
 			request.setAttribute("itemList", itemList);
-	
+			request.setAttribute("category", category);
 			rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 			rd.forward(request, response);
 	}
@@ -305,20 +311,5 @@ public class eFoods extends HttpServlet {
 			System.out.println("Redirect to Checkout.jspx");
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		}
-	}
-
-	private String getItemID(String uri) {
-		Matcher matcher = Pattern.compile("(?<=Order/).*").matcher(uri);
-		matcher.find();
-		return matcher.group();
-	}
-
-	private String getCategory(String uri) {
-		String rv = "";
-		if (uri.toUpperCase().contains("MEAT")) rv = "Meat";
-		else if (uri.toUpperCase().contains("CEREAL")) rv = "Cereal";
-		else if (uri.toUpperCase().contains("ICECREAM")) rv = "Ice Cream";
-		else if (uri.toUpperCase().contains("CHEESE")) rv = "Cheese";
-		return rv;
 	}
 }
