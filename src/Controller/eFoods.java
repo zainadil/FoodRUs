@@ -34,14 +34,13 @@ public class eFoods extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		
 		try {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
 			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +61,11 @@ public class eFoods extends HttpServlet {
 			if (session.getAttribute("client") != null) {
 				request.setAttribute("client", session.getAttribute("client"));
 				request.setAttribute("loggedIn", session.getAttribute("loggedIn"));
+			}
+
+			if (session.getAttribute("emptyCart") != null) {
+				request.setAttribute("emptyCart", session.getAttribute("emptyCart"));
+				session.setAttribute("emptyCart", null);
 			}
 
 			// Determine what the Controller should do and where it should be
@@ -136,23 +140,21 @@ public class eFoods extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 * @throws SQLException
-	 * 
-	 * 
 	 */
 	private void login(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,
 			SQLException {
 		RequestDispatcher rd;
 		HttpSession session = request.getSession();
 		ClientBean tmp;
-		
+
 		System.out.println("Came in here");
-		
+
 		if (request.getParameter("loginButton") != null) {
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
 			request.setAttribute("accountNumber", accountNumber);
 			String password = request.getParameter("password");
-			
+
 			if ((tmp = model.checkClient(accountNumber, password)) != null) {
 				loggedIn = true;
 				request.setAttribute("loggedIn", loggedIn);
@@ -167,10 +169,8 @@ public class eFoods extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else {
-			if (request.getAttribute("returnTo") == null )
-				session.setAttribute("returnTo", (String) request.getHeader("referer"));
-			else
-				session.setAttribute("returnTo", request.getAttribute("returnTo"));
+			if (request.getAttribute("returnTo") == null) session.setAttribute("returnTo", (String) request.getHeader("referer"));
+			else session.setAttribute("returnTo", request.getAttribute("returnTo"));
 			rd = getServletContext().getRequestDispatcher("/views/loginPage.jspx");
 			rd.forward(request, response);
 		}
@@ -199,30 +199,29 @@ public class eFoods extends HttpServlet {
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
 		RequestDispatcher rd;
 
-		if(request.getParameter("addedIDandQty") != null){
-				String updatedIDandQty = request.getParameter("addedIDandQty");
-				System.out.println(updatedIDandQty);
-				String[] splits = updatedIDandQty.split(";");
-				
-				String key = splits[0];
-				int quantity = Integer.parseInt(splits[1]);
-				if(quantity == 0)
-					basket.remove(key);
-				else basket.put(key, quantity);
-				
-				String itemName = model.getItemName(key);
-				String finalMessage = quantity + " " + itemName + " added to Cart";
-				request.setAttribute("addtoCartNotificaton", finalMessage);
-			}
-	
-			String category = Utility.getCategory(uri);
-			List<CategoryBean> catBean = model.retrieveCategories();
-			request.setAttribute("catBean", catBean);
-			List<ItemBean> itemList = model.retrieveItems(category);
-			request.setAttribute("itemList", itemList);
-			request.setAttribute("category", category);
-			rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
-			rd.forward(request, response);
+		if (request.getParameter("addedIDandQty") != null) {
+			String updatedIDandQty = request.getParameter("addedIDandQty");
+			System.out.println(updatedIDandQty);
+			String[] splits = updatedIDandQty.split(";");
+
+			String key = splits[0];
+			int quantity = Integer.parseInt(splits[1]);
+			if (quantity == 0) basket.remove(key);
+			else basket.put(key, quantity);
+
+			String itemName = model.getItemName(key);
+			String finalMessage = quantity + " " + itemName + " added to Cart";
+			request.setAttribute("addtoCartNotificaton", finalMessage);
+		}
+
+		String category = Utility.getCategory(uri);
+		List<CategoryBean> catBean = model.retrieveCategories();
+		request.setAttribute("catBean", catBean);
+		List<ItemBean> itemList = model.retrieveItems(category);
+		request.setAttribute("itemList", itemList);
+		request.setAttribute("category", category);
+		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -239,26 +238,24 @@ public class eFoods extends HttpServlet {
 	 * @param request
 	 * @param response
 	 * @throws Exception
-	 * 
 	 */
 
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		HttpSession session = request.getSession();
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
-		
-		if(request.getParameter("updateQuantity") != null){
+
+		if (request.getParameter("updateQuantity") != null) {
 			String updatedIDandQty = request.getParameter("updatedIDandQty");
 			System.out.println(updatedIDandQty);
 			String[] splits = updatedIDandQty.split(";");
-			
+
 			String key = splits[0];
 			int quantity = Integer.parseInt(splits[1]);
-			if(quantity == 0)
-				basket.remove(key);
+			if (quantity == 0) basket.remove(key);
 			else basket.put(key, quantity);
 		}
-		
+
 		CartBean cartBean = model.generateShopppingCart(basket, (ClientBean) request.getSession().getAttribute("client"));
 		request.setAttribute("sCart", cartBean);
 		RequestDispatcher rd;
@@ -288,28 +285,33 @@ public class eFoods extends HttpServlet {
 	private void checkout(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
-		if (session.getAttribute("client") == null) {
+
+		ClientBean client = (ClientBean) session.getAttribute("client");
+		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+
+		if (client == null) {
 			request.setAttribute("signInRequired", true);
 			request.setAttribute("returnTo", (String) request.getHeader("referer"));
-			session.setAttribute("returnTo",request.getAttribute("returnTo"));
+			session.setAttribute("returnTo", request.getAttribute("returnTo"));
 			login(uri, model, request, response);
-		} else {
-			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
-					(ClientBean) session.getAttribute("client"));
-			String filename = "D:\\test.xml";
-			
-			//filename should be something similar to this:
-			//String filename = "/export/"+cartBean.getCustomer().getNumber()+".xml";
-			//String filepath = this.getServletContext().getRealPath(filename);
-
-			model.export(cartBean, filename);
-
-			// 
-			// rd =
-			// getServletContext().getRequestDispatcher("/views/cartPage.jspx");
-			// rd.forward(request, response);
-			System.out.println("Redirect to Checkout.jspx");
+		} else if (basket == null || basket.isEmpty()) {
+			System.out.println("Empty Basket B");
+			session.setAttribute("emptyCart", true);
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
+		} else {
+			CartBean cartBean = model.generateShopppingCart(basket, client);
+
+			String accountNumber = cartBean.customer.getNumber() + "";
+			String filename = "/POs/po" + accountNumber + "_" + ".xml";
+			String filePath = this.getServletContext().getRealPath(filename);
+			request.setAttribute("filename", filename);
+
+			boolean res = model.export(cartBean, filePath);
+			request.setAttribute("checkoutOk", res);
+
+			session.setAttribute("basket", null);
+			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
+			rd.forward(request, response);
 		}
 	}
 }

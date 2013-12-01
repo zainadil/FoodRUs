@@ -73,12 +73,16 @@ public class FoodRus {
 	 * Function for Shopping Cart
 	 * @throws Exception 
 	 ***/
-	public CartBean generateShopppingCart(HashMap<String, Integer> basket, ClientBean client) throws Exception {
+	public CartBean generateShopppingCart(HashMap<String, Integer> basket, ClientBean client) throws Exception {		
 		double hst = 13; // this is wrong. change it.
 		CartBean tmp = new CartBean();
 		ItemBean item = new ItemBean();
 		List<ItemBean> listItem = new LinkedList<ItemBean>();
 		double total = 0;
+		if (basket == null || client == null){
+			System.out.println("basket or client provided to generateShoppingCart is null");
+			return null;
+		}
 		
 		for (String key : basket.keySet()) {
 			basket.get(key);
@@ -101,7 +105,8 @@ public class FoodRus {
 		return categoryData.retrieveBlobs(filename);
 	}
 	
-	public void export(CartBean cart, String filename) throws Exception {
+	public boolean export(CartBean cart, String filename) throws Exception {
+		boolean res = false;
 		int x = 120;
 		Date now = new Date();
 
@@ -114,11 +119,13 @@ public class FoodRus {
 		StringWriter sw = new StringWriter();
 		sw.write("\n");
 		marshaller.marshal(lw, new StreamResult(sw));
-		System.out.println("wah");
+		//System.out.println("wah");
 		System.out.println(sw.toString()); // for debugging
 		FileWriter fw = new FileWriter(filename);
 		fw.write(sw.toString());
 		fw.close();
+		res = true;
+		return res;
 	}
 
 	private OrderType createOrderType(int x, Date now, CartBean cart) throws Exception {
