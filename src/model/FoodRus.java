@@ -84,7 +84,7 @@ public class FoodRus {
 			basket.get(key);
 			item = itemData.retrieveItem(key);
 			item.setQty(basket.get(key));
-//			item.setExtendedPrice(item.getQty()*item.getPrice());
+			item.setExtendedPrice(item.getQty()*item.getPrice());
 			total += (basket.get(key) * item.getPrice());
 			listItem.add(item);
 		}

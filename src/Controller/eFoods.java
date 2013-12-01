@@ -45,9 +45,12 @@ public class eFoods extends HttpServlet {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
 //			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
-			String PoNumberFileName = "/POs/numberOfPosPerClient.txt";
-			this.getServletContext().setAttribute("PoNumberFileName", this.getServletContext().getRealPath(PoNumberFileName));
-			checkPoFileExists(PoNumberFileName);
+//			String PoNumberFileName = "/POs/numberOfPosPerClient.txt";
+//			this.getServletContext().setAttribute("PoNumberFileName", this.getServletContext().getRealPath(PoNumberFileName));
+//			checkPoFileExists(PoNumberFileName);
+			HashMap<String, Integer> poNumbers = new HashMap<String, Integer>();
+			this.getServletContext().setAttribute("poNumbers", poNumbers);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -315,29 +318,73 @@ public class eFoods extends HttpServlet {
 		} else {
 			CartBean cartBean = model.generateShopppingCart((HashMap<String, Integer>) session.getAttribute("basket"),
 					(ClientBean) session.getAttribute("client"));
-			
+			HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+			if(basket.size()==0)
+			{
+				request.setAttribute("noCart", "true");
+			}			
+			else{
+				
 //			check if file has been created -- dt know how to do that since we are using a filewriter... 
 //			but it it hasnt been created add: (will display that the order wasn't processed)
 //			if() request.setAttribute("checkoutError", "true");
 //			else
-			
-			String accountNumber = Integer.toString(cartBean.customer.getNumber());
 //			check if client exists in PoNumberFileName - if not, append to the file with quantity
-			String qty = this.checkPoQty((String)this.getServletContext().getAttribute("PoNumberFileName"), accountNumber);			
+//			String qty = this.checkPoQty((String)this.getServletContext().getAttribute("PoNumberFileName"), accountNumber);			
+
+			HashMap<String, Integer> poNumbers = (HashMap<String, Integer>) this.getServletContext().getAttribute("poNumbers");
+			String accountNumber = Integer.toString(cartBean.customer.getNumber());
+			int qty=1;
+			System.out.println("poNumbers.containsKey(accountNumber) : " + poNumbers.containsKey(accountNumber));
+			if(poNumbers.size()==0)
+			{
+				poNumbers.put(accountNumber, qty);
+				this.getServletContext().setAttribute("poNumbers", poNumbers);
+			}
+			else{
+				System.out.println("im hereeeeeee sucka");
+				System.out.println("poNumbers.containsKey(accountNumber) : " + poNumbers.containsKey(accountNumber));
+				if(poNumbers.containsKey(accountNumber))
+				{
+					System.out.println("it contains the key, update the qty");
+					qty = poNumbers.get(accountNumber);
+					qty++;
+					System.out.println(poNumbers.get(accountNumber));
+					poNumbers.put(accountNumber, qty);
+					this.getServletContext().setAttribute("poNumbers", poNumbers);
+				}
+				else
+				{
+					poNumbers.put(accountNumber, qty);
+					this.getServletContext().setAttribute("poNumbers", poNumbers);
+				}
+				
+				System.out.println(poNumbers.get(accountNumber));
+			}
 			
-			String filename = "/POs/po" + accountNumber +"_"+ "" +".xml"; 
+			
+			String filename = "/POs/po" + accountNumber +"_"+ poNumbers.get(accountNumber) +".xml"; 
 			String filePath = this.getServletContext().getRealPath(filename);
-			System.out.println("filePath : "+ filePath);
-			System.out.println("filename : "+ filename);
+
 			request.setAttribute("filename", filename);
 			
 			model.export(cartBean, filePath);
 			
+			//null the cart so that they have nothing in their basket 
+//			HashMap<String, Integer> sCart = (HashMap<String, Integer>) session.getAttribute("basket");
+//			sCart = null;
+//			session.setAttribute("sCart", sCart);
+//			request.setAttribute("noCart", true);
+			
 			request.setAttribute("checkoutError", "false");
 
+			
+			}
+			
 			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
 			rd.forward(request, response);
 		}
+		
 
 	}
 
@@ -358,32 +405,57 @@ public class eFoods extends HttpServlet {
 	
 	private String checkPoQty(String fileDirectory, String accountNumber) throws IOException
 	{
-		String quantityInFile = "0";
-		FileWriter f = new FileWriter(fileDirectory, true);
+		System.out.println(fileDirectory);
+		String quantity = null;
 	    BufferedReader br = new BufferedReader(new FileReader(fileDirectory)); 
         BufferedWriter bw = new BufferedWriter(new FileWriter(fileDirectory, true));
         String str = br.readLine();
-        if (str != null){
-        	while(str != null){
-	        	String clientNumber = str.substring(str.indexOf("'"));
-	        	System.out.println("client number in file is : " + clientNumber);
-	        	quantityInFile = str.substring(str.indexOf(","),str.length());
-	        	System.out.println("quantity for client " + clientNumber + " is:" + quantityInFile);
-	        	
-	            bw.write(str, 0, str.length());
-	            bw.newLine();
-	            // read the next line
-	            str = br.readLine();
-        	}
-        }
-        else
+
+        if(str == null)
         {
-        	
+        	str = accountNumber + ",1";
+        	quantity = "1";
+        	bw.write(str, 0, str.length());
+            bw.newLine();
+        }
+        else{
+	        while(br.readLine()!= null){
+	        	String clientNumber = str.substring(0,str.indexOf(","));
+	        	System.out.println("theres a next line to read! ");
+	        	if(clientNumber.equals(accountNumber)){
+	        		System.out.println("client = account!!!!!!!!!!");
+	        		System.out.println("accountNumber: " + accountNumber);
+	        		System.out.println("clientNumber: " + clientNumber);
+
+	        		bw = new BufferedWriter(new FileWriter(fileDirectory));
+			        int qty = Integer.parseInt(str.substring(str.indexOf(",")+1,str.length()));
+		        	qty++;
+		        	System.out.println("quantity for client " + clientNumber + " is:" + qty );
+		        	quantity = Integer.toString(qty);
+		        	System.out.println("quantity: " + quantity);
+		        }
+	        	else{
+	        		System.out.println("immmm hereeeee ");
+	        		bw = new BufferedWriter(new FileWriter(fileDirectory, true));
+	        		bw.newLine();
+	        		System.out.println("clientNumber : " + clientNumber);
+	        		str = accountNumber + ",1";
+	            	quantity = "1";
+	            	System.out.println("quantity: " + quantity);
+	            	
+	        	}
+	        	
+	        }
+	        str = accountNumber + "," + quantity;
+	        System.out.println("str"+ str);
+	        bw.write(str, 0, str.length());
+            bw.newLine();
+            bw.flush();
+        
         }
         br.close();
         bw.close();
-        
-		return quantityInFile;
+        return quantity;
 	}
 	
 	

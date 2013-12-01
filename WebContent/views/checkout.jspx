@@ -26,6 +26,11 @@
 	</div>
 	
 	<div id = "main" >
+	
+		<c:if test="${noCart eq true}">
+			You cannot checkout if you do not have items in your cart!  
+		</c:if>
+		
 		<c:if test="${checkoutError eq true}">
 			Your order has not been processed ! Please check again later 
 		</c:if>
