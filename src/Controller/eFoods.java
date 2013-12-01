@@ -153,6 +153,7 @@ public class eFoods extends HttpServlet {
 			SQLException {
 		RequestDispatcher rd;
 		HttpSession session = request.getSession();
+		
 		ClientBean tmp;
 		
 		System.out.println("Came in here");
@@ -160,6 +161,7 @@ public class eFoods extends HttpServlet {
 		if (request.getParameter("loginButton") != null) {
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
+			request.setAttribute("accountNumber", accountNumber);
 			String password = request.getParameter("password");
 			
 			if ((tmp = model.checkClient(accountNumber, password)) != null) {
@@ -167,7 +169,6 @@ public class eFoods extends HttpServlet {
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("client", tmp);
-				session.setAttribute("accountNumber", accountNumber.toString());
 				if (session.getAttribute("returnTo") == null) response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 				else response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
@@ -357,23 +358,32 @@ public class eFoods extends HttpServlet {
 	
 	private String checkPoQty(String fileDirectory, String accountNumber) throws IOException
 	{
-		String qtyyy = "";
+		String quantityInFile = "0";
+		FileWriter f = new FileWriter(fileDirectory, true);
 	    BufferedReader br = new BufferedReader(new FileReader(fileDirectory)); 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(fileDirectory));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileDirectory, true));
         String str = br.readLine();
-        while (str != null) {
-        	String clientNumber = str.substring(str.indexOf("'"));
-        	String qty = str.substring(str.indexOf(","),str.length());
-            bw.write(str, 0, str.length());
-            bw.newLine();
-            // read the next line
-            str = br.readLine();
+        if (str != null){
+        	while(str != null){
+	        	String clientNumber = str.substring(str.indexOf("'"));
+	        	System.out.println("client number in file is : " + clientNumber);
+	        	quantityInFile = str.substring(str.indexOf(","),str.length());
+	        	System.out.println("quantity for client " + clientNumber + " is:" + quantityInFile);
+	        	
+	            bw.write(str, 0, str.length());
+	            bw.newLine();
+	            // read the next line
+	            str = br.readLine();
+        	}
+        }
+        else
+        {
+        	
         }
         br.close();
         bw.close();
         
-        
-        return qtyyy;
+		return quantityInFile;
 	}
 	
 	
@@ -387,11 +397,10 @@ public class eFoods extends HttpServlet {
         	file.createNewFile(); 
         	exists = true; 
         }
-        
-         if (exists)
+        if (exists)
             System.out.println("Empty File successfully created");
         else
-            System.out.println("ur an idiot, the file already exists");
+            System.out.println("ur an idiot, the file already exists. Path to it: " + this.getServletContext().getRealPath(PoNumberFileName));
 		
 		return exists;
 				

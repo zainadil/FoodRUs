@@ -11,7 +11,7 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Insert title here</title>
+<title>Checkout</title>
 </head>
 <body>
 	<div id="TopMenu">
@@ -22,17 +22,7 @@
 			</a>
 		</div>
 
-		<div id="TopMenuList">
-			<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
-			<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-			<c:if test="${loggedIn eq null}">
-				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
-			</c:if>
-			<c:if test="${loggedIn eq true}">
-				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
-			</c:if>
-			
-		</div>
+		
 	</div>
 	
 	<div id = "main" >
