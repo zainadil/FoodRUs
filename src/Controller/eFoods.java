@@ -223,7 +223,7 @@ public class eFoods extends HttpServlet {
 
 			String key = splits[0];
 			int quantity = Integer.parseInt(splits[1]);
-			if (quantity == 0) basket.remove(key);
+			if (basket.containsKey(key)) basket.put(key, (basket.get(key) + quantity));
 			else basket.put(key, quantity);
 
 			String itemName = model.getItemName(key);

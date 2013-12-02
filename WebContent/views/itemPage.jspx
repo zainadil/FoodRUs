@@ -113,7 +113,7 @@
 												</div>
 												
 												<div id = "itemButton">
-													<input type="submit" id = "orderbuttons" value="Add to Cart" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
+													<input type="submit" id = "orderbuttons" value="Add to Cart" name="orderbuttons" onClick = "return addtoCart('${i.number}');"/>
 												</div>
 										</div>
 									</center>

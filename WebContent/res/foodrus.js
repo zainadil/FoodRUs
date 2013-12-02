@@ -6,7 +6,13 @@ function updateQuanity(itemID){
 
 function addtoCart(itemID){
 	var qty = document.getElementById(itemID).value;
-	document.getElementById("addedIDandQty").value = itemID + ";" + qty;
+	if(isNaN(qty)){
+			alert("WTF");
+			return false;
+	} else{
+		document.getElementById("addedIDandQty").value = itemID + ";" + qty;
+		return true;
+	}
 }
 
 // Hack, do something about this later.
