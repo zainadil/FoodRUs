@@ -79,10 +79,6 @@ public class FoodRus {
 		ItemBean item = new ItemBean();
 		List<ItemBean> listItem = new LinkedList<ItemBean>();
 		double total = 0;
-		if (basket == null || client == null){
-			System.out.println("basket or client provided to generateShoppingCart is null");
-			return null;
-		}
 		
 		for (String key : basket.keySet()) {
 			basket.get(key);
@@ -108,6 +104,7 @@ public class FoodRus {
 	public boolean export(CartBean cart, String filename) throws Exception {
 		boolean res = false;
 		int x = 120;
+		//change
 		Date now = new Date();
 
 		OrderType lw = createOrderType(x, now, cart);
