@@ -37,6 +37,13 @@ public class eFoods extends HttpServlet {
 		try {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
+			
+			if (this.getServletContext().getAttribute("clientList") == null)
+			{
+				HashMap<String, Integer> list = new HashMap<String, Integer>();
+				this.getServletContext().setAttribute("clientList", list);
+			}
+			
 			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,8 +154,6 @@ public class eFoods extends HttpServlet {
 		HttpSession session = request.getSession();
 		ClientBean tmp;
 
-		System.out.println("Came in here");
-
 		if (request.getParameter("loginButton") != null) {
 			boolean loggedIn;
 			String accountNumber = request.getParameter("accountNumber");
@@ -156,7 +161,19 @@ public class eFoods extends HttpServlet {
 			String password = request.getParameter("password");
 
 			if ((tmp = model.checkClient(accountNumber, password)) != null) {
+				HashMap<String, Integer> clients = (HashMap<String, Integer>) this.getServletContext().getAttribute("clientList");
+				if (clients == null)
+				{
+					// should never enter here, but okay... 
+					System.out.println("Clients list is null.");
+				}
 				loggedIn = true;
+				if (!clients.containsKey(tmp.getName())){
+					System.out.println(tmp.getName() + " is being set to 0");
+					clients.put(tmp.getName(), 0);
+					this.getServletContext().setAttribute("clientList", clients);
+				}
+				
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("client", tmp);
@@ -288,6 +305,7 @@ public class eFoods extends HttpServlet {
 
 		ClientBean client = (ClientBean) session.getAttribute("client");
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+		HashMap<String, Integer> clients = (HashMap<String, Integer>) this.getServletContext().getAttribute("clientList");
 
 		if (client == null) {
 			request.setAttribute("signInRequired", true);
@@ -295,20 +313,20 @@ public class eFoods extends HttpServlet {
 			session.setAttribute("returnTo", request.getAttribute("returnTo"));
 			login(uri, model, request, response);
 		} else if (basket == null || basket.isEmpty()) {
-			System.out.println("Empty Basket B");
 			session.setAttribute("emptyCart", true);
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		} else {
 			CartBean cartBean = model.generateShopppingCart(basket, client);
-
+			int poNum = clients.get(client.getName());
 			String accountNumber = cartBean.customer.getNumber() + "";
-			String filename = "/POs/po" + accountNumber + "_" + ".xml";
+			String filename = "/POs/po" + accountNumber + "_" + poNum + ".xml";
 			String filePath = this.getServletContext().getRealPath(filename);
 			request.setAttribute("filename", filename);
+			clients.put(client.getName(), poNum++);
 
 			boolean res = model.export(cartBean, filePath);
 			request.setAttribute("checkoutOk", res);
-
+			this.getServletContext().setAttribute("clientList", clients);
 			session.setAttribute("basket", null);
 			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
 			rd.forward(request, response);
