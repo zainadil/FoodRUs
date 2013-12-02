@@ -47,10 +47,8 @@ public class eFoods extends HttpServlet {
 			
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
-			
 			retrieveServletContextParams();
 			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -96,23 +94,32 @@ public class eFoods extends HttpServlet {
 				session.setAttribute("emptyCart", null);
 			}
 
-			// Determine what the Controller should do and where it should be
-			// passed to.
-			if (pageURI.contains("Category")) {
-				category(pageURI, model, request, response);
-			} else if (pageURI.contains("Login")) {
-				login(pageURI, model, request, response);
-			} else if (pageURI.contains("Logout")) {
-				logout(pageURI, model, request, response);
-			} else if (pageURI.contains("Cart")) {
-				cart(pageURI, model, request, response);
-			} else if (pageURI.contains("Checkout")) {
-				checkout(pageURI, model, request, response);
-			} else { // Always fall back to the homepage
-				session.setAttribute("freshVisit", "freshVisit");
-				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
-				rd.forward(request, response);
+			if (request.getParameter("search") != null)
+			{
+				// display items matching the category
+				String search_string = request.getParameter("search");
+				category_search(pageURI, model, request, response, search_string);
 			}
+			else
+			{
+				// Determine what the Controller should do and where it should be
+				// passed to.
+				if (pageURI.contains("Category")) {
+					category(pageURI, model, request, response);
+				} else if (pageURI.contains("Login")) {
+					login(pageURI, model, request, response);
+				} else if (pageURI.contains("Logout")) {
+					logout(pageURI, model, request, response);
+				} else if (pageURI.contains("Cart")) {
+					cart(pageURI, model, request, response);
+				} else if (pageURI.contains("Checkout")) {
+					checkout(pageURI, model, request, response);
+				} else { // Always fall back to the homepage
+					rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
+					rd.forward(request, response);
+				}
+			}
+			
 		} catch (Exception e) {
 			// Why we silence problem? No Good.
 			System.out.println("Error Caught: " + e);
@@ -262,6 +269,38 @@ public class eFoods extends HttpServlet {
 		rd.forward(request, response);
 	}
 
+	private void category_search(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response, String search_string) throws Exception {
+
+		HttpSession session = request.getSession();
+		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+		RequestDispatcher rd;
+
+		if (request.getParameter("addedIDandQty") != null) {
+			String updatedIDandQty = request.getParameter("addedIDandQty");
+			System.out.println(updatedIDandQty);
+			String[] splits = updatedIDandQty.split(";");
+
+			String key = splits[0];
+			int quantity = Integer.parseInt(splits[1]);
+			if (basket.containsKey(key)) basket.put(key, (basket.get(key) + quantity));
+			else basket.put(key, quantity);
+
+			String itemName = model.getItemName(key);
+			String finalMessage = quantity + " " + itemName + " added to Cart";
+			request.setAttribute("addtoCartNotificaton", finalMessage);
+		}
+
+		String category = Utility.getCategory(uri);
+		List<CategoryBean> catBean = model.retrieveCategories();
+		request.setAttribute("catBean", catBean);
+		List<ItemBean> itemList = model.retrieveItemsBySearch(search_string);
+		request.setAttribute("itemList", itemList);
+//		request.setAttribute("category", category); //VAD, debug possibly
+		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+		rd.forward(request, response);
+	}
+	
+	
 	/**
 	 * Client has chosen to go to the Cart Page (Basket Page). Here the HashMap
 	 * from above is displayed, if null then it is shown as empty.
@@ -322,7 +361,7 @@ public class eFoods extends HttpServlet {
 	private void checkout(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
-		
+
 		ClientBean client = (ClientBean) session.getAttribute("client");
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
 		HashMap<String, Integer> clients = (HashMap<String, Integer>) this.getServletContext().getAttribute("clientList");
