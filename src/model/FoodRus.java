@@ -71,6 +71,10 @@ public class FoodRus {
 	public List<ItemBean> retrieveItems(String category) throws SQLException {
 		return itemData.retrieveItems(category);
 	}
+	
+	public List<ItemBean> retrieveItemsBySearch(String search) throws SQLException {
+		return itemData.retrieveItemsBySearch(search);
+	}
 
 	public ItemBean retrieveItem(String number) throws SQLException {
 		return itemData.retrieveItem(number);
