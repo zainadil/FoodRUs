@@ -82,7 +82,7 @@
 									<b>Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
 									<b>Quantity </b> <input type="text" style = "width:10px" value="${i.qty}" id = "${i.number}"></input><br/>
 									<b>Extended Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.extendedPrice}"/><br/>
-									<input type="submit" id = "updateButtons" value="Update Quantity" name="updateQuantity" onClick = "updateQuanity('${i.number}');"/>
+									<input type="submit" id = "updateButtons" value="Update Quantity" name="updateQuantity" onClick = "return updateQuanity('${i.number}');"/>
 								</div>
 						</div>		
 				 	</c:forEach>

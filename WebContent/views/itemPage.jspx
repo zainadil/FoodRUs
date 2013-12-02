@@ -43,9 +43,11 @@
 						</div>
 					 -->		
 						<div id ="addtoCartNotification">
+							<span id = "notification">
 							<c:if test="${not empty addtoCartNotificaton}">
 								${addtoCartNotificaton}
 							</c:if>
+							</span>
 						</div>
 			
 			
@@ -98,13 +100,15 @@
 												</div>
 												
 												<center>
-												<div id = "quantity">
-													<div id="qLabel">
-														Quantity:
-													</div>
-													<div id="qTextBox">
-														<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
-													</div>
+													<div id = "quantity">
+														<div id = "q${i.number}">
+														<div id="qLabel">
+															Quantity:
+														</div>
+															<div id="qTextBox">
+																	<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+															</div>
+														</div>
 												</div>
 												</center>
 												
