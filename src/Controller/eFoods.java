@@ -181,7 +181,6 @@ public class eFoods extends HttpServlet {
 				}
 				loggedIn = true;
 				if (!clients.containsKey(tmp.getName())) {
-					System.out.println(tmp.getName() + " is being set to 1");
 					clients.put(tmp.getName(), 1);
 					this.getServletContext().setAttribute("clientList", clients);
 				}
@@ -331,20 +330,17 @@ public class eFoods extends HttpServlet {
 
 			CartBean cartBean = model.generateShopppingCart(basket, client, HST, shipping, discountAt, discountRate);
 			int poNum = clients.get(client.getName());
-			System.out.println("Client poNum is: " + poNum);
 
-			String accountNumber = cartBean.customer.getNumber() + "";
-			String filename = "/POs/po" + accountNumber + "_" + poNum + ".xml";
-			String filePath = this.getServletContext().getRealPath(filename);
-			request.setAttribute("filename", filename);
+			String fileName = cartBean.customer.getNumber() + "_" + poNum;
+			String path = "/POs/po" + fileName + ".xml";
+			String filePath = this.getServletContext().getRealPath(path);
+			request.setAttribute("filename", path);
 			poNum++;
 			clients.put(client.getName(), poNum);
-			System.out.println("Incrememnting to: " + poNum);
 			poNum = clients.get(client.getName());
-			System.out.println("Client poNum is: " + poNum);
 			this.getServletContext().setAttribute("clientList", clients);
 
-			boolean res = model.export(orderNum, cartBean, filePath, filename);
+			boolean res = model.export(orderNum, cartBean, filePath, fileName);
 			request.setAttribute("checkoutOk", res);
 			session.setAttribute("basket", null);
 

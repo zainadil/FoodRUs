@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -34,14 +35,18 @@ public class FoodRus {
 	ClientDAO clientData;
 	ItemDAO itemData;
 	
-	String b2bDir = "D:\\forB2B\\";
+	String b2bDir = "";
 	
 	public FoodRus() throws Exception {
 			categoryData = new CategoryDAO();
 			clientData = new ClientDAO();
 			itemData = new ItemDAO();
+			
+			File dir = new File("forB2B");
+			if (!dir.exists())
+				dir.mkdir();
+			b2bDir = dir.getAbsolutePath();
 	}
-
 	/*** CATEGORY TABLE METHODS **/
 	public List<CategoryBean> retrieveCategories() throws SQLException {
 		return categoryData.retrieveCategories();
@@ -136,7 +141,7 @@ public class FoodRus {
 		marshaller.marshal(lw, new StreamResult(sw));
 		//System.out.println(sw.toString()); // for debugging
 		FileWriter fw = new FileWriter(filePath);
-		FileWriter b2b = new FileWriter(b2bDir+fileName);
+		FileWriter b2b = new FileWriter(b2bDir+fileName+".xml");
 		b2b.write(sw.toString());
 		fw.write(sw.toString());
 		fw.close();
