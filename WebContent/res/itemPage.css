@@ -1,6 +1,6 @@
 body{
 	position: relative;
-	width: 90%;
+	width: 92%;
 	height: 90%;
 }
 
@@ -59,7 +59,7 @@ body{
 	background-color: #FFFFFF;
 	width: 170px;
 	float: left;
-	height:700px;
+	height:475px;
 	text-align: center;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
@@ -136,11 +136,11 @@ h5, h6 {
 	}
 	
 #main{
-	width:110%;
+	width:100%;
 }
 	
 #mainContent{
-	margin-left:220px;
+	margin-left:20%;
 }	
 	
 #items {
@@ -151,9 +151,9 @@ h5, h6 {
 	top: 4%;
 	padding-left: 15px;
 	background-color: #FFFFFF;
-	width: 170px;
+	width: 18%;
 	float: left;
-	height: 180px;
+	height: 220px;
 	text-align: center;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
@@ -165,7 +165,7 @@ h5, h6 {
 }
 
 #itemDetails{
-	height: 80px;
+	height: 58%;
 }	
 
 #itemName{
@@ -174,6 +174,15 @@ h5, h6 {
 	font-size: 15px;
 	font-weight: bold;
 	font-family: Coronetscript, cursive;
+}
+
+#itemNumber{
+	text-transform:uppercase;
+	
+}
+
+#itemQtyPerUnit{
+	
 }
 
 #itemPrice{
@@ -275,6 +284,7 @@ h5, h6 {
 }
 
 #addtoCartNotification{
+	margin-top:20px;
 	font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
 	text-align: center;
 	font-size: 15px;	

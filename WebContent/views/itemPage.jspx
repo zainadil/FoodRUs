@@ -37,6 +37,18 @@
 		</div>	
 	</div>
 			<div id = "main" >
+						
+					<!-- <div id = "itemHeading">
+							${category}
+						</div>
+					 -->		
+						<div id ="addtoCartNotification">
+							<c:if test="${not empty addtoCartNotificaton}">
+								${addtoCartNotificaton}
+							</c:if>
+						</div>
+			
+			
 					<div id="leftMenu">
 						<table id="leftMenuList">
 							<tr>
@@ -67,26 +79,18 @@
 					
 					<div id = "mainContent">
 						
-						<div id = "itemHeading">
-							${category}
-						</div>
-						
-						<div id ="addtoCartNotification">
-							<c:if test="${not empty addtoCartNotificaton}">
-								${addtoCartNotificaton}
-							</c:if>
-						</div>
-						
 						<c:if test="${not empty itemList}">
 							<form id = "input" action="" method="POST">
 								<c:forEach var="i" items="${itemList}">
 									<center>
 										 <div id = "items">
+												
 												<div id = "itemDetails">
 													<div id = "itemName">
 														${i.name} <br/>
 													</div>
 												</div>
+												
 												<center>
 												<div id = "quantity">
 													<div id="qLabel">
@@ -97,11 +101,13 @@
 													</div>
 												</div>
 												</center>
+												
 												<div id = "itemPrice">	
 													<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
 												</div>
+												
 												<div id = "itemButton">
-													<input type="submit" id = "orderbuttons" value="Order" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
+													<input type="submit" id = "orderbuttons" value="Add to Cart" name="orderbuttons" onClick = "addtoCart('${i.number}');"/>
 												</div>
 										</div>
 									</center>
