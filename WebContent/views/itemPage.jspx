@@ -111,11 +111,11 @@
 														</div>
 												</div>
 												</center>
-												
+												<center>
 												<div id = "itemPrice">	
 													<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
 												</div>
-												
+												</center>
 												<div id = "itemButton">
 													<input type="submit" id = "orderbuttons" value="Add to Cart" name="orderbuttons" onClick = "return addtoCart('${i.number}');"/>
 												</div>
