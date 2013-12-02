@@ -43,6 +43,11 @@ public class eFoods extends HttpServlet {
 				HashMap<String, Integer> list = new HashMap<String, Integer>();
 				this.getServletContext().setAttribute("clientList", list);
 			}
+			if (this.getServletContext().getAttribute("orderNum") == null)
+			{
+				int orderNum = 1;
+				this.getServletContext().setAttribute("orderNum", orderNum);
+			}
 			
 			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
 		} catch (Exception e) {
@@ -169,8 +174,8 @@ public class eFoods extends HttpServlet {
 				}
 				loggedIn = true;
 				if (!clients.containsKey(tmp.getName())){
-					System.out.println(tmp.getName() + " is being set to 0");
-					clients.put(tmp.getName(), 0);
+					System.out.println(tmp.getName() + " is being set to 1");
+					clients.put(tmp.getName(), 1);
 					this.getServletContext().setAttribute("clientList", clients);
 				}
 				
@@ -316,18 +321,28 @@ public class eFoods extends HttpServlet {
 			session.setAttribute("emptyCart", true);
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		} else {
+			int orderNum = (Integer) this.getServletContext().getAttribute("orderNum");
+			
 			CartBean cartBean = model.generateShopppingCart(basket, client);
 			int poNum = clients.get(client.getName());
+			System.out.println("Client poNum is: " + poNum);
+			
 			String accountNumber = cartBean.customer.getNumber() + "";
 			String filename = "/POs/po" + accountNumber + "_" + poNum + ".xml";
 			String filePath = this.getServletContext().getRealPath(filename);
 			request.setAttribute("filename", filename);
-			clients.put(client.getName(), poNum++);
-
-			boolean res = model.export(cartBean, filePath);
-			request.setAttribute("checkoutOk", res);
+			poNum++;
+			clients.put(client.getName(), poNum);
+			System.out.println("Incrememnting to: " + poNum);
+			poNum = clients.get(client.getName());
+			System.out.println("Client poNum is: " + poNum);
 			this.getServletContext().setAttribute("clientList", clients);
+			
+			boolean res = model.export(orderNum, cartBean, filePath);
+			request.setAttribute("checkoutOk", res);
 			session.setAttribute("basket", null);
+			
+			this.getServletContext().setAttribute("orderNum", ++orderNum);
 			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
 			rd.forward(request, response);
 		}

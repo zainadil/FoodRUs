@@ -101,13 +101,11 @@ public class FoodRus {
 		return categoryData.retrieveBlobs(filename);
 	}
 	
-	public boolean export(CartBean cart, String filename) throws Exception {
+	public boolean export(int orderNum, CartBean cart, String filename) throws Exception {
 		boolean res = false;
-		int x = 120;
-		//change
 		Date now = new Date();
 
-		OrderType lw = createOrderType(x, now, cart);
+		OrderType lw = createOrderType(orderNum, now, cart);
 		JAXBContext jc = JAXBContext.newInstance(lw.getClass());
 		Marshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -116,8 +114,7 @@ public class FoodRus {
 		StringWriter sw = new StringWriter();
 		sw.write("\n");
 		marshaller.marshal(lw, new StreamResult(sw));
-		//System.out.println("wah");
-		System.out.println(sw.toString()); // for debugging
+		//System.out.println(sw.toString()); // for debugging
 		FileWriter fw = new FileWriter(filename);
 		fw.write(sw.toString());
 		fw.close();
