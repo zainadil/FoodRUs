@@ -39,6 +39,12 @@ public class eFoods extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		try {
+			HashMap<String, Long> addMap = new HashMap<String, Long>(); 
+			this.getServletContext().setAttribute("averageAddHashmap", addMap);
+			
+			HashMap<String, Long> checkOutMap = new HashMap<String, Long>(); 
+			this.getServletContext().setAttribute("checkOutAddHashmap", checkOutMap);
+			
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
 			retrieveServletContextParams();
@@ -91,7 +97,6 @@ public class eFoods extends HttpServlet {
 			if (request.getParameter("search") != null)
 			{
 				// display items matching the category
-//				System.out.println("searching");
 				String search_string = request.getParameter("search");
 				category_search(pageURI, model, request, response, search_string);
 			}
@@ -251,6 +256,7 @@ public class eFoods extends HttpServlet {
 			String itemName = model.getItemName(key);
 			String finalMessage = quantity + " " + itemName + " added to Cart";
 			request.setAttribute("addtoCartNotificaton", finalMessage);
+			session.setAttribute("itemAddedToCart", "itemAddedToCart");
 		}
 
 		String category = Utility.getCategory(uri);
@@ -369,6 +375,7 @@ public class eFoods extends HttpServlet {
 			session.setAttribute("emptyCart", true);
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		} else {
+			session.setAttribute("checkout", "checkout");
 			int orderNum = (Integer) this.getServletContext().getAttribute("orderNum");
 
 			CartBean cartBean = model.generateShopppingCart(basket, client, HST, shipping, discountAt, discountRate);
