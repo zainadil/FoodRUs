@@ -46,6 +46,7 @@ public class ClientAnalytics implements HttpSessionAttributeListener {
     	
     	HttpSession session = event.getSession();
     	if(event.getName().equals("freshVisit")){
+    		System.out.println("Fresh Visit");
     		if(session.getAttribute("freshVisitTime") == null){
 	    		session.setAttribute("freshVisitTime", System.currentTimeMillis());
 	    	}

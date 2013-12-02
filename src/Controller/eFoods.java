@@ -119,6 +119,8 @@ public class eFoods extends HttpServlet {
 				} else if (pageURI.contains("admin")) {
 						admin(pageURI, model, request, response);
 				} else { // Always fall back to the homepage
+					
+					session.setAttribute("freshVisit", "freshVisit");
 					rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 					rd.forward(request, response);
 				}
@@ -299,7 +301,6 @@ public class eFoods extends HttpServlet {
 		request.setAttribute("catBean", catBean);
 		List<ItemBean> itemList = model.retrieveItemsBySearch(search_string);
 		request.setAttribute("itemList", itemList);
-//		request.setAttribute("category", category); //VAD, debug possibly
 		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 		rd.forward(request, response);
 	}
