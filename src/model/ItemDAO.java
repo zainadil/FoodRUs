@@ -51,6 +51,39 @@ public class ItemDAO {
 		return rv;
 	}
 
+	// Retrieval Method
+	public List<ItemBean> retrieveItemsBySearch(String search_string) throws SQLException {
+
+		List<ItemBean> rv = new LinkedList<ItemBean>();
+
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet set = null;
+
+		try {
+			conn = DriverManager.getConnection(DB_URL);
+			statement = conn.createStatement();
+			statement.executeUpdate("SET SCHEMA ROUMANI");
+
+			String s = "select * from item, category "
+					+ "where item.catID = category.id AND (LOWER(item.number) like LOWER('%" +search_string + "%') OR LOWER(item.name) like LOWER('%" + search_string + "%'))";
+			set = statement.executeQuery(s);
+
+			while (set.next()) {
+				rv.add(new ItemBean(set.getString("NUMBER"), set.getString("NAME"), set.getDouble("PRICE"), set.getInt("QTY"), set.getInt("ONORDER"),
+						set.getInt("REORDER"), set.getInt("CATID"), set.getInt("SUPID"), set.getDouble("COSTPRICE"), set.getString("UNIT")));
+			}
+		} catch (SQLException e) {
+			throw new SQLException("SQL Exception", e);
+		} finally {
+			if (set != null) set.close();
+			if (statement != null) statement.close();
+			if (conn != null) conn.close();
+		}
+
+		return rv;
+	}
+	
 	public ItemBean retrieveItem(String number) throws SQLException {
 		ItemBean rv = new ItemBean();
 		Connection conn = null;
