@@ -39,10 +39,18 @@ public class eFoods extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		try {
+			HashMap<String, Long> addMap = new HashMap<String, Long>(); 
+			this.getServletContext().setAttribute("averageAddHashmap", addMap);
+			
+			HashMap<String, Long> checkOutMap = new HashMap<String, Long>(); 
+			this.getServletContext().setAttribute("checkOutAddHashmap", checkOutMap);
+			
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
+			
 			retrieveServletContextParams();
 			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,6 +109,7 @@ public class eFoods extends HttpServlet {
 			} else if (pageURI.contains("Checkout")) {
 				checkout(pageURI, model, request, response);
 			} else { // Always fall back to the homepage
+				session.setAttribute("freshVisit", "freshVisit");
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 				rd.forward(request, response);
 			}
@@ -240,6 +249,7 @@ public class eFoods extends HttpServlet {
 			String itemName = model.getItemName(key);
 			String finalMessage = quantity + " " + itemName + " added to Cart";
 			request.setAttribute("addtoCartNotificaton", finalMessage);
+			session.setAttribute("itemAddedToCart", "itemAddedToCart");
 		}
 
 		String category = Utility.getCategory(uri);
@@ -312,7 +322,7 @@ public class eFoods extends HttpServlet {
 	private void checkout(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
-
+		
 		ClientBean client = (ClientBean) session.getAttribute("client");
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
 		HashMap<String, Integer> clients = (HashMap<String, Integer>) this.getServletContext().getAttribute("clientList");
@@ -326,6 +336,7 @@ public class eFoods extends HttpServlet {
 			session.setAttribute("emptyCart", true);
 			response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 		} else {
+			session.setAttribute("checkout", "checkout");
 			int orderNum = (Integer) this.getServletContext().getAttribute("orderNum");
 
 			CartBean cartBean = model.generateShopppingCart(basket, client, HST, shipping, discountAt, discountRate);
