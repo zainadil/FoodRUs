@@ -89,6 +89,12 @@
 													<div id = "itemName">
 														${i.name} <br/>
 													</div>
+													<div id = "itemNumber">
+														Item#: ${i.number} <br/>
+													</div>
+													<div id = "itemQtyPerUnit">
+														Per Unit Quantity: ${i.qty} ${i.unit}<br/>
+													</div>
 												</div>
 												
 												<center>
