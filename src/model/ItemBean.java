@@ -50,7 +50,7 @@ public class ItemBean {
 	}
 
 	public void setNumber(String number) {
-		this.number = number;
+		this.number = number.toUpperCase();
 	}
 
 	public String getName() {

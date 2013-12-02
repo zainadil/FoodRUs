@@ -329,7 +329,7 @@ public class eFoods extends HttpServlet {
 		} else {
 			int orderNum = (Integer) this.getServletContext().getAttribute("orderNum");
 
-			CartBean cartBean = model.generateShopppingCart(basket, client, HST, shipping, discountAt, discountRate );
+			CartBean cartBean = model.generateShopppingCart(basket, client, HST, shipping, discountAt, discountRate);
 			int poNum = clients.get(client.getName());
 			System.out.println("Client poNum is: " + poNum);
 
@@ -344,7 +344,7 @@ public class eFoods extends HttpServlet {
 			System.out.println("Client poNum is: " + poNum);
 			this.getServletContext().setAttribute("clientList", clients);
 
-			boolean res = model.export(orderNum, cartBean, filePath);
+			boolean res = model.export(orderNum, cartBean, filePath, filename);
 			request.setAttribute("checkoutOk", res);
 			session.setAttribute("basket", null);
 

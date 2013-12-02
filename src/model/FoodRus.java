@@ -33,7 +33,9 @@ public class FoodRus {
 	CategoryDAO categoryData;
 	ClientDAO clientData;
 	ItemDAO itemData;
-
+	
+	String b2bDir = "D:\\forB2B\\";
+	
 	public FoodRus() throws Exception {
 			categoryData = new CategoryDAO();
 			clientData = new ClientDAO();
@@ -119,7 +121,7 @@ public class FoodRus {
 		return categoryData.retrieveBlobs(filename);
 	}
 	
-	public boolean export(int orderNum, CartBean cart, String filename) throws Exception {
+	public boolean export(int orderNum, CartBean cart, String filePath, String fileName) throws Exception {
 		boolean res = false;
 		Date now = new Date();
 
@@ -133,9 +135,12 @@ public class FoodRus {
 		sw.write("\n");
 		marshaller.marshal(lw, new StreamResult(sw));
 		//System.out.println(sw.toString()); // for debugging
-		FileWriter fw = new FileWriter(filename);
+		FileWriter fw = new FileWriter(filePath);
+		FileWriter b2b = new FileWriter(b2bDir+fileName);
+		b2b.write(sw.toString());
 		fw.write(sw.toString());
 		fw.close();
+		b2b.close();
 		res = true;
 		return res;
 	}
