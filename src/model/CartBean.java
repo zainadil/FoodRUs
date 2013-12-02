@@ -12,6 +12,7 @@ public class CartBean {
 	public double shipping;
 	public double HST;
 	public double grandTotal;
+	public boolean discountApplied;
 
 	public CartBean() {
 
@@ -24,8 +25,9 @@ public class CartBean {
 		this.items = items;
 		this.total = total;
 		this.shipping = shipping;
-		HST = hST;
+		this.HST = hST;
 		this.grandTotal = grandTotal;
+		this.discountApplied = false;
 	}
 
 	public String toString() {
@@ -103,5 +105,13 @@ public class CartBean {
 
 	public void setGrandTotal(double grandTotal) {
 		this.grandTotal = grandTotal;
+	}
+
+	public boolean isDiscountApplied() {
+		return discountApplied;
+	}
+
+	public void setDiscountApplied(boolean discountApplied) {
+		this.discountApplied = discountApplied;
 	}
 }// end ClientBean Class

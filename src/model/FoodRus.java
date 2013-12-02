@@ -71,10 +71,23 @@ public class FoodRus {
 
 	/***
 	 * Function for Shopping Cart
+	 * @param taxRate 
+	 * @param shipping 
+	 * @param discountRate 
+	 * @param discountAt 
 	 * @throws Exception 
 	 ***/
-	public CartBean generateShopppingCart(HashMap<String, Integer> basket, ClientBean client) throws Exception {		
-		double hst = 13; // this is wrong. change it.
+	public CartBean generateShopppingCart(HashMap<String, Integer> basket, ClientBean client, String taxRate, String shipping, String discountAt, String discountRate) throws Exception {		
+		
+		double hst = 0; 
+		hst = Double.parseDouble(taxRate);
+		double shipRate = 0;
+		shipRate = Double.parseDouble(shipping);
+		double discount = 0;
+		discount = Double.parseDouble(discountRate);
+		double valDiscount = 0;
+		valDiscount = Double.parseDouble(discountAt);
+		
 		CartBean tmp = new CartBean();
 		ItemBean item = new ItemBean();
 		List<ItemBean> listItem = new LinkedList<ItemBean>();
@@ -92,8 +105,13 @@ public class FoodRus {
 		tmp.setCustomer(client);
 		tmp.setItems(listItem);
 		tmp.setTotal(total);
+		if (total > valDiscount){
+			shipRate = shipRate - discount;
+			tmp.setDiscountApplied(true);
+		}
+		tmp.setShipping(shipRate);
 		tmp.setHST(hst);
-		tmp.setGrandTotal(total * ((hst / 100) + 1));
+		tmp.setGrandTotal(tmp.getTotal() * ((tmp.getHST() / 100) + 1) + tmp.getShipping());
 		return tmp;
 	}
 
