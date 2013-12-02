@@ -37,6 +37,14 @@
 		</div>	
 	</div>
 			<div id = "main" >
+			
+			<div id = "searchBar">
+			<form name="input" action="" method="post">
+				<input type="text" id="search" name="search" placeholder="enter item#, product name, etc" />
+				<button id="searchbutton">Search</button>
+			</form>
+			</div>
+			
 					<div id="leftMenu">
 						<table id="leftMenuList">
 							<tr>

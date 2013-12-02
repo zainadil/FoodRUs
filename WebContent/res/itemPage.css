@@ -1,3 +1,7 @@
+body, html {
+    height: 100%;
+}
+
 body{
 	position: relative;
 	width: 92%;
@@ -59,7 +63,7 @@ body{
 	background-color: #FFFFFF;
 	width: 170px;
 	float: left;
-	height:475px;
+	height:100%;
 	text-align: center;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
@@ -137,6 +141,7 @@ h5, h6 {
 	
 #main{
 	width:100%;
+	height: 100%;
 }
 	
 #mainContent{
@@ -327,4 +332,17 @@ h5, h6 {
 	padding-left:5%;
 	padding-top:5%;
 	font-size: 20px;
+}
+
+#searchBar {
+	float:right;
+	margin-top: 10px;
+	margin-left: 20px;
+	position: relative;	
+	width: 80%;
+	height: 50px;
+	background-color: #FFFFFF;
+	border: 8px solid #EEEEEE;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 10px #4E707C;
 }
