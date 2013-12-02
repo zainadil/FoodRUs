@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.derby.tools.sysinfo;
+
 import Utilitiy.Utility;
 import model.*;
 
@@ -108,6 +110,8 @@ public class eFoods extends HttpServlet {
 				cart(pageURI, model, request, response);
 			} else if (pageURI.contains("Checkout")) {
 				checkout(pageURI, model, request, response);
+			} else if (pageURI.contains("admin")) {
+					admin(pageURI, model, request, response);
 			} else { // Always fall back to the homepage
 				session.setAttribute("freshVisit", "freshVisit");
 				rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
@@ -359,5 +363,44 @@ public class eFoods extends HttpServlet {
 			rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
 			rd.forward(request, response);
 		}
+	}
+	
+	private void admin(String pageURI, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher rd;
+		
+		int addtoCartCount = 0;
+		Long addtoCartAverage = new Long(0);
+		int checkoutCount = 0;
+		Long checkoutAverage = new Long(0);
+		
+		HashMap<String, Long> addMap = (HashMap<String, Long>) this.getServletContext().getAttribute("averageAddHashmap");
+		HashMap<String, Long> checkoutMap = (HashMap<String, Long>) this.getServletContext().getAttribute("checkOutAddHashmap");
+		
+		for(String key: addMap.keySet()){
+			addtoCartCount++;
+			addtoCartAverage += addMap.get(key);
+		}
+		
+		for(String key: checkoutMap.keySet()){
+			checkoutCount++;
+			checkoutAverage += checkoutMap.get(key);
+		}
+		
+		System.out.println(checkoutCount);
+		System.out.println(checkoutAverage);
+		
+		System.out.println(addtoCartCount);
+		System.out.println(addtoCartAverage);
+		
+		request.setAttribute("checkoutTime", checkoutAverage/checkoutCount);
+		request.setAttribute("checkoutCustomer", checkoutCount);
+		
+		request.setAttribute("addToCartTimes", addtoCartAverage/addtoCartCount);
+		request.setAttribute("cartCustomers", addtoCartCount);
+		
+		rd = getServletContext().getRequestDispatcher("/views/admin.jspx");
+		rd.forward(request, response);
+		
 	}
 }
