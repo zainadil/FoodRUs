@@ -92,10 +92,10 @@
 														${i.name} <br/>
 													</div>
 													<div id = "itemNumber">
-														Item No. : ${i.number} <br/>
+														Item No. ${i.number} <br/>
 													</div>
 													<div id = "itemQtyPerUnit">
-														Per Unit Quantity: ${i.qty} ${i.unit}<br/>
+														Items per Unit: ${i.qty} ${i.unit}<br/>
 													</div>
 												</div>
 												
