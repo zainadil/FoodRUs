@@ -77,10 +77,17 @@
 					</div>
 					
 					<div id = "mainContent">
-						
-						
+						<c:if test="${emptyCart eq true}">
+							<div id="emptyCart">
+								<center>
+									<span style="color: red" id="emptyCartError">Empty Cart.
+										Cannot go to Checkout</span>
+								</center>
+							</div>
+						</c:if>
 					</div>	
 				</div>
+				
 				<div id = "footer">		
 					
 				</div>			

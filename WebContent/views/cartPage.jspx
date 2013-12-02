@@ -81,7 +81,7 @@
 	<div id="main">		
 		<div id = "mainContent">
 			<c:if test="${not empty sCart}">	
-				<c:if test="${not empty sCart}">	
+				<c:if test="${not empty sCart.items}">	
 					
 				<form name="input" id = "input" action="" method="post">
 					<c:forEach var="i" items="${sCart.items}"> 
