@@ -350,3 +350,147 @@ h5, h6 {
 #cartFinalDetails{
 	/* Add CSS here */
 }
+
+
+/*Express Checkout CSS*/
+
+#express {
+	margin: 5em auto;
+	margin-top:10%;
+	margin-left:20%;
+	s background: #fff;
+	border: 8px solid #eee;
+	width: 500px;
+	height: 350px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 10px #4e707c;
+	-webkit-box-shadow: 0 0 10px #4e707c;
+	box-shadow: 0 0 10px #4e707c;
+	text-align: left;
+	position: absolute;
+}
+
+#express a,#login a:visited {
+	color: #0283b2;
+}
+
+#express a:hover {
+	color: #111;
+}
+
+#express h1 {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-bottom: 1px solid #747170;
+	font-size: 20px;
+	margin: 0 0 1.5em;
+	padding: 18px 23px;
+	text-align: center;
+	text-shadow: 0 1px 0 #747170;
+}
+
+#express .register {
+	position: absolute;
+	float: left;
+	margin: 0;
+	line-height: 30px;
+	top: -40px;
+	right: 0;
+	font-size: 11px;
+}
+
+#express p {
+	margin: .5em 25px;
+}
+
+#express div {
+	margin: 25px 25px;
+	background: #eee;
+	padding: 4px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	text-align: right;
+	position: relative;
+}
+
+#express label {
+	float: left;
+	line-height: 30px;
+	padding-left: 10px;
+	font-size: 16px;
+}
+
+#express .field {
+	border: 1px solid #ccc;
+	width: 280px;
+	font-size: 12px;
+	line-height: 1em;
+	padding: 4px;
+	-moz-box-shadow: inset 0 0 5px #ccc;
+	-webkit-box-shadow: inset 0 0 5px #ccc;
+	box-shadow: inset 0 0 5px #ccc;
+}
+
+#express div.submit {
+	background: none;
+	margin: 1em 25px;
+	text-align: center;
+}
+
+#express div.submit label {
+	float: none;
+	display: inline;
+	font-size: 11px;
+}
+
+#express button {
+	border: 0;
+	padding: 0 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	text-shadow: #007dab 0 1px 0;
+	background: #0092c8;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+	cursor: pointer;
+}
+
+#express .forgot {
+	text-align: right;
+	font-size: 11px;
+}
+
+#express .back {
+	padding: 1em 0;
+	border-top: 1px solid #eee;
+	text-align: right;
+	font-size: 11px;
+}
+
+#express .error {
+	float: left;
+	position: absolute;
+	left: 95%;
+	top: -5px;
+	background: #890000;
+	padding: 5px 10px;
+	font-size: 11px;
+	color: #fff;
+	text-shadow: #500 0 1px 0;
+	text-align: left;
+	white-space: nowrap;
+	border: 1px solid #500;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0 0 5px #700;
+	-webkit-box-shadow: 0 0 5px #700;
+	box-shadow: 0 0 5px #700;
+}
+

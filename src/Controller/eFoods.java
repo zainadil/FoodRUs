@@ -433,14 +433,16 @@ public class eFoods extends HttpServlet {
 		System.out.println(addtoCartCount);
 		System.out.println(addtoCartAverage);
 		
-		request.setAttribute("checkoutTime", checkoutAverage/checkoutCount);
-		request.setAttribute("checkoutCustomer", checkoutCount);
-		
-		request.setAttribute("addToCartTimes", addtoCartAverage/addtoCartCount);
-		request.setAttribute("cartCustomers", addtoCartCount);
+		if(checkoutCount !=  0){
+			request.setAttribute("checkoutTime", checkoutAverage/checkoutCount);
+			request.setAttribute("checkoutCustomer", checkoutCount);
+		}
+		if(addtoCartCount != 0){
+			request.setAttribute("addToCartTimes", addtoCartAverage/addtoCartCount);
+			request.setAttribute("cartCustomers", addtoCartCount);
+		}
 		
 		rd = getServletContext().getRequestDispatcher("/views/admin.jspx");
 		rd.forward(request, response);
-		
 	}
 }

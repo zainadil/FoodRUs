@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="false" />
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="StyleSheet"
+	href="${pageContext.request.contextPath}/res/itemPage.css"
+	type="text/css" title="cse4413Front" media="screen, print" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
+</head>
+	<body>
+		<div id="TopMenu">
+				<div id="topLogo">
+					<a href="${pageContext.request.contextPath}/eFoods/">
+			 <img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
+			</a>
+				</div>
+				
+		<div id="TopMenuList">
+				<div id="TopMenuList">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+					<c:if test="${loggedIn eq null}">
+						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+					</c:if>
+					<c:if test="${loggedIn eq true}">
+						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+					</c:if>
+					
+				</div>
+		</div>	
+	</div>
+	
+			<div id = "main" >
+			
+			<div id = "searchBar">
+			<form name="input" action="" method="post">
+				<input type="text" id="search" name="search" placeholder="enter item#, product name, etc" />
+				<button id="searchbutton">Search</button>
+			</form>
+			</div>
+			
+					<div id="leftMenu">
+						<table id="leftMenuList">
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
+											<strong>Cereal</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
+											<strong>Cheese</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
+											<strong>Ice Cream</strong>
+										</h4></a></td>
+							</tr>
+							<tr>
+								<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
+											<strong>Meat</strong>
+										</h4></a></td>
+							</tr>
+						</table>
+					</div>
+					
+					<div id = "mainContent">
+					
+					
+						
+						<div id = "ExpressCheckoutForm">
+							<div id = "itemHeading">
+								Express Checkout
+							</div>
+							<form id="express" action="" method="POST">
+		
+								<!--  Use this for notification - Example incorrect Login Credentials, Item Number doesn't Exist etc
+								<c:if test="${loggedInError eq true}">
+									<center>
+										<span style="color: red" id="loggedInError">Invalid Username or Password</span>
+									</center>
+								</c:if>
+								<c:if test="${signInRequired eq true}">
+									<center>
+										<span style="color: blue" id="loggedInError">Please login to continue... </span>
+									</center>
+								</c:if>
+							
+							 	-->
+							 	
+							 	<div id = "expressItemNumber">
+									<label for="expressItemNumber">Item Number</label>
+									<input type="text" name="itemNumber" value="" class="field required" placeholder="Item Number"/>
+								</div>
+							 	
+							 	<div id = "expressItemQuantity">
+									<label for="expressItemQuantity">Item Quantity</label>
+									<input type="text" name="itemQuantity" value="" class="field required" placeholder="Quantity"/>
+								</div>
+							 	
+								<div id = "userName">
+									<label for="login_username">Acc. Number</label>
+									<input type="text" name="accountNumber" value="" class="field required" placeholder="Account Number"/>
+								</div>
+					
+								<div>
+									<label for="login_password">Password</label>
+									<input type="password" name="password" value="" class="field required" placeholder="Password"/>
+								</div>
+					
+								<div class="submit" align="center">
+									<button type="submit" id="checkoutButton" name="checkoutButton" >
+										Checkout
+									</button>		
+								</div>
+							 
+							</form>
+						
+						
+						</div>
+							
+					</div>
+					
+				</div>
+				<div id = "footer">		
+					
+			   </div>			
+		</body>
+	</html>
+</jsp:root>
