@@ -43,8 +43,8 @@
 			<div id = "main">
 			
 			<div id = "searchBar">
-			<form name="input" action="" method="post">
-				<input type="text" id="search" name="search" placeholder="enter item#, product name, etc" />
+			<form name="input" action="${pageContext.request.contextPath}/eFoods/Category/" method="post">
+				<input type="text" id="search" name="search" placeholder="Enter Item Number or Product Name... " />
 				<button id="searchbutton">Search</button>
 			</form>
 			</div>

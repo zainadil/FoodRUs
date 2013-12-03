@@ -225,6 +225,22 @@ public class eFoods extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
+	
+
+	private void category_search(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response, String search_string) throws Exception {
+		HttpSession session = request.getSession();
+		RequestDispatcher rd;
+		List<CategoryBean> catBean = model.retrieveCategories();
+		request.setAttribute("catBean", catBean);
+		List<ItemBean> itemList = model.retrieveItemsBySearch(search_string);
+		request.setAttribute("itemList", itemList);
+		session.setAttribute("itemsSearched", itemList);
+		
+		request.setAttribute("searching", search_string);
+		session.setAttribute("searching", search_string);
+		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
+		rd.forward(request, response);
+	}
 
 	/**
 	 * Client has gone to the category page, here we will forward them
@@ -248,7 +264,15 @@ public class eFoods extends HttpServlet {
 		HttpSession session = request.getSession();
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
 		RequestDispatcher rd;
-
+		String category = Utility.getCategory(uri);
+		if ( category.equals("") && session.getAttribute("itemsSearched") != null) {
+			request.setAttribute("itemList", session.getAttribute("itemsSearched"));
+			request.setAttribute("searching", session.getAttribute("searching"));
+		}
+		if (!category.equals("")){
+			session.setAttribute("itemsSearched", null);
+			session.setAttribute("searching", null);
+		}
 		if (request.getParameter("addedIDandQty") != null) {
 			String updatedIDandQty = request.getParameter("addedIDandQty");
 			System.out.println(updatedIDandQty);
@@ -265,47 +289,17 @@ public class eFoods extends HttpServlet {
 			session.setAttribute("itemAddedToCart", "itemAddedToCart");
 		}
 
-		String category = Utility.getCategory(uri);
 		List<CategoryBean> catBean = model.retrieveCategories();
 		request.setAttribute("catBean", catBean);
-		List<ItemBean> itemList = model.retrieveItems(category);
-		request.setAttribute("itemList", itemList);
+		if (request.getAttribute("itemList") == null){
+			List<ItemBean> itemList = model.retrieveItems(category);
+			request.setAttribute("itemList", itemList);
+		}
 		request.setAttribute("category", category);
 		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
 		rd.forward(request, response);
 	}
 
-	private void category_search(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response, String search_string) throws Exception {
-
-		HttpSession session = request.getSession();
-		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
-		RequestDispatcher rd;
-
-		if (request.getParameter("addedIDandQty") != null) {
-			String updatedIDandQty = request.getParameter("addedIDandQty");
-			System.out.println(updatedIDandQty);
-			String[] splits = updatedIDandQty.split(";");
-
-			String key = splits[0];
-			int quantity = Integer.parseInt(splits[1]);
-			if (basket.containsKey(key)) basket.put(key, (basket.get(key) + quantity));
-			else basket.put(key, quantity);
-
-			String itemName = model.getItemName(key);
-			String finalMessage = quantity + " " + itemName + " added to Cart";
-			request.setAttribute("addtoCartNotificaton", finalMessage);
-		}
-
-		String category = Utility.getCategory(uri);
-		List<CategoryBean> catBean = model.retrieveCategories();
-		request.setAttribute("catBean", catBean);
-		List<ItemBean> itemList = model.retrieveItemsBySearch(search_string);
-		request.setAttribute("itemList", itemList);
-		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
-		rd.forward(request, response);
-	}
-	
-	
 	/**
 	 * Client has chosen to go to the Cart Page (Basket Page). Here the HashMap
 	 * from above is displayed, if null then it is shown as empty.
@@ -321,7 +315,6 @@ public class eFoods extends HttpServlet {
 	 * @param response
 	 * @throws Exception
 	 */
-
 	private void cart(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
