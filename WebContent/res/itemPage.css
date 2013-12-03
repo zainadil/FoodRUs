@@ -22,9 +22,10 @@ body{
 
 #TopMenu {
 	margin-top: 25px;
-	margin-left: 20px;
+	margin-left: -2px;
 	position: relative;	
-	width: 104%;
+	/* width: 104%; */
+	width:1183px;
 	height: 45px;
 	background-color: #FFFFFF;
 	border: 8px solid #EEEEEE;
@@ -56,9 +57,10 @@ body{
 
 #leftMenu {
 	margin-left: 20px;
-	margin-top:20px;
+	/* margin-top:20px; */
+	margin-top:-66px;
 	position: relative;
-	top: 4%;
+	/* top: 4%; */
 	padding-left: 15px;
 	background-color: #FFFFFF;
 	width: 170px;
@@ -145,24 +147,28 @@ h5, h6 {
 }
 	
 #mainContent{
-	margin-left:20%;
+	margin-left:246px;
+	min-width: 1000px;
+	max-width: 1000px;
 }	
 	
 #items {
-	margin-left: 20px;
-	margin-top:20px;
-	margin-right: 12px;
-	position: relative;
-	top: 4%;
+	margin-left: -13px;
+	margin-top: 13px;
+	margin-right: 26px;
+	/* position: relative;
+	top: 4%; */
 	padding-left: 15px;
 	background-color: #FFFFFF;
-	width: 18%;
+	width: 204px;
 	float: left;
 	height: 220px;
 	text-align: center;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
 	box-shadow: 0 0 10px #4E707C;
+	min-width: 289px;
+	max-width: 300px;
 }
 
 #items:hover{
@@ -277,7 +283,7 @@ h5, h6 {
 	margin-top: 9px;
 }
 
-#footer{
+#{
 	clear: both;
 	margin-top: 25px;
 	margin-left: 20px;
@@ -335,11 +341,13 @@ h5, h6 {
 }
 
 #searchBar {
-	float:right;
+	/* float:right; */
 	margin-top: 10px;
-	margin-left: 20px;
+	/* margin-left: 20px; */
+	margin-left:210px;
 	position: relative;	
-	width: 80%;
+	/* width: 80%; */
+	width:970px;
 	height: 50px;
 	background-color: #FFFFFF;
 	border: 8px solid #EEEEEE;

@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
 	<body>
+	<div align="center" id="wrap">
 		<div id="TopMenu">
 				<div id="topLogo">
 				<a href="${pageContext.request.contextPath}/eFoods/">
@@ -150,7 +151,8 @@
 				
 				<div id = "footer">		
 					
-				</div>			
+				</div>	
+			</div>		
 		</body>
 	</html>
 </jsp:root>
