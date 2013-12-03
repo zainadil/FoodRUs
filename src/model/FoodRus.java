@@ -121,8 +121,8 @@ public class FoodRus {
 			tmp.setDiscountApplied(true);
 		}
 		tmp.setShipping(shipRate);
-		tmp.setHST(hst);
-		tmp.setGrandTotal(tmp.getTotal() * ((tmp.getHST() / 100) + 1) + tmp.getShipping());
+		tmp.setHST(tmp.getTotal() * (hst/100));
+		tmp.setGrandTotal(tmp.getTotal() + tmp.getHST() + tmp.getShipping());
 		return tmp;
 	}
 
