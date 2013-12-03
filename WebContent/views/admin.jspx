@@ -26,6 +26,9 @@
 				
 		<div id="TopMenuList">
 				<div id="TopMenuList">
+					<c:if test="${loggedIn eq true}">
+						Greetings, ${client.name} 
+					</c:if>	
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
 					<c:if test="${loggedIn eq null}">

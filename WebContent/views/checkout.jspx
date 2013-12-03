@@ -30,8 +30,8 @@
 			Your order has not been processed! Please check again later 
 		</c:if>
 		
-		<c:if test="${checkoutOk eq true}">
-			<h>Your order is being processed!</h><br/>
+		<c:if test="${checkoutOk eq true}">					
+			<h>Thank you for purchasing through us, ${client.name}. Your order is currently being processed!</h><br/>
 			Please check your Purchase Order at the following link : <a href ="${pageContext.request.contextPath}${filename}">PO File</a>
 		</c:if>
 	</div>

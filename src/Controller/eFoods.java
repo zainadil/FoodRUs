@@ -41,12 +41,12 @@ public class eFoods extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		try {
-			HashMap<String, Long> addMap = new HashMap<String, Long>(); 
+			HashMap<String, Long> addMap = new HashMap<String, Long>();
 			this.getServletContext().setAttribute("averageAddHashmap", addMap);
-			
-			HashMap<String, Long> checkOutMap = new HashMap<String, Long>(); 
+
+			HashMap<String, Long> checkOutMap = new HashMap<String, Long>();
 			this.getServletContext().setAttribute("checkOutAddHashmap", checkOutMap);
-			
+
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
 			retrieveServletContextParams();
@@ -96,18 +96,17 @@ public class eFoods extends HttpServlet {
 				session.setAttribute("emptyCart", null);
 			}
 
-			if (request.getParameter("search") != null)
-			{
+			if (request.getParameter("search") != null) {
 				// display items matching the category
 				String search_string = request.getParameter("search");
 				category_search(pageURI, model, request, response, search_string);
-			}
-			else
-			{
-				// Determine what the Controller should do and where it should be
-				// passed to.
+			} else {
+				// Determine what the Controller should do and where it should
+				// be passed to.
 				if (pageURI.contains("Category")) {
 					category(pageURI, model, request, response);
+				} else if (pageURI.contains("Express")) {
+					express(pageURI, model, request, response);
 				} else if (pageURI.contains("Login")) {
 					login(pageURI, model, request, response);
 				} else if (pageURI.contains("Logout")) {
@@ -117,20 +116,119 @@ public class eFoods extends HttpServlet {
 				} else if (pageURI.contains("Checkout")) {
 					checkout(pageURI, model, request, response);
 				} else if (pageURI.contains("admin")) {
-						admin(pageURI, model, request, response);
+					admin(pageURI, model, request, response);
 				} else { // Always fall back to the homepage
-					
+
 					session.setAttribute("freshVisit", "freshVisit");
 					rd = getServletContext().getRequestDispatcher("/views/homePage.jspx");
 					rd.forward(request, response);
 				}
 			}
-			
+
 		} catch (Exception e) {
 			// Why we silence problem? No Good.
 			System.out.println("Error Caught: " + e);
 			e.printStackTrace();
 		}
+	}
+
+	/*
+	 * This is for express checking out. It verifies login, then adds item to
+	 * cart (including any other items that you may have). and then it
+	 * automaticaly sends you to the checkout page.
+	 * 
+	 * @param pageURI
+	 * 
+	 * @param model
+	 * 
+	 * @param request
+	 * 
+	 * @param response
+	 * 
+	 * @throws Exception
+	 */
+	private void express(String pageURI, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/views/express.jspx");
+		ClientBean tmp = null;
+		HttpSession session = request.getSession();
+		String error = "";
+		boolean loggedIn = false, itemVerified = false;
+		String itemNum = null;
+		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
+		HashMap<String, Integer> clients = (HashMap<String, Integer>) this.getServletContext().getAttribute("clientList");
+		int orderNum = (Integer) this.getServletContext().getAttribute("orderNum");
+		if (request.getParameter("checkoutButton") != null) {
+			// verify Login
+			if (session.getAttribute("client") == null) {
+				String accountNumber = request.getParameter("accountNumber");
+				request.setAttribute("accountNumber", accountNumber);
+				String password = request.getParameter("password");
+				// verify credentials, if true log them in.
+				if ((tmp = model.checkClient(accountNumber, password)) != null) {
+					if (clients == null) {
+						// should never enter here, but okay...
+						System.out.println("Clients list is null.");
+					}
+					loggedIn = true;
+					if (!clients.containsKey(tmp.getName())) {
+						clients.put(tmp.getName(), 1);
+						this.getServletContext().setAttribute("clientList", clients);
+					}
+
+					request.setAttribute("loggedIn", loggedIn);
+					session.setAttribute("loggedIn", loggedIn);
+					session.setAttribute("client", tmp);
+					request.setAttribute("client", tmp);
+				} else {
+					loggedIn = false;
+					error += "Unable to login. Please check credentials.";
+					request.setAttribute("error", error);
+				}
+			} else {
+				loggedIn = true;
+				tmp = (ClientBean) session.getAttribute("client");
+			}
+
+			// add item to cart
+			itemNum = request.getParameter("itemNumber");
+			if (model.getItemName(itemNum) != null) {
+				// itemQuantity assume is positive, checked at JS
+				// add to cart
+				String itemIDandQuantity = itemNum + ";" + request.getParameter("itemQuantity");
+				System.out.println("Item: " + itemNum + itemIDandQuantity);
+				model.addToBasket(basket, itemIDandQuantity);
+				session.setAttribute("itemAddedToCart", "itemAddedToCart");
+				itemVerified = true;
+			} else {
+				if (!error.equals("")) error += "<br//>";
+				error += "Item does not exist. Please try a different a valid item number.";
+				request.setAttribute("error", error);
+			}
+
+			// if both true (loggedIn and Added item to cart) then checkout page
+			if (loggedIn && itemVerified) {
+				CartBean cartBean = model.generateShopppingCart(basket, tmp, HST, shipping, discountAt, discountRate);
+				int poNum = clients.get(tmp.getName());
+
+				String fileName = cartBean.customer.getNumber() + "_" + poNum;
+				String path = "/POs/po" + fileName + ".xml";
+				String filePath = this.getServletContext().getRealPath(path);
+				request.setAttribute("filename", path);
+				poNum++;
+				clients.put(tmp.getName(), poNum);
+				poNum = clients.get(tmp.getName());
+				this.getServletContext().setAttribute("clientList", clients);
+
+				boolean res = model.export(orderNum, cartBean, filePath, fileName);
+				request.setAttribute("checkoutOk", res);
+				session.setAttribute("basket", null);
+
+				this.getServletContext().setAttribute("orderNum", ++orderNum);
+				rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
+			}
+		}
+		rd.forward(request, response);
+
 	}
 
 	/**
@@ -210,6 +308,8 @@ public class eFoods extends HttpServlet {
 				request.setAttribute("loggedIn", loggedIn);
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("client", tmp);
+				request.setAttribute("client", tmp);
+
 				if (session.getAttribute("returnTo") == null) response.sendRedirect(this.getServletContext().getContextPath() + "/eFoods");
 				else response.sendRedirect((String) session.getAttribute("returnTo"));
 			} else {
@@ -225,9 +325,9 @@ public class eFoods extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
-	
 
-	private void category_search(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response, String search_string) throws Exception {
+	private void category_search(String uri, FoodRus model, HttpServletRequest request, HttpServletResponse response, String search_string)
+			throws Exception {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
 		List<CategoryBean> catBean = model.retrieveCategories();
@@ -235,7 +335,7 @@ public class eFoods extends HttpServlet {
 		List<ItemBean> itemList = model.retrieveItemsBySearch(search_string);
 		request.setAttribute("itemList", itemList);
 		session.setAttribute("itemsSearched", itemList);
-		
+
 		request.setAttribute("searching", search_string);
 		session.setAttribute("searching", search_string);
 		rd = getServletContext().getRequestDispatcher("/views/itemPage.jspx");
@@ -265,33 +365,25 @@ public class eFoods extends HttpServlet {
 		HashMap<String, Integer> basket = (HashMap<String, Integer>) session.getAttribute("basket");
 		RequestDispatcher rd;
 		String category = Utility.getCategory(uri);
-		if ( category.equals("") && session.getAttribute("itemsSearched") != null) {
+		if (category.equals("") && session.getAttribute("itemsSearched") != null) {
 			request.setAttribute("itemList", session.getAttribute("itemsSearched"));
 			request.setAttribute("searching", session.getAttribute("searching"));
 		}
-		if (!category.equals("")){
+		if (!category.equals("")) {
 			session.setAttribute("itemsSearched", null);
 			session.setAttribute("searching", null);
 		}
 		if (request.getParameter("addedIDandQty") != null) {
 			String updatedIDandQty = request.getParameter("addedIDandQty");
 			System.out.println(updatedIDandQty);
-			String[] splits = updatedIDandQty.split(";");
-
-			String key = splits[0];
-			int quantity = Integer.parseInt(splits[1]);
-			if (basket.containsKey(key)) basket.put(key, (basket.get(key) + quantity));
-			else basket.put(key, quantity);
-
-			String itemName = model.getItemName(key);
-			String finalMessage = quantity + " " + itemName + " added to Cart";
+			String finalMessage = model.addToBasket(basket, updatedIDandQty);
 			request.setAttribute("addtoCartNotificaton", finalMessage);
 			session.setAttribute("itemAddedToCart", "itemAddedToCart");
 		}
 
 		List<CategoryBean> catBean = model.retrieveCategories();
 		request.setAttribute("catBean", catBean);
-		if (request.getAttribute("itemList") == null){
+		if (request.getAttribute("itemList") == null) {
 			List<ItemBean> itemList = model.retrieveItems(category);
 			request.setAttribute("itemList", itemList);
 		}
@@ -330,7 +422,8 @@ public class eFoods extends HttpServlet {
 			if (quantity == 0) basket.remove(key);
 			else basket.put(key, quantity);
 		}
-		CartBean cartBean = model.generateShopppingCart(basket, (ClientBean) request.getSession().getAttribute("client"), HST , shipping, discountAt, discountRate );
+		CartBean cartBean = model.generateShopppingCart(basket, (ClientBean) request.getSession().getAttribute("client"), HST, shipping, discountAt,
+				discountRate);
 		request.setAttribute("sCart", cartBean);
 		RequestDispatcher rd;
 
@@ -397,44 +490,44 @@ public class eFoods extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
-	
+
 	private void admin(String pageURI, FoodRus model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		RequestDispatcher rd;
-		
+
 		int addtoCartCount = 0;
 		Long addtoCartAverage = new Long(0);
 		int checkoutCount = 0;
 		Long checkoutAverage = new Long(0);
-		
+
 		HashMap<String, Long> addMap = (HashMap<String, Long>) this.getServletContext().getAttribute("averageAddHashmap");
 		HashMap<String, Long> checkoutMap = (HashMap<String, Long>) this.getServletContext().getAttribute("checkOutAddHashmap");
-		
-		for(String key: addMap.keySet()){
+
+		for (String key : addMap.keySet()) {
 			addtoCartCount++;
 			addtoCartAverage += addMap.get(key);
 		}
-		
-		for(String key: checkoutMap.keySet()){
+
+		for (String key : checkoutMap.keySet()) {
 			checkoutCount++;
 			checkoutAverage += checkoutMap.get(key);
 		}
-		
+
 		System.out.println(checkoutCount);
 		System.out.println(checkoutAverage);
-		
+
 		System.out.println(addtoCartCount);
 		System.out.println(addtoCartAverage);
-		
-		if(checkoutCount !=  0){
-			request.setAttribute("checkoutTime", checkoutAverage/checkoutCount);
+
+		if (checkoutCount != 0) {
+			request.setAttribute("checkoutTime", checkoutAverage / checkoutCount);
 			request.setAttribute("checkoutCustomer", checkoutCount);
 		}
-		if(addtoCartCount != 0){
-			request.setAttribute("addToCartTimes", addtoCartAverage/addtoCartCount);
+		if (addtoCartCount != 0) {
+			request.setAttribute("addToCartTimes", addtoCartAverage / addtoCartCount);
 			request.setAttribute("cartCustomers", addtoCartCount);
 		}
-		
+
 		rd = getServletContext().getRequestDispatcher("/views/admin.jspx");
 		rd.forward(request, response);
 	}

@@ -198,4 +198,16 @@ public class FoodRus {
 	public String getItemName(String itemID) throws SQLException{
 		return itemData.getItemName(itemID);
 	}
+	
+	public String addToBasket(HashMap<String, Integer> basket, String updatedIDandQty) throws SQLException {
+		String finalMessage = null;
+		String[] splits = updatedIDandQty.split(";");
+		String key = splits[0];
+		int quantity = Integer.parseInt(splits[1]);
+		if (basket.containsKey(key)) basket.put(key, (basket.get(key) + quantity));
+		else basket.put(key, quantity);
+		String itemName = getItemName(key);
+		finalMessage = quantity + " " + itemName + " added to Cart";
+		return finalMessage;
+	}
 }// end business Logic

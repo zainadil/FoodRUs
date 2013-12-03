@@ -42,10 +42,10 @@
 			<div id = "main" >
 			
 			<div id = "searchBar">
-			<form name="input" action="" method="post">
-				<input type="text" id="search" name="search" placeholder="enter item#, product name, etc" />
-				<button id="searchbutton">Search</button>
-			</form>
+				<form name="input" action="${pageContext.request.contextPath}/eFoods/Category/" method="post">
+					<input type="text" id="search" name="search" placeholder="Enter Item Number or Product Name... " />
+					<button id="searchbutton">Search</button>
+				</form>
 			</div>
 			
 					<div id="leftMenu">
@@ -86,20 +86,29 @@
 							</div>
 							<form id="express" action="" method="POST">
 		
-								<!--  Use this for notification - Example incorrect Login Credentials, Item Number doesn't Exist etc
-								<c:if test="${loggedInError eq true}">
+								<!--    Use this for notification - Example incorrect Login Credentials, Item Number doesn't Exist etc-->
+								<c:if test="${ not empty error}">
 									<center>
-										<span style="color: red" id="loggedInError">Invalid Username or Password</span>
+										<span style="color: red" id="loggedInError">${error}</span>
 									</center>
 								</c:if>
-								<c:if test="${signInRequired eq true}">
-									<center>
-										<span style="color: blue" id="loggedInError">Please login to continue... </span>
-									</center>
-								</c:if>
+
 							
-							 	-->
-							 	
+							 
+		 						<c:if test="${loggedIn eq null}">
+									<div id = "userName">
+										<label for="login_username">Acc. Number</label>
+										<input type="text" name="accountNumber" value="" class="field required" placeholder="Account Number"/>
+									</div>
+						
+									<div>
+										<label for="login_password">Password</label>
+										<input type="password" name="password" value="" class="field required" placeholder="Password"/>
+									</div>
+								</c:if>
+								<c:if test="${loggedIn eq true}">
+									Logged in as: ${client.name} 
+								</c:if>
 							 	<div id = "expressItemNumber">
 									<label for="expressItemNumber">Item Number</label>
 									<input type="text" name="itemNumber" value="" class="field required" placeholder="Item Number"/>
@@ -109,17 +118,7 @@
 									<label for="expressItemQuantity">Item Quantity</label>
 									<input type="text" name="itemQuantity" value="" class="field required" placeholder="Quantity"/>
 								</div>
-							 	
-								<div id = "userName">
-									<label for="login_username">Acc. Number</label>
-									<input type="text" name="accountNumber" value="" class="field required" placeholder="Account Number"/>
-								</div>
-					
-								<div>
-									<label for="login_password">Password</label>
-									<input type="password" name="password" value="" class="field required" placeholder="Password"/>
-								</div>
-					
+
 								<div class="submit" align="center">
 									<button type="submit" id="checkoutButton" name="checkoutButton" >
 										Checkout
