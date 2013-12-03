@@ -145,7 +145,8 @@ public class FoodRus {
 		marshaller.marshal(lw, new StreamResult(sw));
 		//System.out.println(sw.toString()); // for debugging
 		FileWriter fw = new FileWriter(filePath);
-		FileWriter b2b = new FileWriter(b2bDir+fileName+".xml");
+		//System.out.println(b2bDir+fileName+".xml");
+		FileWriter b2b = new FileWriter(b2bDir+"\\"+fileName+".xml");
 		b2b.write(sw.toString());
 		fw.write(sw.toString());
 		fw.close();
