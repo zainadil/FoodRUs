@@ -19,16 +19,14 @@
 </head>
 	<body>
 		<form action="" method="POST">
-
 			<div id="TopMenu">
-				
 				<div id="topLogo">
 					<a href="${pageContext.request.contextPath}/eFoods/">
 						<img src="${pageContext.request.contextPath}/res/Logo.png" alt="FoodRUs" id="Logo" />
 					</a>
 				</div>
-				
-				<div id="TopMenuList">
+		<div id="TopMenuList">
+			<div id="TopMenuList">
 				<c:if test="${loggedIn eq true}">
 					Thank you for considering us, ${client.name} 
 				</c:if>	
@@ -44,6 +42,7 @@
 				</c:if>
 				
 			</div>
+		</div>
 			</div>
 			<div id = "main">
 			
@@ -92,14 +91,18 @@
 				<form name="input" id = "input" action="" method="post">
 					<c:forEach var="i" items="${sCart.items}"> 
 				 		<div id = "cartItems">
-								<div id = "cartItemName"> ${i.name} </div>
-								<div id = "cartItemDetails">
-								 	<b>Item ID: </b> ${fn:toUpperCase(i.number)} <br/>
-									<b>Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
-									<b>Quantity </b> <input type="text" style = "width:30px" value="${i.qty}" id = "${i.number}"></input><br/>
-									<b>Extended Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.extendedPrice}"/><br/>					
-									<input type="submit" id = "updateButtons" value="Update Quantity" name="updateQuantity" onClick = "return updateQuanity('${i.number}');"/>
-								</div>
+							<div id = "cartItemName"> ${i.name} </div>
+							<div id = "cartItemNum"><b>Item ID: </b> ${fn:toUpperCase(i.number)}
+												<br/><b>Item Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
+							
+							</div>
+							<div id = "cartItemDetails">
+								<b>Extended Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.extendedPrice}"/>					
+							</div>
+							<div id = "updateButton">
+								<b>Quantity </b> <input type="text" style = "width:50px; align: center;" value="${i.qty}" id = "${i.number}"></input><br/>
+								<input type="submit" id = "updateButtons" value="Update Item" name="updateQuantity" onClick = "return updateQuanity('${i.number}');"/>							
+							</div>
 						</div>		
 				 	</c:forEach>
 				 	<input type="hidden" name = "updatedIDandQty" id="updatedIDandQty" value = ""/>
@@ -109,24 +112,26 @@
 				
 				<!-- Apply Final CSS later -->
 				
-				<p>Total: <fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.total}"/> </p>
+				<p><b>Total:	</b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.total}"/> </p>
 				
-				<p>Tax Rate: ${sCart.HST} %</p>
+				<p><b>Tax:	</b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.HST}"/> </p>
 				
 				<c:if test = "${sCart.discountApplied eq true}">
-					Shipping: <fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.shipping}"/> - Order over $100 - Discount applied
+					<span style="color: blue;"> (Discounted) </span> <b> Shipping: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.shipping}"/>
 				</c:if>
 				
 				<c:if test = "${sCart.discountApplied eq false}">
-					Shipping: <fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.shipping}"/>
+					<b> Shipping: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.shipping}"/>
 				</c:if>
 				
-				<p> Grand Total: <fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.grandTotal}"/></p>
-			
+				<p> <b>Grand Total: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${sCart.grandTotal}"/></p>
+				<br/>
+				
+				<div id="cartButtons">
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
 					
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Category/cereal">Continue Shopping</a>
-				
+				</div>
 			</div>
 			
 				</c:if>

@@ -29,4 +29,4 @@ function closeNotificatonDiv(){
 	document.getElementById("addtoCartNotification").style.display=" none";
 }
 
-window.setTimeout( closeNotificatonDiv, 2000 );
+window.setTimeout( closeNotificatonDiv, 1 );

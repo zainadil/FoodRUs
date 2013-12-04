@@ -25,17 +25,22 @@
 				</div>
 				
 		<div id="TopMenuList">
-				<div id="TopMenuList">
-					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
-					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-					<c:if test="${loggedIn eq null}">
-						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
-					</c:if>
-					<c:if test="${loggedIn eq true}">
-						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
-					</c:if>
-					
-				</div>
+			<div id="TopMenuList">
+				<c:if test="${loggedIn eq true}">
+					Thank you for considering us, ${client.name} 
+				</c:if>	
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Express">Express Checkout</a>
+				
+				<c:if test="${loggedIn eq null}">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
+				</c:if>
+				<c:if test="${loggedIn eq true}">
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
+				</c:if>
+				
+			</div>
 		</div>	
 	</div>
 	
@@ -85,6 +90,7 @@
 							<div id = "itemHeading">
 								Express Checkout
 							</div>
+							
 							<form id="express" action="" method="POST">
 		
 								<!--    Use this for notification - Example incorrect Login Credentials, Item Number doesn't Exist etc-->
@@ -94,8 +100,6 @@
 									</center>
 								</c:if>
 
-							
-							 
 		 						<c:if test="${loggedIn eq null}">
 									<div id = "userName">
 										<label for="login_username">Acc. Number</label>
@@ -107,9 +111,12 @@
 										<input type="password" name="password" value="" class="field required" placeholder="Password"/>
 									</div>
 								</c:if>
-								<c:if test="${loggedIn eq true}">
-									Logged in as: ${client.name} 
-								</c:if>
+								<center>
+								
+									<c:if test="${loggedIn eq true}">
+										<b>${client.name}</b><br/>
+									</c:if>
+								</center>
 							 	<div id = "expressItemNumber">
 									<label for="expressItemNumber">Item Number</label>
 									<input type="text" name="itemNumber" value="" class="field required" placeholder="Item Number"/>

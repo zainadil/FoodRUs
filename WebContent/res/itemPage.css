@@ -2,12 +2,6 @@ body, html {
     height: 100%;
 }
 
-body{
-	position: relative;
-	width: 92%;
-	height: 90%;
-}
-
 #topLogo{
 	position: relative;
 	width: 0%;
@@ -17,14 +11,15 @@ body{
 
 #Logo{
 	height:40px;
-	width: 200px;	
+	width: 200px;
+	margin-left: 10px;
+	margin-top: 3px;
 }
 
 #TopMenu {
 	margin-top: 25px;
 	margin-left: -2px;
 	position: relative;	
-	/* width: 104%; */
 	width:1183px;
 	height: 45px;
 	background-color: #FFFFFF;
@@ -56,16 +51,15 @@ body{
 }
 
 #leftMenu {
-	margin-left: 20px;
+	margin-left: 0px;
 	/* margin-top:20px; */
 	margin-top:-66px;
 	position: relative;
-	/* top: 4%; */
 	padding-left: 15px;
 	background-color: #FFFFFF;
 	width: 170px;
 	float: left;
-	height:100%;
+	height: 763px;
 	text-align: center;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
@@ -153,11 +147,9 @@ h5, h6 {
 }	
 	
 #items {
-	margin-left: -13px;
+	margin-left: -35px;
 	margin-top: 13px;
-	margin-right: 26px;
-	/* position: relative;
-	top: 4%; */
+	margin-right: 47px;
 	padding-left: 15px;
 	background-color: #FFFFFF;
 	width: 204px;
@@ -229,36 +221,50 @@ h5, h6 {
 }
 
 #cartItems {
-	margin-left: 20px;
-	margin-top:20px;
-	margin-right: 12px;
+	margin-left: -36px;
+	margin-top: 11px;
+	margin-right: 10px;
 	position: relative;
-	top: 4%;
 	padding-left: 15px;
 	background-color: #FFFFFF;
-	width: 92%;
+	width: 955px;
 	float: left;
-	height: 170px;
-	text-align: center;
+	height: 115.75px;
 	border: 8px solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
 	box-shadow: 0 0 10px #4E707C;
 }
 
 #cartItemName{
-	width:70%;
+	width:500px;
 	text-align: left;
-	padding-top:10px;
+	padding-top: 18px;
 	font-size: 25px;
-	font-weight: bold;
-	font-family: Coronetscript, cursive;
+	font-family: "Century Gothic";
+}
+#cartItemNum{
+	width:200px;
+	text-align: left;
+	padding-top:2px;
+	font-size: 18px;
+	font-family: "Century Gothic";
 }
 
 #cartItemDetails{
-	width:70%;
-	text-align: left;
-	padding-top: -10px;
-	font-size: 15px;
+	float: left;
+	width: 270px;
+	margin-top: -45px;
+	margin-left: 672px;
+	text-align: right;
+	font-size: 18px;
+}
+
+#updateButton{
+	text: inline;
+	text-align: center;
+	width: 121px;
+	margin-top: -65px;
+	margin-left: 400px;
 }
 
 #cartItems:hover{
@@ -266,7 +272,6 @@ h5, h6 {
 }
 
 #updateButtons{
-	border:0;
 	padding:0 9px;
 	height:30px;
 	line-height:16px;
@@ -299,8 +304,11 @@ h5, h6 {
 #itemHeading{
 	font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
 	text-align: center;
-	margin-top: 15px;
-	font-size: 35px;	
+	margin-top: 90px;
+	font-size: 35px;
+	width: 500px;
+	margin-left: 210px;
+		
 }
 
 #addtoCartNotification{
@@ -340,6 +348,12 @@ h5, h6 {
 	font-size: 20px;
 }
 
+#search {
+    margin-top: 12px;
+    margin-left: 39px;
+    width: 800px;
+}
+
 #searchBar {
 	/* float:right; */
 	margin-top: 10px;
@@ -356,17 +370,23 @@ h5, h6 {
 }
 
 #cartFinalDetails{
-	/* Add CSS here */
+	float: left;
+	text-decoration: none;
+	margin-left: 640px;
+	text-align: right;
+	padding-top: 10px;
 }
-
+#cartButtons {
+	margin-left: 1px;
+	
+}
 
 /*Express Checkout CSS*/
 
 #express {
 	margin: 5em auto;
-	margin-top:10%;
-	margin-left:20%;
-	s background: #fff;
+	margin-top: 23px;
+	margin-left: 200px;
 	border: 8px solid #eee;
 	width: 500px;
 	height: 350px;
@@ -502,3 +522,13 @@ h5, h6 {
 	box-shadow: 0 0 5px #700;
 }
 
+
+body {
+	margin-left: 5%;
+	margin-right: 5%;
+	
+}
+#loggedInAsExpress{
+	margin-bottom: 30px;
+	align: center;
+}
