@@ -207,24 +207,7 @@ public class eFoods extends HttpServlet {
 
 			// if both true (loggedIn and Added item to cart) then checkout page
 			if (loggedIn && itemVerified) {
-				CartBean cartBean = model.generateShopppingCart(basket, tmp, HST, shipping, discountAt, discountRate);
-				int poNum = clients.get(tmp.getName());
-
-				String fileName = cartBean.customer.getNumber() + "_" + poNum;
-				String path = "/POs/po" + fileName + ".xml";
-				String filePath = this.getServletContext().getRealPath(path);
-				request.setAttribute("filename", path);
-				poNum++;
-				clients.put(tmp.getName(), poNum);
-				poNum = clients.get(tmp.getName());
-				this.getServletContext().setAttribute("clientList", clients);
-
-				boolean res = model.export(orderNum, cartBean, filePath, fileName);
-				request.setAttribute("checkoutOk", res);
-				session.setAttribute("basket", null);
-
-				this.getServletContext().setAttribute("orderNum", ++orderNum);
-				rd = getServletContext().getRequestDispatcher("/views/checkout.jspx");
+				checkout(pageURI, model, request, response);
 			}
 		}
 		rd.forward(request, response);

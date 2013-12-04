@@ -47,6 +47,9 @@ public class FoodRus {
 				dir.mkdir();
 			b2bDir = dir.getAbsolutePath();
 	}
+	/*** INPUT HANDLING FUNCTIONS ***/
+
+	
 	/*** CATEGORY TABLE METHODS **/
 	public List<CategoryBean> retrieveCategories() throws SQLException {
 		return categoryData.retrieveCategories();
@@ -69,15 +72,19 @@ public class FoodRus {
 
 	/** ITEM TABLE METHODS ***/
 	public List<ItemBean> retrieveItems(String category) throws SQLException {
-		return itemData.retrieveItems(category);
+		return itemData.retrieveItems(category.trim());
 	}
 	
-	public List<ItemBean> retrieveItemsBySearch(String search) throws SQLException {
-		return itemData.retrieveItemsBySearch(search);
+	public List<ItemBean> retrieveItemsBySearch(String search) throws Exception {
+		if (!search.matches("^[a-zA-Z0-9]*$"))
+			throw new Exception("Input for search is non-alphanumeric");
+		return itemData.retrieveItemsBySearch(search.trim());
 	}
 
-	public ItemBean retrieveItem(String number) throws SQLException {
-		return itemData.retrieveItem(number);
+	public ItemBean retrieveItem(String number) throws Exception {
+		if (!number.matches("^[a-zA-Z0-9]*$"))
+			throw new Exception("Input for item is non-alphanumeric");
+		return itemData.retrieveItem(number.trim());
 	}
 
 	/***

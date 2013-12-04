@@ -46,11 +46,11 @@ public class ItemBean {
 	}
 
 	public String getNumber() {
-		return number.toUpperCase();
+		return number;
 	}
 
 	public void setNumber(String number) {
-		this.number = number.toUpperCase();
+		this.number = number;
 	}
 
 	public String getName() {
