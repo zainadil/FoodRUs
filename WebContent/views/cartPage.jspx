@@ -57,27 +57,28 @@
 				<div id="leftMenu">
 					<table id="leftMenuList">
 						<tr>
-							<td><a
-								href="${pageContext.request.contextPath}/eFoods/Category/cereal"><h4>
-										<strong>Cereal</strong>
-									</h4></a></td>
+							<td>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Cereal"><img src="${pageContext.request.contextPath}/png/Cereal.png"/></a>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Cereal"><h4><strong>Cereal</strong></h4></a>
+							</td>
 						</tr>
 						<tr>
-							<td><a
-								href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4>
-										<strong>Cheese</strong>
-									</h4></a></td>
+							<td>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><img src="${pageContext.request.contextPath}/png/Cheese.png"/></a>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4><strong>Cheese</strong></h4></a>
+							</td>
 						</tr>
 						<tr>
-							<td><a
-								href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4>
-										<strong>Ice Cream</strong>
-									</h4></a></td>
+							<td>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><img src="${pageContext.request.contextPath}/png/IceCream.png"/></a>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4><strong>Ice Cream</strong></h4></a>
+							</td>
 						</tr>
 						<tr>
-							<td id="last"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4>
-										<strong>Meat</strong>
-									</h4></a></td>
+							<td id="last">
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><img src="${pageContext.request.contextPath}/png/Meat.png"/></a>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4><strong>Meat</strong></h4></a>
+							</td>
 						</tr>
 					</table>
 				</div>
