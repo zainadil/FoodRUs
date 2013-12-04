@@ -98,9 +98,57 @@
 					</table>
 					</div>
 					
+					
+
+					
+					
+					
 					<div id = "mainContent">
+					
+					
 						<c:if test="${not empty itemList}">
 							<form id = "input" action="" method="POST">
+								<c:if test="${not empty adverts}">
+							<c:forEach var="i" items="${adverts}">
+									<center>
+										 <div id = "items">
+										 
+												<div id = "itemDetails">
+													<div id = "itemName">
+														${i.name} <br/>
+													</div>
+													<div id = "itemNumber">
+														Item No. ${i.number} <br/>
+													</div>
+													<div id = "itemQtyPerUnit">
+														Items per Unit: ${i.qty} ${i.unit}<br/>
+													</div>
+												</div>
+												
+												<center>
+													<div id = "quantity">
+														<div id = "q${i.number}">
+														<div id="qLabel">
+															Quantity:
+														</div>
+															<div id="qTextBox">
+																	<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+															</div>
+														</div>
+												</div>
+												</center>
+												<center>
+												<div id = "itemPrice">	
+													<fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.price}"/><br/>
+												</div>
+												</center>
+												<div id = "itemButton">
+													<input type="submit" id = "orderbuttons" value="Add to Cart" name="orderbuttons" onClick = "return addtoCart('${i.number}');"/>
+												</div>
+										</div>
+									</center>
+								</c:forEach>
+								</c:if>
 								<c:forEach var="i" items="${itemList}">
 									<center>
 										 <div id = "items">
@@ -148,7 +196,7 @@
 						There's nothing in for this category
 					</c:if>
 				</div>
-				
+
 				<div id = "footer">		
 					
 				</div>	

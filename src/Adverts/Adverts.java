@@ -62,7 +62,7 @@ public class Adverts implements Filter {
 			if(itemID.compareToIgnoreCase(addedItem) == 0){
 				FoodRus model = (FoodRus)request.getServletContext().getAttribute("fru");
 				try {
-					System.out.println(recommended);
+					//System.out.println(recommended);
 					List<ItemBean> advertItems = model.retrieveItemsBySearch(recommended);
 					request.setAttribute("adverts",advertItems);
 					

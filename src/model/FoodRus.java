@@ -209,10 +209,13 @@ public class FoodRus {
 		return itemData.getItemName(itemID);
 	}
 	
-	public String addToBasket(HashMap<String, Integer> basket, String updatedIDandQty) throws SQLException {
+	public String addToBasket(HashMap<String, Integer> basket, String updatedIDandQty) throws Exception {
 		String finalMessage = null;
 		String[] splits = updatedIDandQty.split(";");
 		String key = splits[0];
+		if (splits == null || splits.length < 2){
+			throw new Exception("Quantity Issue");
+		}
 		int quantity = Integer.parseInt(splits[1]);
 		if (basket.containsKey(key)) basket.put(key, (basket.get(key) + quantity));
 		else basket.put(key, quantity);
