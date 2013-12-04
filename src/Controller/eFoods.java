@@ -50,7 +50,7 @@ public class eFoods extends HttpServlet {
 			FoodRus fru = new FoodRus();
 			this.getServletContext().setAttribute("fru", fru);
 			retrieveServletContextParams();
-			fru.retrieveBlobs(this.getServletContext().getRealPath("/png/"));
+			fru.retrieveBlobs(this.getServletContext().getRealPath("png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

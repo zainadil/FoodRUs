@@ -67,7 +67,7 @@ public class CategoryDAO {
 			while (set.next()) {
 				InputStream image_stream = set.getBinaryStream("PICTURE");
 				BufferedImage image = ImageIO.read(image_stream);
-				String file = filename + "\\"+set.getString("NAME").replaceAll("\\s+","")+".png";
+				String file = filename + "/"+set.getString("NAME").replaceAll("\\s+","")+".png";
 				ImageIO.write(image, "png", new File(file));
 
 			}

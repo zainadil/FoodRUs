@@ -134,6 +134,9 @@
 		<c:if test="${empty sCart}">
 			<h1>Cart is Empty</h1>
 		</c:if>
+        <c:if test="${empty sCart.items}">
+            <h1>Cart is Empty</h1>
+        </c:if>
 		</div>
 		
 		<div id = "cartTotals">
