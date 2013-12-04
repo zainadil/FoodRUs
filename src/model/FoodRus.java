@@ -46,6 +46,7 @@ public class FoodRus {
 			if (!dir.exists())
 				dir.mkdir();
 			b2bDir = dir.getAbsolutePath();
+
 	}
 	/*** INPUT HANDLING FUNCTIONS ***/
 

@@ -561,3 +561,14 @@ body {
 	min-width: 289px;
 	max-width: 300px;
 }
+#searchRes{
+	color: blue;
+	text-align: center;
+	
+}
+#AdvertiseText{
+	position: absolute;
+	margin-left: -60px;
+	color: yellow;
+	
+}

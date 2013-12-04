@@ -73,4 +73,4 @@ function closeNotificatonDiv(){
 	document.getElementById("addtoCartNotification").style.display=" none";
 }
 
-window.setTimeout( closeNotificatonDiv, 1 );
+window.setTimeout( closeNotificatonDiv, 2000 );

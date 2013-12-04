@@ -62,7 +62,7 @@
 						<button id="searchbutton">Search</button>
 					</form>
 						<c:if test="${not empty searching}">
-							<div>
+							<div id="searchRes">
 								Displaying search results for: ${searching}
 							</div>
 						</c:if>
