@@ -44,7 +44,7 @@
 			<div id = "main" >
 			
 			<div id = "searchBar">
-			<form name="input" action="" method="post">
+			<form name="input" action="${pageContext.request.contextPath}/eFoods/Category/" method="post" onsubmit="return searchValidation();">
 				<input type="text" id="search" name="search" placeholder="enter item#, product name, etc" />
 				<button id="searchbutton">Search</button>
 			</form>

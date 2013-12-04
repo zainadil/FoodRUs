@@ -47,7 +47,7 @@ public class B2B //POJO
 	{
 		// Directory of PO's need to be supplied
 		Scanner input = new Scanner(System.in);
-		System.out.print("Please enter the path to the folder containing PO's. (example: /home/user/PO_folder/)\n=> ");
+		System.out.print("Please enter the path to the folder containing PO's. (example: /home/user/forB2B/)\n=> ");
 		String directory = input.nextLine().trim();
 		if (!(new File(directory).isDirectory()))
 		{
@@ -92,6 +92,21 @@ public class B2B //POJO
 
 		//After merge, order everything required
 		order_all(map_number_quantity);
+		
+		
+		//put the files into /processed folder
+		File processed_dir = new File(directory_path+"/processed");
+		if (!processed_dir.exists()) processed_dir.mkdir();
+
+		for(File file : files)
+		{
+			if (file.getAbsolutePath().contains(".xml"))
+			{
+				file.renameTo(new File(processed_dir.getAbsolutePath()+"/"+file.getName()));
+			}
+		}
+
+		
 	}
 	
 	public static void order_all(HashMap<String, Integer> map_number_quantity) throws Exception

@@ -32,15 +32,37 @@ function addtoCart(itemID){
 	}
 }
 
+function validateCredentials(){
+	
+	var rv = true;
+	
+	var loginName = document.getElementById("loginName").value;
+	var loginPassword = document.getElementById("loginPassword").value;
+	
+	if (loginName == null || loginPassword == null || loginName.length < 1 || loginPassword.length <1 ) {
+		alert("Empty Credentials");
+		rv = false;
+	}
+	return rv;
+}
+
 function validateExpressCheckout(){
 	
 	var rv = true;
 	
 	var itemNumber = document.getElementById("itemNumber").value;
 	var itemQuantity = document.getElementById("itemQuantity").value;
+    var loginName = document.getElementById("loginName").value;
+	var loginPassword = document.getElementById("loginPassword").value;
 	
 	var letter = /[a-zA-Z]/; 
     var number = /[0-9]/;
+	
+	if (loginName == null || loginPassword == null || loginName.length < 1 || loginPassword.length <1 ) {
+		alert("Empty Credentials");
+		rv = false;
+	}
+	
     var valid = number.test(itemNumber) && letter.test(itemNumber);
      if(!valid){
     	 alert("Invalid Item-ID");
@@ -57,6 +79,7 @@ function validateExpressCheckout(){
 	
 	return rv;
 }
+
 
 function searchValidation(){
 	var rv = true;

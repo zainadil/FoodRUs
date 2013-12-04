@@ -11,6 +11,7 @@
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<link rel="StyleSheet" href="${pageContext.request.contextPath}/res/loginPage.css" type="text/css" title="cse4413Front" media="screen, print" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/foodrus.js">;</script>
 </head>
 <body>
 
@@ -20,8 +21,8 @@
 		</a>
 	</div>
 
-	<form id="login" action="" method="POST">
-		
+	<form id="login" action="" method="POST" onsubmit="return validateCredentials();">
+			
 			<c:if test="${loggedInError eq true}">
 				<center>
 					<span style="color: red" id="loggedInError">Invalid Username or Password</span>
@@ -35,12 +36,12 @@
 		
 			<div id = "userName">
 				<label for="login_username">Acc. Number</label>
-				<input type="text" name="accountNumber" value="" class="field required" placeholder="Account Number"/>
+				<input type="text" name="accountNumber" value=""  id="loginName" class="field required" placeholder="Account Number"/>
 			</div>
 
 			<div>
 				<label for="login_password">Password</label>
-				<input type="password" name="password" value="" class="field required" placeholder="Password"/>
+				<input type="password" name="password" value="" id="loginPassword" class="field required" placeholder="Password"/>
 			</div>
 
 			<div class="submit" align="center">
