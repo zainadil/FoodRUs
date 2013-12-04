@@ -327,7 +327,7 @@ h5, h6 {
     position: relative;
     margin-right:20px;
     height:22px;
-    width:115px;
+    width:160px;
 }
 
 #qLabel{
@@ -522,6 +522,13 @@ h5, h6 {
 	box-shadow: 0 0 5px #700;
 }
 
+#errorMsg {
+    color: red;
+    margin-left: -27px;
+    margin-top: 10px;
+    text-align: center;
+    width: 970px;
+}
 
 body {
 	margin-left: 5%;
@@ -532,7 +539,25 @@ body {
 	margin-bottom: 30px;
 	align: center;
 }
-#adverts{
-	color:blue;
-	background-color:red;
+
+#highlightmenu
+{
+	color: red;
+}
+
+#itemAdverts {
+	margin-left: -35px;
+	margin-top: 13px;
+	margin-right: 47px;
+	padding-left: 15px;
+	background-color: #d3d3d3;
+	width: 204px;
+	float: left;
+	height: 220px;
+	text-align: center;
+	border: 8px solid #EEEEEE;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 10px #4E707C;
+	min-width: 289px;
+	max-width: 300px;
 }

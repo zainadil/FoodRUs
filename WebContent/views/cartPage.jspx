@@ -136,13 +136,14 @@
 			
 				</c:if>
 			</c:if>
-			
-		<c:if test="${empty sCart}">
-			<h1>Cart is Empty</h1>
-		</c:if>
-        <c:if test="${empty sCart.items}">
-            <h1>Cart is Empty</h1>
-        </c:if>
+			<div id="errorMsg">
+				<c:if test="${empty sCart}">
+					Cart is Empty
+				</c:if>
+		        <c:if test="${empty sCart.items}">
+		            Cart is Empty
+		        </c:if>
+	        </div>
 		</div>
 		
 		<div id = "cartTotals">

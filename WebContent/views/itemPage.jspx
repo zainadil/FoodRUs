@@ -74,25 +74,36 @@
 						<tr>
 							<td>
 							<a href="${pageContext.request.contextPath}/eFoods/Category/Cereal"><img src="${pageContext.request.contextPath}/png/Cereal.png"/></a>
-							<a href="${pageContext.request.contextPath}/eFoods/Category/Cereal"><h4><strong>Cereal</strong></h4></a>
+							<c:if test="${category eq 'Cereal'}"><a href="${pageContext.request.contextPath}/eFoods/Category/Cereal"><h4><strong><span id="highlightmenu">Cereal</span></strong></h4></a></c:if>
+							<c:if test="${category ne 'Cereal'}"><a href="${pageContext.request.contextPath}/eFoods/Category/Cereal"><h4><strong>Cereal</strong></h4></a></c:if>
+						
+	
+	
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><img src="${pageContext.request.contextPath}/png/Cheese.png"/></a>
-							<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4><strong>Cheese</strong></h4></a>
+							<a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><img src="${pageContext.request.contextPath}/png/Cheese.png"/></a>		
+							<c:if test="${category eq 'Cheese'}"><a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4><strong><span id="highlightmenu">Cheese</span></strong></h4></a></c:if>
+							<c:if test="${category ne 'Cheese'}"><a href="${pageContext.request.contextPath}/eFoods/Category/Cheese"><h4><strong>Cheese</strong></h4></a></c:if>							
 							</td>
 						</tr>
 						<tr>
 							<td>
 							<a href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><img src="${pageContext.request.contextPath}/png/IceCream.png"/></a>
-							<a href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4><strong>Ice Cream</strong></h4></a>
+							
+							<c:if test="${category eq 'Ice Cream'}"><a href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4><strong><span id="highlightmenu">Ice Cream</span></strong></h4></a></c:if>
+							<c:if test="${category ne 'Ice Cream'}"><a href="${pageContext.request.contextPath}/eFoods/Category/iceCream"><h4><strong>Ice Cream</strong></h4></a></c:if>							
+							
 							</td>
 						</tr>
 						<tr>
 							<td id="last">
 							<a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><img src="${pageContext.request.contextPath}/png/Meat.png"/></a>
-							<a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4><strong>Meat</strong></h4></a>
+							
+							<c:if test="${category eq 'Meat'}"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4><strong><span id="highlightmenu">Meat</span></strong></h4></a></c:if>
+							<c:if test="${category ne 'Meat'}"><a href="${pageContext.request.contextPath}/eFoods/Category/Meat"><h4><strong>Meat</strong></h4></a></c:if>							
+							
 							</td>
 						</tr>
 					</table>
@@ -111,8 +122,8 @@
 								<c:if test="${not empty adverts}">
 							<c:forEach var="i" items="${adverts}">
 									<center>
-										 <div id = "items">
-										 
+										 <div id = "itemAdverts">
+										 		<span id="AdvertiseText">Advertisement</span>
 												<div id = "itemDetails">
 													<div id = "itemName">
 														${i.name} <br/>
@@ -132,7 +143,7 @@
 															Quantity:
 														</div>
 															<div id="qTextBox">
-																	<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+																	<input class = "itemQty" type = "text" id="${i.number}" style = "width: 50px; margin-top: -2px;" value = "1"/>
 															</div>
 														</div>
 												</div>
@@ -172,7 +183,7 @@
 															Quantity:
 														</div>
 															<div id="qTextBox">
-																	<input class = "itemQty" type = "text" id="${i.number}" style = "width: 30px;" value = "1"/>
+																	<input class = "itemQty" type = "text" id="${i.number}" style = "width: 50px; margin-top: -2px;" value = "1"/>
 															</div>
 														</div>
 												</div>
@@ -191,10 +202,13 @@
 								<input type="hidden" name = "addedIDandQty" id="addedIDandQty"/>
 							</form>
 						</c:if>
-					</div>		
-					<c:if test="${empty itemList}">
-						There's nothing in for this category
-					</c:if>
+					</div>
+					
+					<div id="errorMsg">
+						<c:if test="${empty itemList}">
+							There's nothing in for this category
+						</c:if>
+					</div>
 				</div>
 
 				<div id = "footer">		
