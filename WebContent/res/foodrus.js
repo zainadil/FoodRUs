@@ -5,7 +5,7 @@ function updateQuanity(itemID) {
 	if(isNaN(qty) || qty > 999 || qty < 0){
 		if(qty > 999 )
 			alert ("Quantity should be less than 999");
-		else if(itemQuantity <= 0)
+		else if(qty <= 0)
 			alert ("Quantity should be positive");
 		else alert("Invalid Quantity");
 		return false;
@@ -20,7 +20,7 @@ function addtoCart(itemID){
 	if(isNaN(qty) || qty > 999 || qty < 0){
 		if(qty > 999 )
 			alert ("Quantity should be less than 999");
-		else if(itemQuantity <= 0)
+		else if(qty <= 0)
 			alert ("Quantity should be greater than 0");
 		else alert("Invalid Quantity");
 			var id = "q"+itemID;
@@ -38,7 +38,11 @@ function validateCredentials(){
 	
 	var loginName = document.getElementById("loginName").value;
 	var loginPassword = document.getElementById("loginPassword").value;
-	
+	if (isNaN(loginName) || isNaN(loginPassword))
+	{
+		alert("Credentials are only numeric for now.");
+		rv = false;
+	}
 	if (loginName == null || loginPassword == null || loginName.length < 1 || loginPassword.length <1 ) {
 		alert("Empty Credentials");
 		rv = false;
@@ -57,11 +61,15 @@ function validateExpressCheckout(){
 	
 	var letter = /[a-zA-Z]/; 
     var number = /[0-9]/;
-	
+    if (isNaN(loginName) || isNaN(loginPassword))
+	{
+		alert("Credentials are only numeric for now.");
+		rv = false;
+	}
 	if (loginName == null || loginPassword == null || loginName.length < 1 || loginPassword.length <1 ) {
 		alert("Empty Credentials");
 		rv = false;
-	}
+	} else 
 	
     var valid = number.test(itemNumber) && letter.test(itemNumber);
      if(!valid){
