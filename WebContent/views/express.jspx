@@ -90,9 +90,8 @@
 							<div id = "itemHeading">
 								Express Checkout
 							</div>
-							
-							<form id="express" action="" method="POST">
-		
+
+							<form id="express" action="" method="POST" onsubmit="return validateExpressCheckout();">		
 								<!--    Use this for notification - Example incorrect Login Credentials, Item Number doesn't Exist etc-->
 								<c:if test="${ not empty error}">
 									<center>
@@ -119,12 +118,12 @@
 								</center>
 							 	<div id = "expressItemNumber">
 									<label for="expressItemNumber">Item Number</label>
-									<input type="text" name="itemNumber" value="" class="field required" placeholder="Item Number"/>
+									<input type="text" name="itemNumber" id = "itemNumber" value="" class="field required" placeholder="Item Number"/>
 								</div>
 							 	
 							 	<div id = "expressItemQuantity">
 									<label for="expressItemQuantity">Item Quantity</label>
-									<input type="text" name="itemQuantity" value="" class="field required" placeholder="Quantity"/>
+									<input type="text" name="itemQuantity" id = "itemQuantity" value="" class="field required" placeholder="Quantity"/>
 								</div>
 
 								<div class="submit" align="center">
