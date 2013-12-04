@@ -27,7 +27,7 @@
 
 
 		<c:if test="${checkoutOk eq false}">
-			Your order has not been processed! Please check again later 
+			Your order has not been processed! Please check with site admin. 
 		</c:if>
 		
 		<c:if test="${checkoutOk eq true}">					
@@ -35,8 +35,8 @@
 			Please check your Purchase Order at the following link : <a href ="${pageContext.request.contextPath}${filename}">PO File</a>
 		</c:if>
 	</div>
-	
-	<div id="footer">FOOTER</div>
+	<br/><br/>
+	<div id="footer">Presented to you by Auto. (Z.A. V.S. N.S. N.H. S.R)</div>
 </body>
 </html>
 </jsp:root>

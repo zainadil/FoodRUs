@@ -27,17 +27,17 @@
 		<div id="TopMenuList">
 				<div id="TopMenuList">
 					<c:if test="${loggedIn eq true}">
-						Greetings, ${client.name} 
+						<span id="welcomeMsg">Greetings, ${client.name}</span>
 					</c:if>	
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
+					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Express">Express Checkout</a>
 					<c:if test="${loggedIn eq null}">
 						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
 					</c:if>
 					<c:if test="${loggedIn eq true}">
 						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
 					</c:if>
-					
 				</div>
 		</div>	
 	</div>
@@ -93,9 +93,7 @@
 						</div>
 					</div>	
 				</div>
-				<div id = "footer">		
-					
-				</div>			
+			<div id="footer">Presented to you by Auto. (Z.A. V.S. N.S. N.H. S.R)</div>
 		</body>
 	</html>
 </jsp:root>

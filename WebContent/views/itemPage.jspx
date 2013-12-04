@@ -27,7 +27,7 @@
 		<div id="TopMenuList">
 				<div id="TopMenuList">
 					<c:if test="${loggedIn eq true}">
-						Feel free to browse our inventory ${client.name} 
+					<span id="welcomeMsg">Greetings, ${client.name}</span>
 					</c:if>	
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
@@ -38,7 +38,6 @@
 					<c:if test="${loggedIn eq true}">
 						<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
 					</c:if>
-					
 				</div>
 		</div>	
 	</div>
@@ -211,9 +210,8 @@
 					</div>
 				</div>
 
-				<div id = "footer">		
-					
-				</div>	
+			<div id="footer">Presented to you by Auto. (Z.A. V.S. N.S. N.H. S.R)</div>
+
 		</body>
 	</html>
 </jsp:root>

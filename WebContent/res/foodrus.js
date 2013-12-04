@@ -2,11 +2,12 @@
 function updateQuanity(itemID) {
 	var qty = document.getElementById(itemID).value;
 
-	if (isNaN(qty) || (qty > 999)) {
-		if(qty > 999)
+	if(isNaN(qty) || qty > 999 || qty < 0){
+		if(qty > 999 )
 			alert ("Quantity should be less than 999");
-		else 
-			alert("Invalid Quantity");
+		else if(itemQuantity <= 0)
+			alert ("Quantity should be positive");
+		else alert("Invalid Quantity");
 		return false;
 	} else {
 		document.getElementById("updatedIDandQty").value = itemID + ";" + qty;
@@ -16,9 +17,11 @@ function updateQuanity(itemID) {
 
 function addtoCart(itemID){
 	var qty = document.getElementById(itemID).value;
-	if(isNaN(qty) || qty > 999){
-		if(qty > 999)
+	if(isNaN(qty) || qty > 999 || qty < 0){
+		if(qty > 999 )
 			alert ("Quantity should be less than 999");
+		else if(itemQuantity <= 0)
+			alert ("Quantity should be greater than 0");
 		else alert("Invalid Quantity");
 			var id = "q"+itemID;
 			document.getElementById(id).style.background="red";
@@ -43,9 +46,11 @@ function validateExpressCheckout(){
     	 alert("Invalid Item-ID");
     	 rv = false;
      }
-	if(isNaN(itemQuantity) || itemQuantity >999){
+	if(isNaN(itemQuantity) || itemQuantity >999 || itemQuantity < 1){
 		if(itemQuantity > 999)
 			alert ("Quantity should be less than 999");
+		else if(itemQuantity <= 0)
+			alert ("Quantity should be greater than 1");
 		else alert("Invalid Quantity");
 		rv =  false;
 	}	
@@ -73,4 +78,4 @@ function closeNotificatonDiv(){
 	document.getElementById("addtoCartNotification").style.display=" none";
 }
 
-window.setTimeout( closeNotificatonDiv, 2000 );
+window.setTimeout( closeNotificatonDiv, 1500 );

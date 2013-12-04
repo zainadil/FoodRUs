@@ -28,24 +28,22 @@
 		<div id="TopMenuList">
 			<div id="TopMenuList">
 				<c:if test="${loggedIn eq true}">
-					Thank you for considering us, ${client.name} 
+				<span id="welcomeMsg">	Thank you, ${client.name} </span>
 				</c:if>	
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a>
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Express">Express Checkout</a>
-				
 				<c:if test="${loggedIn eq null}">
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Login">Login</a>
 				</c:if>
 				<c:if test="${loggedIn eq true}">
 					<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Logout">Logout</a>
 				</c:if>
-				
 			</div>
 		</div>
 			</div>
 			<div id = "main">
-			
+
 			<div id = "searchBar">
 			<form name="input" action="${pageContext.request.contextPath}/eFoods/Category/" method="post">
 				<input type="text" id="search" name="search" placeholder="Enter Item Number or Product Name... " />
@@ -100,7 +98,7 @@
 								<b>Extended Price: </b><fmt:formatNumber type="currency" pattern="$#,##0.00;-$#,##0.00" value="${i.extendedPrice}"/>					
 							</div>
 							<div id = "updateButton">
-								<b>Quantity </b> <input type="text" style = "width:50px; align: center;" value="${i.qty}" id = "${i.number}"></input><br/>
+								<b>Quantity </b><input type="text" style = "width:50px; align: center;" value="${i.qty}" id = "${i.number}"></input><br/>
 								<input type="submit" id = "updateButtons" value="Update Item" name="updateQuantity" onClick = "return updateQuanity('${i.number}');"/>							
 							</div>
 						</div>		
@@ -129,7 +127,6 @@
 				
 				<div id="cartButtons">
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Checkout">Checkout</a>
-					
 				<a id="buttons" href="${pageContext.request.contextPath}/eFoods/Category/cereal">Continue Shopping</a>
 				</div>
 			</div>
@@ -151,7 +148,7 @@
 		</div>
 		
 	</div>
-		<div id = "footer">		</div>				
+			<div id="footer">Presented to you by Auto. (Z.A. V.S. N.S. N.H. S.R)</div>		
 			</form>
 		</body>
 	</html>

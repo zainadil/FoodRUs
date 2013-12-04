@@ -134,7 +134,23 @@ h5, h6 {
 	cursor:pointer;
 	margin-right: 5px;
 	}
+#searchbutton {
+	border:0;
+	padding:7px 15px;
+	height:30px;
+	line-height:15px;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	text-shadow:#007dab 0 1px 0;
+	background:#0092c8;
+	-moz-border-radius:50px;
+	-webkit-border-radius:50px;
+	border-radius:50px;
+	cursor:pointer;
+	margin-right: 5px;
 	
+}	
 #main{
 	width:100%;
 	height: 100%;
@@ -259,12 +275,11 @@ h5, h6 {
 	font-size: 18px;
 }
 
-#updateButton{
-	text: inline;
-	text-align: center;
-	width: 121px;
-	margin-top: -65px;
-	margin-left: 400px;
+#updateButton {
+    margin-left: 400px;
+    margin-top: -41px;
+    text-align: center;
+    width: 140px;
 }
 
 #cartItems:hover{
@@ -285,7 +300,7 @@ h5, h6 {
 	border-radius:50px;
 	cursor:pointer;
 	text-decoration: none;
-	margin-top: 9px;
+	margin-top: 2px;
 }
 
 #{
@@ -311,14 +326,14 @@ h5, h6 {
 		
 }
 
-#addtoCartNotification{
-	margin-top:20px;
-	font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
-	text-align: center;
-	font-size: 15px;	
-	color: blue;
+#addtoCartNotification {
+    color: green;
+    font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+    font-size: 15px;
+    text-align: center;
+    width: 1183px;
+    margin-top: 10px;
 }
-
 #quantity{
     background: none repeat scroll 0 0 #EEEEEE;
     border-radius: 3px;
@@ -542,7 +557,7 @@ body {
 
 #highlightmenu
 {
-	color: red;
+	color: blue;
 }
 
 #itemAdverts {
@@ -562,7 +577,7 @@ body {
 	max-width: 300px;
 }
 #searchRes{
-	color: blue;
+	color: green;
 	text-align: center;
 	
 }
@@ -571,4 +586,12 @@ body {
 	margin-left: -60px;
 	color: yellow;
 	
+}
+#welcomeMsg{
+	color: blue;
+	margin-right: 133px;
+	font-family: "Century Gothic";
+}
+#footer{
+	display:none;
 }
