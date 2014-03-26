@@ -8,14 +8,9 @@ FoodRUs
 FoodRUS (Final Project for CSE4413) is a platfrom built for food retailers. 
 
 ### Tech Stack
-Java7
-
-JavaEE
-
-SQL (Derby)
-
-JavaScript
-
-CSS
-
-HTML5
+- Java7
+- JavaEE/J2EE
+- SQL (Derby)
+- JavaScript
+- HTML5
+- CSS
