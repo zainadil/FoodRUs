@@ -3,7 +3,7 @@ FoodRUs
 
 ![FoodRUs Image](/FoodsRUs.png "FoodsRUs")
 
-## What
+### What
 
 FoodRUS (Final Project for CSE4413) is a platfrom built for food retailers. 
 
@@ -17,4 +17,5 @@ SQL (Derby)
 JavaScript
 
 CSS
+
 HTML5
