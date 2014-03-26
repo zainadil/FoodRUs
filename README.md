@@ -1,10 +1,16 @@
 FoodRUs
 =======
 
-4413 - Final Project
-
 ![FoodRUs Image](/FoodsRUs.png "FoodsRUs")
 
-### What
+## What
 
-### Tech Stack
+FoodRUS (Final Project for CSE4413) is a platfrom built for food retailers. 
+
+## Tech Stack
+Java7
+JavaEE
+SQL (Derby)
+JavaScript
+CSS
+HTML5
